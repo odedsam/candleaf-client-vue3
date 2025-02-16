@@ -1,0 +1,42 @@
+@import 'tailwindcss';
+@layer base {
+  :root {
+    --primary-gr: #56b280;
+    --secondary-gr: #92cfad;
+    --ternanry-gr: #849a8e;
+    --gr-haki:#849A8E;
+  }
+}
+
+@layer utilities {
+  .text-pr {
+    color: var(--primary-gr);
+  }
+
+  .text-sec {
+    color: var(--secondary-gr);
+  }
+  .text-ter {
+    color: var(--ternanry-gr);
+  }
+  .text-haki {
+    color:var(--gr-haki)
+  }
+
+  .bg-pr {
+    background-color: var(--primary-gr);
+  }
+  .bg-sec {
+    background-color: var(--secondary-gr);
+  }
+  .bg-ter {
+    background-color: var(--ternanry-gr);
+  }
+
+  .ter-gr {
+    color: var(--ternanry-gr);
+  }
+}
+.xldr {
+  background-color: #92cfad;
+}
