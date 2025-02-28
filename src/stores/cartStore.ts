@@ -1,49 +1,85 @@
-import { defineStore } from 'pinia'
-import { Item, type Cart } from '@/types'
-import { ref } from 'vue'
-import { useProductStore } from './productStore'
-import { storeToRefs } from 'pinia'
+import { defineStore } from "pinia"
+import { ref, computed } from "vue"
 
-export const useCartStore = defineStore('cart', () => {
-  const productStore = useProductStore()
-  const { products } = storeToRefs(productStore)
+/*
+hybrid approach 
+cross device syncing
+*/
 
-  const cart = ref<Cart[]>([])
-  const quantity = ref<Cart['quantity']>(1)
-  const price = ref<Item['price']>(0)
-  const cartTotals = ref<number>(0)
+export const useCartStore = defineStore("cart", () => {
+  const items = ref<{ productId: string; quantity: number }[]>([])
 
+  // compute total items in cart
+  const totalItems = computed(() => items.value.reduce((sum, item) => sum + item.quantity, 0))
 
-  const addToCart = (productId: Item['id']) => {
-    const matchedProduct = products.value.find((item) => item.id === productId)
-    if (!matchedProduct) {
-      return  console.log('Product Not Found Bro!')
+  // load cart from backend (if user is logged in)
+  const loadCart = async () => {
+    const token = localStorage.getItem("accessToken")
+    if (!token) return
 
-    }
-
-    price.value += matchedProduct.price
-    cart.value.push({ ...matchedProduct, quantity: (quantity.value += 1) })
-
-    const itemInCart = cart.value.find((p: any) => p.id === productId)
-    if (itemInCart) {
-      itemInCart.quantity += 1
+    const response = await fetch("http://localhost:5001/api/cart", {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    if (response.ok) {
+      items.value = await response.json()
     }
   }
 
-  const removeFromCart = (productId: Item) => {
-    const productToRemove = cart.value.filter((item: Item) => item.id === productId.id)
-    const preserveOriginalPrice = productId.price
+  // add to cart (local & backend sync)
+  const addToCart = async (productId: string, quantity = 1) => {
+    const existingItem = items.value.find(item => item.productId === productId)
+    if (existingItem) {
+      existingItem.quantity += quantity
+    } else {
+      items.value.push({ productId, quantity })
+    }
 
-    console.log('productToRemove : ', productToRemove)
-
-    price.value = Math.max(preserveOriginalPrice, price.value - productId.price)
-
-    cart.value = cart.value.filter((item) => item.id !== productId.id)
-    if (quantity.value > 1) {
-      if (quantity.value === 1) return
-      quantity.value -= 1
+    // sync with backend if user is logged in
+    const token = localStorage.getItem("accessToken")
+    if (token) {
+      await fetch("http://localhost:5001/api/cart/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ productId, quantity })
+      })
+    } else {
+      localStorage.setItem("cart", JSON.stringify(items.value)) // save to LocalStorage
     }
   }
 
-  return { cart, price, quantity, addToCart, removeFromCart }
+  // remove from Cart (Local & Backend Sync)
+  const removeFromCart = async (productId: string) => {
+    items.value = items.value.filter(item => item.productId !== productId)
+
+    // sync with Backend if user is logged in
+    const token = localStorage.getItem("accessToken")
+    if (token) {
+      await fetch("http://localhost:5001/api/cart/remove", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ productId })
+      })
+    } else {
+      localStorage.setItem("cart", JSON.stringify(items.value)) // save to localstorage
+    }
+  }
+
+  // move localstorage cart to backend after login
+  const syncLocalCartToBackend = async () => {
+    const token = localStorage.getItem("accessToken")
+    if (!token) return
+
+    const localCart = JSON.parse(localStorage.getItem("cart") || "[]")
+    if (localCart.length) {
+      await fetch("http://localhost:5001/api/cart/sync", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ items: localCart })
+      })
+      localStorage.removeItem("cart") // clear local cart after syncing
+      loadCart()
+    }
+  }
+
+  return { items, totalItems, loadCart, addToCart, removeFromCart, syncLocalCartToBackend }
 })

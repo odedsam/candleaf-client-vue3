@@ -1,31 +1,22 @@
-import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import {defineStore} from 'pinia'
+import {ref, computed} from 'vue'
+import {productCatalog} from '@/constants'
 
 type Item = {
   id: number
   title: string
   image: string
   price: number
-  quantity:number
-  basePrice:number
+  quantity: number
+  basePrice: number
 }
 
-
-/* TODO 
-
- • [ v ] calculatePrice will be responsible on calculate price  ++ or -- together 
- • [ v ] Add to cart button should be in cartStore and the logic there is pretty quite enough 
- • [ v ] From Cart we should make the biling process 
-
-
-*/
-
-
 export const useProductStore = defineStore('ProductStore', () => {
+  const localProducts = ref(productCatalog)
   const products = ref<Item[]>([])
   const isLoading = ref<boolean | null>(false)
   const error = ref<boolean | null>(null)
-  const selectedProduct = ref<Item | null>(null) // Track the selected product
+  const selectedProduct = ref<Item | null>(null)
 
   async function fetchProducts() {
     isLoading.value = true
@@ -33,6 +24,7 @@ export const useProductStore = defineStore('ProductStore', () => {
       const res = await fetch('https://fakestoreapi.com/products')
       if (!res.ok) throw new Error('Failed fetching products')
       products.value = await res.json()
+
       error.value = false
     } catch (err: any) {
       error.value = err.message
@@ -41,6 +33,10 @@ export const useProductStore = defineStore('ProductStore', () => {
       isLoading.value = false
     }
   }
+  const mergedProducts = computed(() => [
+    ...localProducts.value,
+    ...products.value,
+  ])
 
   const getItemById = (id: number) => {
     return products.value.find((item) => item.id === id) || null
@@ -50,28 +46,32 @@ export const useProductStore = defineStore('ProductStore', () => {
     selectedProduct.value = {
       ...product,
       quantity: product.quantity || 1,
-      basePrice: product.basePrice ?? product.price, 
-      price: product.price, 
+      basePrice: product.basePrice ?? product.price,
+      price: product.price,
     }
   }
 
   const addQuantity = () => {
     if (selectedProduct.value) {
       selectedProduct.value.quantity += 1
-      selectedProduct.value.price = selectedProduct.value.basePrice * selectedProduct.value.quantity
+      selectedProduct.value.price =
+        selectedProduct.value.basePrice * selectedProduct.value.quantity
     }
   }
 
   const removeQuantity = () => {
     if (selectedProduct.value && selectedProduct.value.quantity > 1) {
       selectedProduct.value.quantity -= 1
-      selectedProduct.value.price = selectedProduct.value.basePrice * selectedProduct.value.quantity
+      selectedProduct.value.price =
+        selectedProduct.value.basePrice * selectedProduct.value.quantity
     }
   }
 
   return {
     fetchProducts,
+    localProducts,
     products,
+    mergedProducts,
     isLoading,
     error,
     selectedProduct,
@@ -81,60 +81,6 @@ export const useProductStore = defineStore('ProductStore', () => {
     removeQuantity,
   }
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // const removeFromCart = (productItem: Item) => {
 //     if (!cart.value) return

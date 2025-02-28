@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useWishlistStore } from '@/stores/wishList';
+import { useWishlistStore } from '@/stores/wishListStore';
 
 
 const wishlistStore = useWishlistStore();

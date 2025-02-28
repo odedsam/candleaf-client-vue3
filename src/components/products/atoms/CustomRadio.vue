@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, defineProps, defineEmits } from 'vue'
-import SelectDelivery from '@/components/Products/atoms/SelectDelivery.vue'
+import SelectDelivery from '@/components/products/atoms/SelectDelivery.vue'
 
 const props = defineProps<{
   options: { label: string; value: string; hasSelect: boolean | null }[]

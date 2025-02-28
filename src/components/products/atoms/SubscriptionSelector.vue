@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import RadioInput from '@/components/Products/atoms/RadioInput.vue'
-import SelectDelivery from '@/components/Products/atoms/SelectDelivery.vue'
-
+import {computed, ref} from 'vue'
+import RadioInput from '@/components/products/atoms/RadioInput.vue'
+import SelectDelivery from '@/components/products/atoms/SelectDelivery.vue'
+import MainButton from '@/components/shared/MainButton.vue'
 
 const selectedOption = ref<'one-time' | 'subscribe' | null>(null)
 const deliveryInterval = ref('4 weeks')
@@ -13,7 +13,12 @@ const selectionData = computed(() => ({
 }))
 
 const borderToggle = (option: 'one-time' | 'subscribe') => {
-  return selectedOption.value === option ? 'border-selected' : 'border-transparent'
+  return selectedOption.value === option
+    ? 'border-selected'
+    : 'border-transparent'
+}
+const handleClick = (event: MouseEvent) => {
+  console.log('נלחץ!', event)
 }
 </script>
 <template>
@@ -43,14 +48,28 @@ const borderToggle = (option: 'one-time' | 'subscribe') => {
           radio-label="Subscribe and delivery every"
           :label-style="'max-sm:pl-2 pl-4 max-sm:text-xs text-break text-sm lg:text-md font-roboto'"
         />
-        <SelectDelivery v-model="deliveryInterval" :options="['2 weeks', '4 weeks', '6 weeks']" />
+        <SelectDelivery
+          v-model="deliveryInterval"
+          :options="['2 weeks', '4 weeks', '6 weeks']"
+        />
       </div>
-      <p class="text-[.975rem] py-3 max-sm:py-2 max-sm:text-xs font-roboto text-[#818181]">
-        Subscribe now and get 10% off on every recurring order. The discount will be applied at
-        checkout.
+      <p
+        class="text-[.975rem] py-3 max-sm:py-2 max-sm:text-xs font-roboto text-[#818181]"
+      >
+        Subscribe now and get 10% off on every recurring order.
+        <br class="hidden max-md:block" />
+        The discount will be applied at checkout.
         <a href="#" class="text-[#92cfad]">See details</a>
       </p>
     </div>
+    <MainButton
+      :btn-icon="'/cart-white.svg'"
+      label="+ Add To Cart"
+      :btn-class="'my-12'"
+      :grow="true"
+      :disabled="false"
+      @click="handleClick"
+    />
   </div>
 </template>
 
