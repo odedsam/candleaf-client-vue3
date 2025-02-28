@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { normalizeTitle} from "@/utils"
 
 const props = defineProps<{
   id: number
@@ -14,9 +15,7 @@ const emit = defineEmits<{
 }>()
 
 const imgSizeClass = computed(() => (props.imgSize === 'large' ? 'w-64 h-64' : 'w-32 h-32'))
-const normalizeTitle = (title: string, wordLimit: number = 4): string => {
-  return title.split(' ').slice(0, wordLimit).join(' ') + (title.split(' ').length > wordLimit ? '' : '')
-}
+
 
 </script>
 

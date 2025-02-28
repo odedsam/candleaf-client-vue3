@@ -18,7 +18,7 @@ const features:Features[] = [
 
 <template>
   <section class="flex flex-col lg:flex-row items-center justify-between bg-gray-100 p-12 rounded-lg">
-    <!-- Text Content -->
+    <!-- text content -->
     <div class="lg:w-1/2 space-y-4">
       <h2 class="text-4xl font-bold text-gray-900">Clean and <br> fragrant soy wax</h2>
       <p class="text-green-600 text-lg">Made for your home and for your wellness</p>
@@ -35,7 +35,7 @@ const features:Features[] = [
       </button>
     </div>
 
-    <!-- Image Content -->
+    <!-- image content -->
     <div class="lg:w-1/2 mt-6 lg:mt-0 flex justify-center">
       <img :src="fragrantSoy" alt="Candles" class="max-w-md w-full">
     </div>

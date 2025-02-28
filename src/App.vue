@@ -1,26 +1,15 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import Footer from './components/shared/Footer.vue';
-import Header from './components/shared/Header.vue';
+import {RouterLink, RouterView} from 'vue-router'
+import Footer from './components/shared/Footer.vue'
+import Header from './components/shared/Header.vue'
 </script>
 
 <template>
-  
-  <header>
-    <!-- <nav class="app-nav flex justify-evenly items-center py-8">
-      <RouterLink to="/" class="text-3xl font-semibold underline text-green-800">Home</RouterLink>
-      <RouterLink to="/products" class="text-3xl font-semibold underline text-green-800">Products</RouterLink>
-      <RouterLink to="/cart" class="text-3xl font-semibold underline text-green-800">Cart</RouterLink>
-      <RouterLink to="/orderList" class="text-3xl font-semibold underline text-green-800">Order-List</RouterLink>
-      <RouterLink to="/wish" class="text-3xl font-semibold underline text-green-800">Wish-list</RouterLink>
-      <RouterLink to="/user" class="text-3xl font-semibold underline text-green-800">UserProfile</RouterLink>
-    </nav> -->
-   <div class="px-24"> <Header /></div>
-  </header>
-  <RouterView />
-  <footer>
+  <div>
+    <Header />
+    <main class="min-h-screen flex flex-col"><RouterView /></main>
     <Footer />
-  </footer>
+  </div>
 </template>
 
 <style>
