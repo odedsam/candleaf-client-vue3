@@ -1,85 +1,78 @@
-import { defineStore } from "pinia"
-import { ref, computed } from "vue"
+import {defineStore} from 'pinia'
+import {ref, computed} from 'vue'
 
-/*
-hybrid approach 
-cross device syncing
-*/
+type CartItem = {
+  id: number
+  title: string
+  image: string
+  price: number
+  quantity: number
+}
 
-export const useCartStore = defineStore("cart", () => {
-  const items = ref<{ productId: string; quantity: number }[]>([])
+export const useCartStore = defineStore('cart', () => {
+  const cartItems = ref<CartItem[]>([])
+  const isCartOpen = ref<boolean>(false)
 
-  // compute total items in cart
-  const totalItems = computed(() => items.value.reduce((sum, item) => sum + item.quantity, 0))
+  //  total items count for cart icon
+  const cartAmount = computed(() => {
+    return cartItems.value.reduce((total, item) => total + item.quantity, 0)
+  })
 
-  // load cart from backend (if user is logged in)
-  const loadCart = async () => {
-    const token = localStorage.getItem("accessToken")
-    if (!token) return
+  //  computed subtotal price
+  const subTotal = computed(() => {
+    return cartItems.value.reduce((total, item) => total + item.price * item.quantity, 0)
+  })
 
-    const response = await fetch("http://localhost:5001/api/cart", {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    if (response.ok) {
-      items.value = await response.json()
-    }
-  }
-
-  // add to cart (local & backend sync)
-  const addToCart = async (productId: string, quantity = 1) => {
-    const existingItem = items.value.find(item => item.productId === productId)
-    if (existingItem) {
-      existingItem.quantity += quantity
+  //  function to add an item to the cart or increase quantity
+  const addToCart = (product: CartItem) => {
+    const existingProduct = cartItems.value.find((item) => item.id === product.id)
+    if (existingProduct) {
+      existingProduct.quantity += 1
     } else {
-      items.value.push({ productId, quantity })
+      cartItems.value.push({...product, quantity: 1})
     }
+  }
 
-    // sync with backend if user is logged in
-    const token = localStorage.getItem("accessToken")
-    if (token) {
-      await fetch("http://localhost:5001/api/cart/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ productId, quantity })
-      })
+  // increase quantity of products synchronized with cart icon quantity
+  const increaseQuantity = (productId: CartItem['id']) => {
+    const index = cartItems.value.findIndex((item) => item.id === productId)
+    if (index !== -1) {
+      //  replace the entire object so Vue detects the change
+      cartItems.value[index] = {
+        ...cartItems.value[index],
+        quantity: cartItems.value[index].quantity + 1,
+      }
+    }
+  }
+
+  const decreaseQuantity = (productId: CartItem['id']) => {
+    const index = cartItems.value.findIndex((item) => item.id === productId)
+    if (index !== -1 && cartItems.value[index].quantity > 1) {
+      //  replace the entire object
+      cartItems.value[index] = {
+        ...cartItems.value[index],
+        quantity: cartItems.value[index].quantity - 1,
+      }
     } else {
-      localStorage.setItem("cart", JSON.stringify(items.value)) // save to LocalStorage
+      //  remove the item when quantity reaches 0
+      cartItems.value.splice(index, 1)
     }
   }
-
-  // remove from Cart (Local & Backend Sync)
-  const removeFromCart = async (productId: string) => {
-    items.value = items.value.filter(item => item.productId !== productId)
-
-    // sync with Backend if user is logged in
-    const token = localStorage.getItem("accessToken")
-    if (token) {
-      await fetch("http://localhost:5001/api/cart/remove", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ productId })
-      })
-    } else {
-      localStorage.setItem("cart", JSON.stringify(items.value)) // save to localstorage
-    }
+  const removeFromCart = (productId: CartItem['id']) => {
+    cartItems.value = cartItems.value.filter((item) => item.id !== productId)
   }
-
-  // move localstorage cart to backend after login
-  const syncLocalCartToBackend = async () => {
-    const token = localStorage.getItem("accessToken")
-    if (!token) return
-
-    const localCart = JSON.parse(localStorage.getItem("cart") || "[]")
-    if (localCart.length) {
-      await fetch("http://localhost:5001/api/cart/sync", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ items: localCart })
-      })
-      localStorage.removeItem("cart") // clear local cart after syncing
-      loadCart()
-    }
+  const toggleCart = () => {
+    isCartOpen.value = !isCartOpen.value
   }
-
-  return { items, totalItems, loadCart, addToCart, removeFromCart, syncLocalCartToBackend }
+  return {
+    cartItems,
+    cartAmount, // total items for cart icon
+    subTotal, // subtotal price
+    addToCart,
+    increaseQuantity,
+    decreaseQuantity,
+    isCartOpen,
+    toggleCart,
+    removeFromCart,
+  }
 })

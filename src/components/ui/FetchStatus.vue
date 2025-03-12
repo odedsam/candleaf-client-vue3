@@ -22,7 +22,7 @@ defineProps<{
   </div>
 
   <div v-else>
-    <CatalogGrid :productCatalog="data" /> 
+    <CatalogGrid :products="data" /> 
     <slot />  <!-- rest of the content like FeaturesProduct, TestimonialsComp, etc.. -->
   </div>
 </template>

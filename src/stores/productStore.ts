@@ -1,8 +1,8 @@
 import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
-import {productCatalog} from '@/constants'
+import {getProducts} from '@/services/productService'
 
-type Item = {
+export type Item = {
   id: number
   title: string
   image: string
@@ -12,44 +12,49 @@ type Item = {
 }
 
 export const useProductStore = defineStore('ProductStore', () => {
-  const localProducts = ref(productCatalog)
   const products = ref<Item[]>([])
   const isLoading = ref<boolean | null>(false)
   const error = ref<boolean | null>(null)
   const selectedProduct = ref<Item | null>(null)
 
-  async function fetchProducts() {
+  const fetchProducts = async () => {
     isLoading.value = true
     try {
-      const res = await fetch('https://fakestoreapi.com/products')
-      if (!res.ok) throw new Error('Failed fetching products')
-      products.value = await res.json()
-
-      error.value = false
+      products.value = await getProducts()
     } catch (err: any) {
-      error.value = err.message
-      console.error('Fetching error:', err.message)
+      error.value = err.message || 'Failed to fetch products'
     } finally {
       isLoading.value = false
+      error.value = false
     }
   }
-  const mergedProducts = computed(() => [
-    ...localProducts.value,
-    ...products.value,
-  ])
 
-  const getItemById = (id: number) => {
-    return products.value.find((item) => item.id === id) || null
-  }
+  const setSelectedProduct = (id: number) => {
+    if (!products.value || products.value.length === 0) {
+      console.log('Products not loaded yet!')
+      return
+    }
+    const findId = products.value.find((p) => p.id === id) || null
 
-  const setSelectedProduct = (product: Item) => {
-    selectedProduct.value = {
-      ...product,
-      quantity: product.quantity || 1,
-      basePrice: product.basePrice ?? product.price,
-      price: product.price,
+    if (!findId) {
+      console.log('Product Not Found for ID:', id)
+    } else {
+      selectedProduct.value = findId
+      console.log('Selected Product:', selectedProduct.value)
     }
   }
+
+  const catalogProducts = computed(() => {
+    return products.value.filter((product) => product.id > 20)
+  })
+  const popularProducts = computed(() => {
+    return products.value.filter((product) => product.id > 24)
+  })
+  const priceNormalizer = computed(() => {
+    return selectedProduct.value?.price
+      ? parseFloat(selectedProduct.value.price.toFixed(2))
+      : 0
+  })
 
   const addQuantity = () => {
     if (selectedProduct.value) {
@@ -67,16 +72,37 @@ export const useProductStore = defineStore('ProductStore', () => {
     }
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
   return {
     fetchProducts,
-    localProducts,
     products,
-    mergedProducts,
     isLoading,
     error,
-    selectedProduct,
-    getItemById,
     setSelectedProduct,
+    priceNormalizer,
+    catalogProducts,
+    popularProducts,
+    selectedProduct,
     addQuantity,
     removeQuantity,
   }

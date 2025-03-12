@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 const props = defineProps<{
+  productId: number; 
   quantity: number;
-  addQuantity: () => void;
-  removeQuantity: () => void;
+  addQuantity: (id:number) => void;
+  removeQuantity: (id:number) => void;
   addClass?: string;
 }>();
 
@@ -17,18 +18,16 @@ const classes = computed(()=>[
 
 
 <template>
-  <div class="wraper">
-    <div class="inline-grid grid-rows-1 py-4 justify-center items-center">
+    <div class="inline-grid grid-rows-1 justify-center items-center">
       <div class="flex flex-col items-center gap-2">
-        <p class="text-semibold font-roboto text-xl text-black text-start">Quantity</p>
+        <p class="text-semibold font-roboto text-xl text-black text-start md:self-start">Quantity</p>
         <div :class="classes">
-          <button @click="addQuantity" class="text-base cursor-pointer font-bold text-[#56b280] font-mono">+</button>
+          <button @click="addQuantity(props.productId)" class="text-base cursor-pointer font-bold text-[#56b280] font-mono">+</button>
           <p class="text-black text-lg font-bold">{{ quantity.toString() }}</p>
-          <button @click="removeQuantity" class="cursor-pointer text-gray-400 text-base font-bold font-mono">-</button>
+          <button @click="removeQuantity(props.productId)" class="cursor-pointer text-gray-400 text-base font-bold font-mono">-</button>
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <style lang="css" scoped></style>

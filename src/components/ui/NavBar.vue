@@ -1,37 +1,66 @@
-<script lang="ts" setup>
-import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
-import HeaderLogo from '@/assets/icons/HeaderLogo.svg'
-import Profile from '@/assets/icons/userProfile.svg'
-import CartIcon from '@/components/ui/CartIcon.vue'
+<script setup lang="ts">
+import { computed, onMounted } from 'vue';
+import { RouterLink } from 'vue-router';
+import ProfileIcon from '@/assets/icons/userProfile.svg';
+import CartIcon from '@/components/ui/CartIcon.vue';
+import MenuBar from '@/components/ui/MenuBar.vue';
+import LogoIcon from '@/components/ui/LogoIcon.vue';
+import { useCartStore } from '@/stores/cartStore';
+import { useAuthStore } from '@/stores/authStore';
+import { storeToRefs } from 'pinia';
 
-const isLoggedIn = ref(false)
-const userHaveItems = ref(true)
+const authStore = useAuthStore();
+const cartStore = useCartStore();
+const { isAuthenticated} = storeToRefs(authStore)
+
+
+
+
+// onMounted(async () => {
+//   try {
+//     const res = await fetch("http://localhost:5001/api/user", {
+//       credentials: "include",
+//     });
+
+//     if (res.ok) {
+//       authStore.user.value = await res.json();
+//     }
+//   } catch (err) {
+//     console.error(err);
+//   }
+// });
+
+const logout = async () => {
+  await fetch("http://localhost:5001/api/logout", { credentials: "include" });
+  authStore.user.value = null;
+};
+
+const profileImage = computed(() => authStore.user?.image || ProfileIcon);
 </script>
 
 <template>
-  <nav class="flex justify-between items-center bg-white py-6 px-24">
-    <RouterLink :to="'/'">
-      <div class="inline-flex justify-center items-center">
-        <img :src="HeaderLogo" alt="header-logo" />
-        <p class="text-[#56B280] pl-2 text-xl text-semibold">Candleaf</p>
+  <nav class="flex justify-between items-center bg-white py-6 max-md:px-2 px-8">
+    <LogoIcon class="order-2 md:order-1" />
+    <MenuBar class="order-1 md:order-2" />
+
+    <div class="order-3 flex justify-center items-center space-x-4">
+      <!-- If user is logged in, show profile info -->
+      <div v-if="authStore.isAuthenticated" class="flex items-center space-x-2">
+        <RouterLink :to="`/user/${authStore.user?.id}`" class="flex items-center space-x-2">
+          <span class="text-sm font-bold text-gray-800">{{ authStore.user?.name }}</span>
+          <img :src="profileImage" class="w-8 h-8 rounded-full cursor-pointer" alt="User Profile" />
+        </RouterLink>
       </div>
-    </RouterLink>
 
-    <div class="flex justify-center items-center gap-4">
-      <RouterLink to="/products" class="hover:underline">Discovery</RouterLink>
-      <RouterLink to="/about" class="hover:underline">About</RouterLink>
-      <RouterLink to="/contact" class="hover:underline">Contact us</RouterLink>
-    </div>
-
-    <div class="flex justify-center items-center gap-4">
-      <RouterLink :to="isLoggedIn ? '/login' : '/user/${id}'">
-        <img :src="Profile" class="w-6 h-6 cursor-pointer" alt="profile-icon" />
+      <!-- If user is not logged in, show login link -->
+      <RouterLink v-else :to="'/auth/login'">
+        <img :src="ProfileIcon" class="w-6 h-6 cursor-pointer" alt="profile-icon" />
       </RouterLink>
 
-      <RouterLink v-if="userHaveItems" to="/cart">
+      <!-- Cart Icon -->
+      <div @click="cartStore.toggleCart()">
         <CartIcon />
-      </RouterLink>
+      </div>
     </div>
   </nav>
 </template>

@@ -3,7 +3,8 @@ import {useCartStore} from '@/stores/cartStore'
 import {storeToRefs} from 'pinia'
 
 const cartStore = useCartStore()
-const {totalItems} = storeToRefs(cartStore)
+const {cartItems} = storeToRefs(cartStore)
+const {cartAmount} = storeToRefs(cartStore)
 
 </script>
 
@@ -15,10 +16,10 @@ const {totalItems} = storeToRefs(cartStore)
       class="w-5 h-5 cursor-pointer"
     />
     <span
-      v-if="totalItems > 0"
-      class="absolute -top-4 -right-4 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full"
+      v-if="cartAmount > 0"
+      class="absolute -top-4 -right-4 bg-[#56B280] text-white text-xs font-bold px-2 py-1 rounded-full"
     >
-      {{ totalItems }}
+      {{ cartAmount}}
     </span>
   </div>
 </template>

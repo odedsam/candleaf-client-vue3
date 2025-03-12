@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "vue-tsc --build && vite build",
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build",
@@ -14,32 +14,29 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^5.7.0",
     "axios": "^1.7.9",
-    "bcryptjs": "^3.0.2",
     "pinia": "^2.3.1",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0",
-    "vue3-google-login": "^2.0.33",
-    "vue3-google-signin": "^2.1.1",
-    "zod": "^3.24.2"
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.6",
-    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^22.13.1",
+    "@typescript-eslint/eslint-plugin": "^8.26.0",
+    "@typescript-eslint/parser": "^8.26.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/compiler-sfc": "3.5.13",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.4.0",
-    "autoprefixer": "^10.4.20",
     "eslint": "^9.20.0",
     "eslint-plugin-vue": "^9.32.0",
-    "postcss": "^8.5.2",
     "prettier": "^3.5.0",
     "tailwindcss": "^4.0.6",
     "typescript": "~5.7.3",
     "vite": "^6.1.0",
     "vite-plugin-vue-devtools": "^7.7.1",
-    "vue-tsc": "^2.2.0"
+    "vue-tsc": "^2.2.0",
+    "zod": "^3.24.2"
   }
 }

@@ -1,82 +1,126 @@
-<script lang="ts" setup>
-import {RouterLink} from 'vue-router'
-import {ref} from 'vue'
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+import { useCartStore } from '@/stores/cartStore';
+import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
 
-const quantity = ref(1)
-const price = 9.99
-const subtotal = ref(price)
+const router = useRouter();
+const cartStore = useCartStore();
+const { cartItems, isCartOpen, subTotal } = storeToRefs(cartStore);
 
-const increaseQuantity = () => {
-  quantity.value++
-  subtotal.value = quantity.value * price
-}
+/* Store Actions */
+const { toggleCart, removeFromCart, increaseQuantity, decreaseQuantity } = cartStore;
 
-const decreaseQuantity = () => {
-  if (quantity.value > 1) {
-    quantity.value--
-    subtotal.value = quantity.value * price
+const isFullscreen = ref(false);
+
+const modalWidth = computed(() => (isFullscreen.value ? 'w-full' : 'w-[60%] md:w-[45%] lg:w-[50%]'));
+
+const modalOpacity = computed(() => (isFullscreen.value ? 'bg-opacity-100' : 'bg-opacity-50'));
+
+const toggleExpand = () => {
+  isFullscreen.value = !isFullscreen.value;
+};
+
+const closeCart = (event: Event) => {
+  if ((event.target as HTMLElement).id === 'cart-overlay') {
+    toggleCart();
   }
-}
+};
+
+const navigateTo = () => {
+  toggleCart();
+  router.push('/checkout/details');
+};
+
+const backToShopping = () => {
+  toggleCart();
+  router.push('/products');
+};
 </script>
 
 <template>
-  <div class="p-10 max-w-4xl mx-auto h-screen">
-    <h2 class="text-2xl text-center font-semibold">Your cart items</h2>
-    <RouterLink to="/" class="text-green-600 block text-center mt-2">
-      Back to shopping
-    </RouterLink>
-    <div class="mt-6 border-t border-gray-300">
+  <!-- ✅ Full-screen overlay -->
+  <Transition name="fade">
+    <div
+      v-if="isCartOpen"
+      id="cart-overlay"
+      class="fixed inset-0 bg-black z-40 flex justify-end transition-all"
+      :class="modalOpacity"
+      @click="closeCart"
+    >
+      <!-- ✅ Cart Modal (Expandable) -->
       <div
-        class="grid grid-cols-5 py-4 font-semibold text-gray-600 text-center"
+        :class="[modalWidth, 'bg-white shadow-lg h-full p-6 flex flex-col z-50 relative transition-all duration-300']"
       >
-        <span class="text-left col-span-2">Product</span>
-        <span>Price</span>
-        <span>Quantity</span>
-        <span>Total</span>
-      </div>
+        <!-- ✅ Expand/Close Buttons -->
+        <div class="flex justify-between items-center">
+          <button
+            class="text-gray-500 hover:text-gray-700"
+            @click="toggleExpand"
+          >
+            {{ isFullscreen ? 'Minimize' : 'Full Screen' }}
+          </button>
+          <button
+            class="text-gray-500 hover:text-gray-700"
+            @click="toggleCart"
+          >
+            ✖
+          </button>
+        </div>
 
-      <!-- product-section -->
+        <h2 class="text-2xl font-semibold text-center my-4">
+          {{ cartItems.length > 0 ? 'Your cart items' : 'No items In Cart' }}
+        </h2>
+        <button class="text-green-600 text-center mb-4" @click="backToShopping">
+          Back to shopping
+        </button>
 
-      <div
-        class="border-t border-gray-300 py-4 grid grid-cols-5 items-center text-center"
-      >
-        <div class="flex items-center col-span-2 text-left">
-          <img
-            src="@/assets/catalog/blueberriesCup.svg"
-            alt="Product Image"
-            class="w-24 h-24 object-cover"
-          />
-          <div class="ml-4">
-            <p class="text-lg font-semibold">Spiced Mint Candleaf®</p>
-            <a href="#" class="text-green-600">Remove</a>
+        <div v-if="cartItems.length > 0" class="flex-1 overflow-y-auto">
+          <div v-for="item in cartItems" :key="item.id" class="border-b py-4 flex items-center">
+            <img :src="item.image" alt="Product-Image" class="w-16 h-16 object-cover rounded-lg" />
+            <div class="ml-4 flex-1">
+              <p class="text-lg font-semibold">{{ item.title }}</p>
+              <button class="text-red-500 text-sm mt-1" @click="removeFromCart(item.id)">
+                Remove
+              </button>
+            </div>
+            <div class="text-center">
+              <p class="text-sm text-gray-500">${{ (item.price ?? 0).toFixed(2) }}</p>
+              <div class="flex items-center justify-center border rounded w-24 mx-auto mt-2">
+                <button @click="decreaseQuantity(item.id)" class="px-2 border-r">-</button>
+                <span class="px-4">{{ item.quantity }}</span>
+                <button @click="increaseQuantity(item.id)" class="px-2 border-l">+</button>
+              </div>
+            </div>
           </div>
         </div>
-        <span class="text-center">$ {{ price.toFixed(2) }}</span>
-        <div
-          class="flex items-center justify-center border rounded w-24 mx-auto"
-        >
-          <button @click="decreaseQuantity" class="px-2 border-r">-</button>
-          <span class="px-4">{{ quantity }}</span>
-          <button @click="increaseQuantity" class="px-2 border-l">+</button>
+
+        <!-- ✅ Subtotal & Checkout -->
+        <div v-if="cartItems.length > 0" class="mt-4 border-t pt-4">
+          <p class="text-lg font-semibold text-right">
+            Sub-total: <span class="ml-2">${{ subTotal.toFixed(2) }}</span>
+          </p>
+          <p class="text-gray-500 text-sm text-right">Tax and shipping cost will be calculated later</p>
+          <button
+            class="mt-4 w-full bg-green-600 text-white py-3 rounded-md hover:bg-green-700 transition-all"
+            @click="navigateTo"
+          >
+            Checkout
+          </button>
         </div>
-        <span class="text-center">$ {{ subtotal.toFixed(2) }}</span>
       </div>
     </div>
-
-    <div class="border-t border-gray-300 py-6 text-right">
-      <p class="text-lg font-semibold">
-        Sub-total:
-        <span class="ml-4">$ {{ subtotal.toFixed(2) }}</span>
-      </p>
-      <p class="text-gray-500 mt-1">
-        Tax and shipping cost will be calculated later
-      </p>
-      <button class="mt-4 px-6 py-2 bg-green-600 text-white rounded-lg">
-        Check-out
-      </button>
-    </div>
-  </div>
+  </Transition>
 </template>
 
-<style scoped></style>
-
+<style scoped>
+/* ✅ Fade In/Out Animation */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease-in-out;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

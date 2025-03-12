@@ -16,19 +16,20 @@ defineProps<{
   >
     <span class="break-after-all">
       <strong class="text-black text-base font-normal max-sm:text-xs">Wax:</strong>
-      <small class="text-haki text-base max-sm:text-xs">{{ ingredients?.wax }}</small>
+      <small class="text-haki text-base max-sm:text-xs ml-[0.3rem]">{{ ingredients?.wax }}</small>
     </span>
     <span class="break-after-all">
       <strong class="text-black text-base font-normal max-sm:text-xs">Fragrance:</strong>
-      <small class="text-haki text-base max-sm:text-xs">{{ ingredients?.fragrance }}</small>
+      <small class="text-haki text-base max-sm:text-xs ml-[0.3rem]">{{ ingredients?.fragrance }}</small>
     </span>
     <span class="sp-group">
       <strong class="text-black text-base font-normal max-sm:text-xs">BurningTime:</strong>
-      <small class="text-haki text-base max-sm:text-xs">{{ ingredients?.burningTime }}</small>
-      <strong class="text-black text-base font-normal max-sm:text-xs">Dimension:</strong>
+      <small class="text-haki text-base max-sm:text-xs ml-[0.3rem]">{{ ingredients?.burningTime }}</small>
+      <strong class="text-black text-base font-normal mx-1.5 max-sm:text-xs">Dimension:</strong>
       <small class="text-haki text-base max-sm:text-xs">{{ ingredients?.dimensions }}</small>
-      <strong class="text-black text-base font-normal max-sm:text-xs">Weight:</strong>
+      <strong class="text-black text-base font-normal mx-1.5 max-sm:text-xs">Weight:</strong>
       <small class="text-haki text-base max-sm:text-xs">{{ ingredients?.weight }}</small>
     </span>
   </div>
 </template>
+

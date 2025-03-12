@@ -16,7 +16,7 @@ export type Item = {
   image: string
   price: number
 }
-export type Cart = Item & {
+export type CartItem = Item & {
   quantity: number
 }
 
@@ -61,3 +61,28 @@ export type Face = {
   reviewText: string
   name: string
 }
+
+export type UserDetails = {
+  fullName: string;
+  email: string;
+  address: string;
+  city: string;
+  postalCode: string;
+  country: string;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+// checkout types 
+
+

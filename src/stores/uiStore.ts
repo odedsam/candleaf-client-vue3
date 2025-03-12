@@ -1,27 +1,42 @@
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
+
+type ToastType = 'success' | 'error' | 'info' | 'warning';
+
+interface ToastState {
+  id: number;
+  message: string;
+  type: ToastType;
+}
 
 export const useUIStore = defineStore('ui', () => {
+  const isMenuOpen = ref<boolean>(false);
+  const toasts = ref<ToastState[]>([]);
 
+  const toggleMenu = () => {
+    isMenuOpen.value = !isMenuOpen.value;
+  };
 
-  const isSidebarOpen = ref<boolean>(false)
-  const isLoading = ref<boolean>(false)
-  const modal = ref<string | null>(null)
+  const showToast = (message: string, type: ToastType = 'success', duration = 3000) => {
+    const id = Date.now(); // Unique ID for each toast
+    toasts.value.push({ id, message, type });
 
-  const toggleSidebar = () => {
-    isSidebarOpen.value = !isSidebarOpen.value
-  }
-  const setLoading = (state: boolean) => {
-    isLoading.value = state
-  }
+    // Auto-remove toast after duration
+    setTimeout(() => {
+      removeToast(id);
+    }, duration);
+  };
 
-  const openModal = (modalName: string) => {
-    modal.value = modalName
-  }
+  // Remove Toast by ID
+  const removeToast = (id: number) => {
+    toasts.value = toasts.value.filter((toast) => toast.id !== id);
+  };
 
-  const closeModal = () => {
-    modal.value = null
-  }
-
-  return { isSidebarOpen, isLoading, modal, toggleSidebar, setLoading, openModal, closeModal }
-})
+  return {
+    isMenuOpen,
+    toggleMenu,
+    toasts,
+    showToast,
+    removeToast,
+  };
+});

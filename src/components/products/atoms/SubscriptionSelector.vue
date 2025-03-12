@@ -2,8 +2,8 @@
 import {computed, ref} from 'vue'
 import RadioInput from '@/components/products/atoms/RadioInput.vue'
 import SelectDelivery from '@/components/products/atoms/SelectDelivery.vue'
-import MainButton from '@/components/shared/MainButton.vue'
-
+import {useCartStore} from '@/stores/cartStore'
+const cartStore = useCartStore()
 const selectedOption = ref<'one-time' | 'subscribe' | null>(null)
 const deliveryInterval = ref('4 weeks')
 
@@ -17,12 +17,10 @@ const borderToggle = (option: 'one-time' | 'subscribe') => {
     ? 'border-selected'
     : 'border-transparent'
 }
-const handleClick = (event: MouseEvent) => {
-  console.log('נלחץ!', event)
-}
+
 </script>
 <template>
-  <div class="grid grid-auto-rows-2">
+  <div class="w-full grid grid-auto-rows-2">
     <div
       class="option-container"
       :class="borderToggle('one-time')"
@@ -62,14 +60,6 @@ const handleClick = (event: MouseEvent) => {
         <a href="#" class="text-[#92cfad]">See details</a>
       </p>
     </div>
-    <MainButton
-      :btn-icon="'/cart-white.svg'"
-      label="+ Add To Cart"
-      :btn-class="'my-12'"
-      :grow="true"
-      :disabled="false"
-      @click="handleClick"
-    />
   </div>
 </template>
 
@@ -77,6 +67,7 @@ const handleClick = (event: MouseEvent) => {
 .option-container {
   padding-block: 1rem;
   padding-left: 1rem;
+  padding-right:1rem;
   border-radius: 0.5px;
   transition: border 0.2s ease-in-out;
 }

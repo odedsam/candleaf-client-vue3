@@ -1,15 +1,32 @@
 <script lang="ts" setup>
 import { productCatalog } from '@/constants';
+import { useProductStore } from '@/stores/productStore';
 import { useRouter } from 'vue-router';
+import { useNavigateToProduct } from '@/composables/useNavigateToProduct';
+import { storeToRefs } from 'pinia';
+import { computed,onMounted } from 'vue';
+import { type PropType } from 'vue';
 
 const router = useRouter();
 
-const navigateAction = (product:any)=>{
-  router.push({
-      name: `product-id-view`,
-      params: {id: product.id.toString()},
-    })
+interface CatalogProduct {
+    id: number;
+    title: string;
+    image: string;
+    price: number;
+    quantity: number;
+    basePrice: number;
 }
+
+const { navigateToProduct } = useNavigateToProduct()
+const props = defineProps({
+  products: {
+    type: Array as PropType<CatalogProduct[]>,
+    required: true
+  }
+});
+
+
 
 
 </script>
@@ -21,10 +38,10 @@ const navigateAction = (product:any)=>{
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
       <div 
-        v-for="cat in productCatalog" 
+        v-for="cat in props.products" 
         :key="cat.id" 
         class="cursor-pointer"
-        @click="navigateAction(cat)"
+        @click="navigateToProduct(cat)"
       >
         <div class="bg-gray-200 shadow-lg rounded-lg p-4 text-center">
           <img :src="cat.image" :alt="cat.title" class="mx-auto w-30 h-30 object-cover" />

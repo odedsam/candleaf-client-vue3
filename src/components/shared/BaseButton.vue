@@ -7,18 +7,21 @@ interface Props {
   grow?: boolean;
   disabled?: boolean;
   btnClass?: string;
+  ripple?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  ripple: true,
+});
+
 const emit = defineEmits<{
   (e: "click", event: MouseEvent): void;
 }>();
 
 const baseClasses = `
-  relative overflow-hidden flex items-center justify-center cursor-pointer gap-2 px-4 py-2 rounded-lg 
-  bg-[#56B280] text-white font-medium transition-all
-  hover:bg-[#4ca372] disabled:opacity-50 disabled:cursor-not-allowed
-  min-w-[120px] max-w-md
+  relative overflow-hidden flex items-center justify-center cursor-pointer gap-2 px-4 py-2 rounded-lg
+  bg-[#56B280] text-white font-medium transition-all hover:bg-[#4ca372]
+  disabled:opacity-50 disabled:cursor-not-allowed min-w-[120px] max-w-md
 `;
 
 const classes = computed(() => [
@@ -27,24 +30,26 @@ const classes = computed(() => [
   props.btnClass,
 ]);
 
-// ripple animation effect
+// ripple effect
 const ripples = ref<{ id: number; x: number; y: number }[]>([]);
 
 const createRipple = (event: MouseEvent) => {
-  if (props.disabled) return;
+  if (!props.ripple || props.disabled) return;
 
   const button = event.currentTarget as HTMLElement;
   const rect = button.getBoundingClientRect();
   const size = Math.max(rect.width, rect.height);
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
+  const x = event.clientX - rect.left - size / 2;
+  const y = event.clientY - rect.top - size / 2;
 
   const id = Date.now();
   ripples.value.push({ id, x, y });
 
-  setTimeout(() => {
-    ripples.value = ripples.value.filter((r) => r.id !== id);
-  }, 600);
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      ripples.value = ripples.value.filter((r) => r.id !== id);
+    }, 600);
+  });
 };
 
 const handleClick = (event: MouseEvent) => {
@@ -57,7 +62,7 @@ const handleClick = (event: MouseEvent) => {
   <button :class="classes" :disabled="disabled" @click="handleClick">
     <img v-if="btnIcon" :src="btnIcon" alt="btn" class="w-5 h-5" />
     <span>{{ label }}</span>
- 
+
     <!-- ripple animation effect -->
     <span
       v-for="ripple in ripples"
@@ -67,7 +72,7 @@ const handleClick = (event: MouseEvent) => {
         top: `${ripple.y}px`,
         left: `${ripple.x}px`,
         width: '80px',
-        height: '80px'
+        height: '80px',
       }"
     />
   </button>
@@ -77,7 +82,7 @@ const handleClick = (event: MouseEvent) => {
 @keyframes ripple {
   0% {
     transform: scale(0);
-    opacity: 0.5;
+    opacity: 0.4;
   }
   100% {
     transform: scale(3);
@@ -85,6 +90,6 @@ const handleClick = (event: MouseEvent) => {
   }
 }
 .animate-ripple {
-  animation: ripple 0.6s linear;
+  animation: ripple 0.6s ease-out;
 }
 </style>

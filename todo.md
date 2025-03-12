@@ -1,34 +1,23 @@
-# Todo 
 
 
-# 27/2/2025
-
-# PHASE 1 : 
-- [ V ] Make a reusable ButtonIcon that will get actions styles ect..
-- [ V ] change the style of the products on /products and remove the other product from home page 
-- [ V ] change the style on productId to be Splitted on Desktop 
-- [ V ] onclick on the product id of popular products is should send to product id 
-
-# PHASE 2 : 
-- [ V ] fix cart that will behave as a component and not as a route 
-- [ V ] if user not logged in and he click on profile he will redirected to sign up or sign in, (check if he is authenticated and then redirect)
-
-# Phase 3 : 
-
-- [ V ] on click add to cart add + 1 on the cart icon 
-- [ V ] cart icon should be disabled if no cart items 
-- [ V ] if we have item in cart and user clicked on cart he should get the cart display
-- [ V ] cart items matched the items in the cart 
-- [ V ] when user click on checkout he should proceed to checkout steps 
-- [ V ] back to shipping will navigate back to the products 
-- [ V ] onclick of the images [catalogGrid Comp] will go to product Id also 
+- [ ] fix: footer in the mobile media query
 
 
 
-# 28/2/2025
+
+
+
+
+
+
+
+
+
+
+
 
 # SignUpView
-- [ ] Finish Google login and signup integration with the backend.
+- [ V ] Finish Google login and signup integration with the backend.
 - [ ] Complete cart synchronization across devices.
 - [ ] Implement form validation (email format, password strength, required fields).
 - [ ] Add password confirmation field with validation.
@@ -37,7 +26,7 @@
 - [ ] Show a success message and redirect after successful signup.
 
 # LoginView
-- [ ] Implement email and password login with validation.
+- [ V ] Implement email and password login with validation.
 - [ ] Add "Forgot Password" functionality.
 - [ ] Display error messages for incorrect login attempts.
 - [ ] Allow users to toggle password visibility.

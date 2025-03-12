@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 
 const props = defineProps<{
-  value: string
-  modelValue: string | null
+  value: string| boolean
+  modelValue: string | null | boolean
   radioLabel?: string
   labelStyle?: string
 }>()

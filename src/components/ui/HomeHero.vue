@@ -10,7 +10,7 @@ import {RouterLink} from 'vue-router'
       <p class="text-xl mt-2 mb-6 text-center">All handmade with natural soy wax, <br /> Candleaf is a companion for all your pleasure moments</p>
 
       <RouterLink to="/products">
-        <button class="bg-[#56B280] text-center font-roboto font-medium text-xl py-4 rounded-lg text-white px-16">Discovery our Collection</button>
+        <button class="bg-[#56B280] hover:bg-[#88edb6] transition cursor-pointer text-center font-roboto font-medium text-xl max-md:text-base py-4 rounded-lg text-white max-md:px-4 px-16">Discovery our Collection</button>
       </RouterLink>
     </div>
   </div>

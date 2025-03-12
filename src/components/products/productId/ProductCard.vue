@@ -16,7 +16,6 @@ const emit = defineEmits<{
 
 const imgSizeClass = computed(() => (props.imgSize === 'large' ? 'w-64 h-64' : 'w-32 h-32'))
 
-
 </script>
 
 <template>

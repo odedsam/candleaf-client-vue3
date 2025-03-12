@@ -1,0 +1,274 @@
+
+
+
+
+
+Base Button Before Changes in the component the only change was the name of the component 
+<script setup lang="ts">
+import { ref, computed } from "vue";
+
+interface Props {
+  btnIcon?: string;
+  label?: string;
+  grow?: boolean;
+  disabled?: boolean;
+  btnClass?: string;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits<{
+  (e: "click", event: MouseEvent): void;
+}>();
+
+const baseClasses = `
+  relative overflow-hidden flex items-center justify-center cursor-pointer gap-2 px-4 py-2 rounded-lg 
+  bg-[#56B280] text-white font-medium transition-all hover:bg-[#88edb6]
+  hover:bg-[#4ca372] disabled:opacity-50 disabled:cursor-not-allowed
+  min-w-[120px] max-w-md
+`;
+
+const classes = computed(() => [
+  baseClasses,
+  props.grow ? "w-full flex-grow" : "",
+  props.btnClass,
+]);
+
+// ripple animation effect
+const ripples = ref<{ id: number; x: number; y: number }[]>([]);
+
+const createRipple = (event: MouseEvent) => {
+  if (props.disabled) return;
+
+  const button = event.currentTarget as HTMLElement;
+  const rect = button.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  const id = Date.now();
+  ripples.value.push({ id, x, y });
+
+  setTimeout(() => {
+    ripples.value = ripples.value.filter((r) => r.id !== id);
+  }, 600);
+};
+
+const handleClick = (event: MouseEvent) => {
+  createRipple(event);
+  emit("click", event);
+};
+</script>
+
+<template>
+  <button :class="classes" :disabled="disabled" @click="handleClick">
+    <img v-if="btnIcon" :src="btnIcon" alt="btn" class="w-5 h-5" />
+    <span>{{ label }}</span>
+ 
+    <!-- ripple animation effect -->
+    <span
+      v-for="ripple in ripples"
+      :key="ripple.id"
+      class="absolute bg-white opacity-50 rounded-full transform scale-0 animate-ripple"
+      :style="{
+        top: `${ripple.y}px`,
+        left: `${ripple.x}px`,
+        width: '80px',
+        height: '80px'
+      }"
+    />
+  </button>
+</template>
+
+<style>
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+.animate-ripple {
+  animation: ripple 0.6s linear;
+}
+</style>
+
+
+
+
+
+
+
+
+
+// LoginView.vue 
+
+<script setup lang="ts">
+import {ref, reactive, watch} from 'vue'
+import {useAuthStore} from '@/stores/authStore'
+import {useUIStore} from '@/stores/uiStore'
+import {useRouter} from 'vue-router'
+import BaseInput from '@/components/shared/BaseInput.vue'
+import {validateAuthForm} from '@/validations/authValidation'
+import {GoogleSignInButton} from 'vue3-google-signin'
+
+const authStore = useAuthStore()
+const uiStore = useUIStore()
+const router = useRouter()
+const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID
+const isSignUp = ref(false)
+
+const form = reactive({
+  name: '',
+  email: '',
+  password: '',
+})
+
+const errors = reactive({
+  name: '',
+  email: '',
+  password: '',
+})
+
+// מנקה שגיאות כאשר מחליפים בין Sign In ל-Sign Up
+watch(isSignUp, () => {
+  Object.assign(errors, {name: '', email: '', password: ''})
+})
+
+// טיפול באימות משתמשים
+const handleAuth = async () => {
+  const validationErrors = validateAuthForm(form)
+  if (validationErrors) {
+    Object.assign(errors, validationErrors)
+    return
+  }
+
+  try {
+    if (isSignUp.value) {
+      await authStore.signUp(form)
+      uiStore.showToast('Registration successful! Redirecting...', 'success')
+    } else {
+      await authStore.signIn({email: form.email, password: form.password})
+      uiStore.showToast('Login successful! Redirecting...', 'success')
+    }
+
+    router.push('/')
+    Object.assign(form, {name: '', email: '', password: ''}) // איפוס שדות הטופס
+  } catch (error) {
+    uiStore.showToast('Authentication failed!', 'error')
+    console.error('Auth Error:', error)
+  }
+}
+
+const handleGoogleSignIn = async (response: any) => {
+  try {
+    const {credential} = response
+    if (!credential) {
+      throw new Error('No credential received from Google')
+    }
+
+    // שליחת ה-token לצד השרת לאימות וקבלת נתוני המשתמש
+    const userData = await fetch('http://localhost:5173/api/auth/google', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({token: credential}),
+    }).then((res) => res.json())
+
+    if (!userData || userData.error) {
+      throw new Error(userData.error || 'Failed to authenticate with Google')
+    }
+
+    // שמירת המשתמש בחנות (store)
+    // authStore.setUser(userData);
+
+    uiStore.showToast('Login successful!', 'success')
+    router.push('/')
+  } catch (error: any) {
+    console.error('Google Sign-In Error:', error.message)
+    uiStore.showToast('Google Sign-In failed!', 'error')
+  }
+}
+
+const handleGoogleSignInError = (error: any) => {
+  console.error('Google Sign-In Error:', error)
+  uiStore.showToast('Google Sign-In Error!', 'error')
+}
+</script>
+
+<template>
+  <div
+    class="container border-[#ccc] bg-[#f9f9f9] p-5 rounded-lg text-center mx-auto"
+  >
+    <h2>{{ isSignUp ? 'Sign Up' : 'Sign In' }}</h2>
+
+    <form @submit.prevent="handleAuth" class="space-y-3">
+      <BaseInput v-if="isSignUp" v-model="form.name" placeholder="Full Name" />
+      <p v-if="errors.name" class="text-red-500 text-xs">{{ errors.name }}</p>
+
+      <BaseInput v-model="form.email" type="email" placeholder="Email" />
+      <p v-if="errors.email" class="text-red-500 text-xs">{{ errors.email }}</p>
+
+      <BaseInput
+        v-model="form.password"
+        type="password"
+        placeholder="Password"
+      />
+      <p v-if="errors.password" class="text-red-500 text-xs">
+        {{ errors.password }}
+      </p>
+
+      <button
+        class="block w-full p-2.5 bg-[#56B280] text-white border-none rounded-md font-bold cursor-pointer hover:bg-[#4a9e70] transition"
+        type="submit"
+      >
+        {{ isSignUp ? 'Sign Up' : 'Sign In' }}
+      </button>
+    </form>
+
+    <div class="my-4">
+      <GoogleSignInButton
+        :clientId="clientId"
+        @success="handleGoogleSignIn"
+        @error="handleGoogleSignInError"
+      />
+    </div>
+
+    <p>
+      {{ isSignUp ? 'Already have an account?' : 'Not have an account?' }}
+      <a
+        href="#"
+        @click.prevent="isSignUp = !isSignUp"
+        class="text-blue-600 underline"
+      >
+        {{ isSignUp ? 'Sign In' : 'Sign Up' }}
+      </a>
+    </p>
+  </div>
+</template>
+
+
+
+
+
+// Handle email/password authentication
+// const handleAuth = async () => {
+//   errorMessage.value = null;
+//   const validationErrors = validateAuthForm(form.value);
+//   if (validationErrors) {
+//     errorMessage.value = "Please fill all fields correctly.";
+//     return;
+//   }
+//   isLoading.value = true;
+//   try {
+//     isSignUp.value ? await authStore.signUp(form.value) : await authStore.signIn(form.value);
+//     router.push("/");
+//   } catch (error: any) {
+//     errorMessage.value = error.message || "Authentication failed!";
+//   } finally {
+//     isLoading.value = false;
+//   }
+// };
