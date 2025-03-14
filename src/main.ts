@@ -7,7 +7,7 @@ import StripeTest from './components/shared/StripeTest.vue'
 
 
 const app = createApp(App)
-app.component("StripeTest", StripeTest); 
+// app.component("StripeTest", StripeTest); 
 app.use(createPinia())
 app.use(router)  
 

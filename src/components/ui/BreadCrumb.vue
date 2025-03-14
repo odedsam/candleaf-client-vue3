@@ -1,31 +1,29 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
 
-defineProps<{
-  steps: { name: string; path: string }[];
-}>();
+const props = defineProps<{ steps: { name: string; path: string }[] }>();
 
 const route = useRoute();
-const router = useRouter();
 
-const stepClass = (stepPath: string, index: number) => {
-  const isCheckoutPage = route.path.startsWith('/checkout');
-  const isDetailsActive = isCheckoutPage && index <= 1; 
+//  get the current step index
+const currentStepIndex = computed(() => {
+  return props.steps.findIndex(step => route.path.includes(step.path));
+});
+
+// define step classes for visual indication only
+const stepClass = (index: number) => {
   return {
-    'font-bold text-green-600': route.fullPath.includes(stepPath) || isDetailsActive,
-    'text-gray-500 cursor-pointer hover:text-green-500 transition-all': !route.fullPath.includes(stepPath) && !isDetailsActive
+    'font-bold text-green-600': index <= currentStepIndex.value, //  highlight completed & current step
+    'text-gray-500': index > currentStepIndex.value // future steps in gray
   };
-};
-
-const navigateTo = (stepPath: string) => {
-  router.push(stepPath);
 };
 </script>
 
 <template>
   <div class="flex justify-center items-center space-x-4 py-4 text-gray-600">
     <template v-for="(step, index) in steps" :key="index">
-      <span :class="stepClass(step.path, index)" @click="navigateTo(step.path)">
+      <span :class="stepClass(index)">
         {{ step.name }}
       </span>
 

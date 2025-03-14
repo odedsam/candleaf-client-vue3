@@ -1,5 +1,5 @@
 import { Face } from '@/types/index'
-import { getImageUrl } from '@/utils'
+import { getImageUrl } from '@/utils/formatters'
 import blueBerries from '@/assets/catalog/blueberriesCup.svg'
 import cherries from '@/assets/catalog/cherriesCup.svg'
 import cinnamon from '@/assets/catalog/cinnamonCup.svg'

@@ -18,8 +18,8 @@ const form = ref({
 </script>
 
 <template>
-  <div class="container text-center mx-auto p-5">
-    <h2>{{ isSignUp ? 'Sign Up' : 'Sign In' }}</h2>
+  <div class="container text-center mx-auto p-5 border border-emerald-500 rounded-3xl">
+    <h2 class="mb-6">{{ isSignUp ? 'Sign Up' : 'Sign In' }}</h2>
 
     <form @submit.prevent="" class="space-y-3">
       <BaseInput v-if="isSignUp" v-model="form.name" placeholder="Full Name" />
@@ -31,7 +31,7 @@ const form = ref({
       />
 
       <button
-        class="bg-green-500 text-white p-2 rounded-md w-full"
+        class="bg-[#56B280] cursor-pointer max-w-[13.375rem] text-white p-2 rounded-md w-full"
         type="submit"
         :disabled="isLoading"
       >

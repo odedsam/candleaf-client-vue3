@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useCheckoutStore} from '@/stores/checkoutStore'
 import {storeToRefs} from 'pinia'
-import BaseInput from '@/components/checkout/atoms/BaseInput.vue'
+import BaseInput from '@/components/shared/BaseInput.vue'
 import RadioInput from '@/components/products/atoms/RadioInput.vue'
 
 const checkoutStore = useCheckoutStore()

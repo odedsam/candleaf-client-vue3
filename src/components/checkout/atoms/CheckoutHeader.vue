@@ -8,10 +8,11 @@ import OrderDetails from './OrderDetails.vue'
 const cartStore = useCartStore()
 const {subTotal} = storeToRefs(cartStore)
 const steps = [
-  { name: 'Cart', path: '/checkout/details' },
-  { name: 'Details', path: '/checkout/shipping' },
-  { name: 'Shipping', path: '/checkout/payment' },
-  { name: 'Payment', path: '/checkout/confirmation' }
+  { name: 'Cart', path: '/checkout/cart' },
+  { name: 'Details', path: '/checkout/details' },
+  { name: 'Shipping', path: '/checkout/shipping' },
+  { name: 'Payment', path: '/checkout/payment' },
+  { name: 'Confirmation', path: '/checkout/confirmation' }
 ];
 
 

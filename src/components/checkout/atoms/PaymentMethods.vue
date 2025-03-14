@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import BaseInput from '@/components/checkout/atoms/BaseInput.vue'
+import BaseInput from '@/components/shared/BaseInput.vue'
 
 // Reactive form data
 const paymentData = ref({

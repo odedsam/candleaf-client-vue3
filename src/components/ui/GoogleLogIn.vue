@@ -6,19 +6,18 @@ const authStore = useAuthStore()
 const isLoading = ref(false)
 const errorMessage = ref<string | null>(null)
 
+const isLoggedIn = ref<boolean>(false)
 
 const logOut = (e) => {
   e.stopProppagation;
-
-
   authStore.handleLogout()
 }
 </script>
 
 <template>
   <div class="justify-center items-center flex">
-    <button @click="authStore.handleGoogleSignIn()" class="google-btn">
-      <svg class="google-icon" viewBox="0 0 48 48">
+    <button @click="authStore.handleGoogleSignIn()" class="bg-white flex justify-center items-center text-gray-500 border-[#ccc] gap-3 py-2.5 px-3.5 cursor-pointer transition-all duration-300 font-bold hover:bg-[#f1f1f1] hover:border-1 rounded-xl">
+      <svg class="w-6 h-6" viewBox="0 0 48 48">
         <path
           fill="#4285F4"
           d="M24 9.5c3.64 0 6.43 1.39 8.28 2.56l6.15-6.15C34.58 2.03 29.71 0 24 0 14.71 0 6.9 5.39 2.82 13.23l7.32 5.69C13.13 12.08 18.02 9.5 24 9.5z"
@@ -40,30 +39,5 @@ const logOut = (e) => {
       <span>Sign in with Google</span>
     </button>
   </div>
-
-  <button @click="logOut" class="text-red-500 mt-2">Logout</button>
 </template>
 
-<style scoped>
-.google-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s;
-}
-
-.google-btn:hover {
-  background-color: #f1f1f1;
-}
-
-.google-icon {
-  width: 24px;
-  height: 24px;
-}
-</style>

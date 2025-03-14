@@ -22,7 +22,7 @@ const toggleDetails = () => {
       <div class="flex gap-3 cursor-pointer items-center" @click="toggleDetails">
         <p class="text-[#56B280] text-lg font-semibold">See Your Details</p>
         <img
-          src="/green-chevron-down.svg"
+          src="/chev-down.svg"
           alt="chevron-down"
           class="w-5 h-5 transition-transform duration-300"
           :class="{'rotate-180': showDetails}"

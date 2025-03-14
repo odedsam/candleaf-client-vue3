@@ -1,19 +1,16 @@
 <script setup lang="ts">
-import {ref} from 'vue'
+import { ref } from 'vue'
 import InfoDisplay from './atoms/InfoDisplay.vue'
 import ShippingMethod from './atoms/ShippingMethod.vue'
+import { useCheckoutStore } from '@/stores/checkoutStore'
+import { storeToRefs } from 'pinia'
 
-// Contact & Shipping Data
-const contactInfo = ref('joe.spagnuolo@uxbly.com')
-const shippingAddress = ref('Via Firenze 23, 92023, Campobello di Licata AG, Italia')
-const selectedMethod = ref('Standard Shipping')
+const checkoutStore = useCheckoutStore()
+const { shipping, contactInformation, formattedShippingAddress, shippingOptions } = storeToRefs(checkoutStore)
 
-// Shipping options
-const shippingMethods = [
-  {id: 'standard', label: 'Standard Shipping', price: 'Free'},
-  {id: 'express', label: 'Express Shipping', price: '$9.99'},
-]
-// Edit Handlers (Modify as needed)
+const selectedShippingMethod = ref(shippingOptions.value[0]) // Default to first method
+
+// Edit Handlers
 const editContact = () => {
   console.log('Edit Contact Clicked')
 }
@@ -26,20 +23,20 @@ const editShipping = () => {
 <template>
   <div>
     <div class="border border-green-300 rounded-md p-4">
-      <InfoDisplay label="Contact" :value="contactInfo" @edit="editContact" />
+      <InfoDisplay label="Contact" :value="contactInformation.email" @edit="editContact" />
       <hr class="border-gray-200" />
-      <InfoDisplay label="Ship to" :value="shippingAddress" @edit="editShipping" />
+      <InfoDisplay label="Ship to" :value="formattedShippingAddress" @edit="editShipping" />
     </div>
 
     <div class="p-4">
       <h2 class="text-lg font-semibold mb-3">Shipping method</h2>
 
-      <div v-for="method in shippingMethods" :key="method.id" class="mb-2">
+      <div v-for="method in shippingOptions" :key="method.id" class="mb-2">
         <ShippingMethod
           :label="method.label"
           :price="method.price"
-          :selected="selectedMethod === method.label"
-          @update:selected="selectedMethod = method.label"
+          :selected="selectedShippingMethod.id === method.id"
+          @update:selected="selectedShippingMethod = method"
         />
       </div>
     </div>

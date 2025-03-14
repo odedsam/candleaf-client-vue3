@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {productCatalog} from '@/constants'
+import {productCatalog} from '@/utils/constants'
 export const BASE_URL = `http://localhost:5173`
 const API_URL = 'https://fakestoreapi.com/products'
 

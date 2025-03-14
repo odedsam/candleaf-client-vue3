@@ -6,12 +6,6 @@ const DefaultLayout = () => import('@/layouts/DefaultLayout.vue');
 const AuthLayout = () => import('@/layouts/AuthLayout.vue');
 const CheckoutLayout = () => import('@/layouts/CheckoutLayout.vue')
 
-// Checkout Steps
-const CheckoutDetails = () => import('@/components/checkout/CheckoutDetails.vue');
-const CheckoutShipping = () => import("@/components/checkout/CheckoutShipping.vue");
-const CheckoutPayment = () => import('@/components/checkout/CheckoutPayment.vue');
-const ConfirmationStep = () => import('@/components/checkout/CheckoutConfirmation.vue');
-
 
 const routes: RouteRecordRaw[] = [
   {
@@ -28,6 +22,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'user/:id/orders/:orderId', name: 'order-details', component: () => import('@/views/user/OrderDetailsView.vue') },
     ],
   },
+
   {
     path: '/auth',
     component: AuthLayout,
@@ -37,21 +32,26 @@ const routes: RouteRecordRaw[] = [
       { path: 'signup', name: 'signup-view', component: () => import('@/views/auth/SignupView.vue') },
     ],
   },
+
   {
     path: '/track-order',
     name: 'track-order',
     component:  () => import('@/views/orders/OrderTrackingView.vue'),
   },
+
+  
   {
     path: '/checkout',
     component: CheckoutLayout, 
     children: [
-      { path: 'details', name: 'checkout-details', component: CheckoutDetails },
-      { path: 'shipping', name: 'checkout-shipping', component: CheckoutShipping },
-      { path: 'payment', name: 'checkout-payment', component: CheckoutPayment },
-      { path: 'confirmation', name: 'checkout-confirmation', component: ConfirmationStep },
+      {path: 'cart', name:'checkout-cart', component: () => import('@/components/checkout/CheckoutCart.vue')},
+      { path: 'details', name: 'checkout-details', component:()=> import('@/components/checkout/CheckoutDetails.vue') },
+      { path: 'shipping', name: 'checkout-shipping', component: () => import("@/components/checkout/CheckoutShipping.vue")},
+      { path: 'payment', name: 'checkout-payment', component:() => import('@/components/checkout/CheckoutPayment.vue')},
+      { path: 'confirmation', name: 'checkout-confirmation', component: () => import('@/components/checkout/CheckoutConfirmation.vue') },
     ],
   },
+
   {
     path: '/:pathMatch(.*)*',
     name: 'not-found',

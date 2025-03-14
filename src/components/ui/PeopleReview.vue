@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { faces } from '@/constants'
+import { faces } from '@/utils/constants'
 </script>
 
 <template>

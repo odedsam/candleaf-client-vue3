@@ -5,8 +5,8 @@ import {useCheckoutStore} from '@/stores/checkoutStore'
 import {storeToRefs} from 'pinia'
 
 const checkoutStore = useCheckoutStore()
-const {contactInfo} = storeToRefs(checkoutStore)
-const setContactInfo = checkoutStore.setContactInfo
+const {contactInformation} = storeToRefs(checkoutStore)
+const {setContactInfo} = checkoutStore
 </script>
 
 <template>
@@ -20,7 +20,7 @@ const setContactInfo = checkoutStore.setContactInfo
     </div>
 
     <input
-      :value="contactInfo.email"
+      :value="contactInformation.email"
       @input="setContactInfo({email: ($event.target as HTMLInputElement).value})"
       type="email"
       placeholder="Email"
@@ -29,8 +29,8 @@ const setContactInfo = checkoutStore.setContactInfo
 
     <div class="flex items-center gap-2 mt-3">
       <input
-        :checked="contactInfo.newsletter"
-        @change="setContactInfo({newsletter: ($event.target as HTMLInputElement).checked})"
+        :checked="contactInformation.subscribe"
+        @change="setContactInfo({subscribe: ($event.target as HTMLInputElement).checked})"
         type="checkbox"
         id="newsletter"
         class="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500"

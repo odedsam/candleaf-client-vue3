@@ -3,7 +3,7 @@ import { computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import DetailsSection from '@/components/products/productId/DetailsSection.vue';
 import LoadingSpinner from '@/components/shared/LoadingSpinner.vue';
-import { ingredients, descriptionSection } from '@/constants';
+import { ingredients, descriptionSection } from '@/utils/constants';
 import { useProductStore } from '@/stores/productStore';
 import { storeToRefs } from 'pinia';
 

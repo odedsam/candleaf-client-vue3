@@ -1,14 +1,25 @@
 import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
-import {
-  getUser,
-  loginWithGoogle,
-  logout,
-  fetchProfile,
-} from '@/services/authService'
+import useLocalStorage from '@/composables/useLocalStorage'
+import {getUser, loginWithGoogle, logout, fetchProfile} from '@/services/authService'
+
+type User = {
+  id: number
+  name: string
+  email: string
+  email_verified_at: string
+  created_at: string
+  updated_at: string
+}
+
+type Credentials = {
+  email: string
+  password: string
+  remember: boolean
+}
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref<any>(null)
+  const user = useLocalStorage<User>('auth.user')
   const isLoading = ref<boolean>(false)
   const error = ref<string | null>(null)
   const isAuthenticated = computed(() => !!user.value)
@@ -33,8 +44,8 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function fetchUserProfile() {
-    const profile = await fetchProfile();
-    user.value = profile; 
+    const profile = await fetchProfile()
+    user.value = profile
   }
   const handleGoogleSignIn = async () => {
     isLoading.value = true
@@ -65,12 +76,7 @@ export const useAuthStore = defineStore('auth', () => {
     document.cookie.split(';').forEach((c) => {
       document.cookie = c
         .replace(/^ +/, '')
-        .replace(
-          /=.*/,
-          '=;expires=' +
-            new Date().toUTCString() +
-            ';path=/; domain=.google.com',
-        )
+        .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/; domain=.google.com')
     })
   }
 

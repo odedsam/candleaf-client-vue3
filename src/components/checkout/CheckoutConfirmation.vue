@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import PaymentConfirmation from '@/components/checkout/atoms/PaymentConfirmation.vue';
 import { ref } from 'vue';
-import CheckoutSummary from '../rest/CheckoutSummary.vue';
 
 // Dynamic data
 const isPaymentConfirmed = ref(true); // Toggle this for testing
@@ -11,5 +10,4 @@ const userName = ref("Joe");
 
 <template>
   <PaymentConfirmation :isConfirmed="isPaymentConfirmed" :orderId="orderId" :userName="userName" />
-  <!-- <CheckoutSummary> -->
 </template>

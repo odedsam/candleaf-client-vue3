@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { productCatalog } from '@/constants';
+import { productCatalog } from '@/utils/constants';
 import { useProductStore } from '@/stores/productStore';
 import { useRouter } from 'vue-router';
 import { useNavigateToProduct } from '@/composables/useNavigateToProduct';

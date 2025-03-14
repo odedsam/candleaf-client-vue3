@@ -4,7 +4,7 @@ import {defineProps, defineEmits} from 'vue'
 // Props
 const props = defineProps<{
   label: string
-  price: string
+  price: number | string
   selected: boolean
 }>()
 
@@ -15,8 +15,8 @@ const emit = defineEmits(['update:selected'])
 <template>
   <label
     class="flex items-center justify-between border border-gray-300 rounded-md p-3 cursor-pointer hover:border-green-500"
-    :class="{'border-green-500 bg-green-50': selected}"
-  >
+    :class="{'border-green-500 bg-green-50': selected}">
+ 
     <div class="flex items-center">
       <input
         type="radio"
@@ -29,6 +29,8 @@ const emit = defineEmits(['update:selected'])
     <span class="font-semibold text-gray-800">{{ price }}</span>
   </label>
 </template>
+
+
 <style scoped>
 input[type='radio'] {
   width: 20px;
