@@ -1,4 +1,4 @@
-import { Face } from '@/types/index'
+import { Face, Features } from '@/types/index'
 import { getImageUrl } from '@/utils/formatters'
 import blueBerries from '@/assets/catalog/blueberriesCup.svg'
 import cherries from '@/assets/catalog/cherriesCup.svg'
@@ -17,6 +17,31 @@ export const ingredients = {
   dimensions: '10cm x 5cm',
   weight: '400g',
 }
+
+export const features: Features[] = [
+  {
+    id: 1,
+    title: 'Eco-sustainable',
+    description: 'All recyclable materials, 0% CO2 emissions',
+  },
+  {
+    id: 2,
+    title: 'Hypoallergenic',
+    description: '100% natural, human-friendly ingredients',
+  },
+  {
+    id: 3,
+    title: 'Handmade',
+    description: 'All candles are craftly made with love.',
+  },
+  {
+    id: 4,
+    title: 'Long burning',
+    description: 'No more waste. Created for last long.',
+  },
+]
+
+
 
 export const faces: Face[] = [
   {

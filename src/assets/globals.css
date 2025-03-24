@@ -1,51 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import 'tailwindcss';
+
 @layer base {
   :root {
-    --primary-gr: #56b280;
-    --secondary-gr: #92cfad;
-    --ternanry-gr: #849a8e;
-    --gr-haki:#849A8E;
+    --color-primary:  #56b280; 
+    --color-secondary: #3d8d61; 
+    --color-tertiary:  #a0dbc0;
+    --color-accent: #f5b84c; 
+    --color-light-green:#56B2801A;
+    --color-haki:#849A8E;
+    --color-mgr:#5E6E89;
   }
 }
 
-
 @custom-variant dark (&:where(.dark, .dark *));
 
-
-
-
+@theme{
+  --font-roboto:'Roboto', sans-serif;
+  --font-poppins:'Poppins', sans-serif;
+  --font-helvetica:'Helvetica', sans-serif;
+}
 
 
 
 @layer utilities {
-  .text-pr {
-    color: var(--primary-gr);
-  }
+  .bg-primary     { background-color: var(--color-primary); }
+  .text-primary   { color: var(--color-primary); }
+  .border-primary { border-color: var(--color-primary); }
 
-  .text-sec {
-    color: var(--secondary-gr);
-  }
-  .text-ter {
-    color: var(--ternanry-gr);
-  }
-  .text-haki {
-    color:var(--gr-haki)
-  }
+  .bg-secondary     { background-color: var(--color-secondary); }
+  .text-secondary   { color: var(--color-secondary); }
+  .border-secondary { border-color: var(--color-secondary); }
 
-  .bg-pr {
-    background-color: var(--primary-gr);
-  }
-  .bg-sec {
-    background-color: var(--secondary-gr);
-  }
-  .bg-ter {
-    background-color: var(--ternanry-gr);
-  }
+  .bg-tertiary     { background-color: var(--color-tertiary); }
+  .text-tertiary   { color: var(--color-tertiary); }
+  .border-tertiary { border-color: var(--color-tertiary); }
 
-  .ter-gr {
-    color: var(--ternanry-gr);
-  }
+
+  .bg-haki     { background-color: var(--color-haki); }
+  .text-haki   { color: var(--color-haki); }
+  .border-haki { border-color: var(--color-haki); }
+
+  .bg-lgt-gr     { background-color: var(--color-light-green); }
+  .text-lgt-gr   { color: var(--color-light-green); }
+  .border-lgt-gr { border-color: var(--color-light-green); }
+
+
+  .bg-mgr     { background-color: var(--color-mgr); }
+  .text-mgr   { color: var(--color-mgr); }
+  .border-mgr { border-color: var(--color-mgr); }
+
+
+
+  .bg-accent     { background-color: var(--color-accent); }
+  .text-accent   { color: var(--color-accent); }
+  .border-accent { border-color: var(--color-accent); }
 }
-.xldr {
-  background-color: #92cfad;
-}
+
+
+
+

@@ -4,13 +4,13 @@ import {RouterLink} from 'vue-router'
 </script>
 <template>
   <div class="hero-container">
-    <div class="filtered p-24 flex  flex-col justify-center items-center">
+    <div class="filtered p-24 flex flex-col justify-center items-center">
       <small class="text-[3rem]">🌱</small>
-      <h1 class="text-[2rem]">The nature candle</h1>
-      <p class="text-xl mt-2 mb-6 text-center">All handmade with natural soy wax, <br /> Candleaf is a companion for all your pleasure moments</p>
+      <h1 class="text-[2rem] font-roboto font-normal dark:text-[#5E6E89]">The nature candle</h1>
+      <p class="text-xl mt-2 mb-6 text-center font-normal font-helvetica dark:text-[#5E6E89]">All handmade with natural soy wax, <br /> Candleaf is a companion for all your pleasure moments</p>
 
       <RouterLink to="/products">
-        <button class="bg-[#56B280] hover:bg-[#88edb6] transition cursor-pointer text-center font-roboto font-medium text-xl max-md:text-base py-4 rounded-lg text-white max-md:px-4 px-16">Discovery our Collection</button>
+        <button class="bg-primary hover:bg-emerald-600 transition cursor-pointer text-center font-roboto font-medium text-xl max-md:text-base py-4 rounded-lg text-white max-md:px-4 px-16">Discovery our Collection</button>
       </RouterLink>
     </div>
   </div>

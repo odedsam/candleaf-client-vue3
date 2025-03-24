@@ -1,5 +1,11 @@
 import {  type PaymentInfo, type ShippingInfo } from '@/utils/formValidations';
 
+export type Features = {
+  id: number
+  title: string
+  description: string
+}
+
 export type ProductIdScheme = {
   productId: number
   productImage: string

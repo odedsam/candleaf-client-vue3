@@ -27,7 +27,8 @@ const profileImage = computed(() => user?.value.avatar ?? ProfileIcon)
       </RouterLink>
     </div>
     <RouterLink v-else :to="'/auth/login'">
-      <img :src="ProfileIcon" class="w-6 h-6 cursor-pointer" alt="profile-icon" />
+      <!-- <img :src="ProfileIcon" class="w-6 h-6 cursor-pointer" alt="profile-icon" /> -->
+      <i-tabler-user-circle class="w-6 h-6 cursor-pointer" />
     </RouterLink>
 
     

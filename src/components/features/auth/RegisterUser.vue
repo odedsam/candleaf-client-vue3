@@ -1,23 +1,10 @@
 <script lang="ts" setup>
 
-
-
-
-<script>
-
-
+</script>
 <template>
-
-<div> 
-
-
-
-
-</div>
-
+  <div>
+  </div>
 </template>
 
-
-<style> 
-
+<style lang="css" scoped>
 </style>
