@@ -1,91 +1,74 @@
-import {defineStore} from 'pinia'
-import {ref, computed} from 'vue'
-import useLocalStorage from '@/composables/useLocalStorage'
-import {getUser, loginWithGoogle, logout, fetchProfile} from '@/services/authService'
-
-type User = {
-  id: number
-  name: string
-  email: string
-  email_verified_at: string
-  created_at: string
-  updated_at: string
-}
-
-type Credentials = {
-  email: string
-  password: string
-  remember: boolean
-}
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+import { loginWithGoogle, verifyGoogleToken, logout } from '@/services/authService'
+import { User } from '@/types/User'
+import router from '@/router'
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = useLocalStorage<User>('auth.user')
-  const isLoading = ref<boolean>(false)
+  const user = ref<User | null>(null)
+  const isLoading = ref(false)
   const error = ref<string | null>(null)
   const isAuthenticated = computed(() => !!user.value)
 
-  const fetchUser = async () => {
+  const handleGoogleSignIn = async () => {
+    isLoading.value = true
+    error.value = null
     try {
-      const data = await getUser()
-      if (data && !data.error) {
-        const url = new URLSearchParams()
-        const userInfo = url.get(window.location.href)
-        console.log(userInfo)
-        user.value = data.user
-        sessionStorage.setItem('user', JSON.stringify(data.user))
-      } else {
-        user.value = null
+      const accessToken = await loginWithGoogle()
+      const userData = await verifyGoogleToken(accessToken)
+      if (userData) {
+        user.value = userData
+        router.push('/auth/login/success')
       }
-    } catch (e) {
-      console.error('Error fetching user:', e)
-      error.value = e
+    } catch (err: any) {
+      console.error('Google login failed:', err)
+      error.value = err?.message || 'Login failed'
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const fetchCurrentUser = async () => {
+    try {
+      const res = await fetch('/api/auth/verify', {
+        method: 'POST',
+        credentials: 'include',
+      })
+  
+      if (res.status === 401) {
+        user.value = null
+        return
+      }
+  
+      if (!res.ok) {
+        throw new Error()
+      }
+  
+      const data = await res.json()
+      user.value = data
+    } catch(err:any) {
+      console.error(err)
       user.value = null
     }
   }
-
-  async function fetchUserProfile() {
-    const profile = await fetchProfile()
-    user.value = profile
-  }
-  const handleGoogleSignIn = async () => {
-    isLoading.value = true
-    try {
-      loginWithGoogle()
-    } catch (error) {
-      if (error) {
-        console.error(error)
-        error.value = 'Google login failed. Try again.'
-      }
-
-      error.value = error
-    } finally {
-      isLoading.value = false
-    }
-  }
   const handleLogout = async () => {
-    isLoading.value = true
     try {
       await logout()
-    } catch (error) {
-      error.value = 'Logout failed. Try again.'
+    } catch (err) {
+      console.error('Logout failed:', err)
     } finally {
-      isLoading.value = false
+      localStorage.removeItem('auth.user')
+      user.value = null
     }
-  }
-  const clearCookies = () => {
-    document.cookie.split(';').forEach((c) => {
-      document.cookie = c
-        .replace(/^ +/, '')
-        .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/; domain=.google.com')
-    })
   }
 
   return {
     user,
     isAuthenticated,
-    fetchUser,
-    fetchUserProfile,
+    isLoading,
+    error,
     handleGoogleSignIn,
     handleLogout,
+    fetchCurrentUser,
   }
 })

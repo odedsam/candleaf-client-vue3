@@ -3,10 +3,11 @@ import {ref, onMounted} from 'vue'
 
 const user = ref(null)
 const errorMessage = ref<string | null>(null)
-
+const id = ref('67df7344ad829779009e3543')
 const fetchUserProfile = async () => {
   try {
-    const response = await fetch('http://localhost:5001/api/user/profile', {
+    const response = await fetch(`http://localhost:5001/api/user/${id.value}`, {
+      credentials: 'include',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
@@ -23,7 +24,9 @@ const fetchUserProfile = async () => {
   }
 }
 
-onMounted(fetchUserProfile)
+onMounted(async()=>{
+  fetchUserProfile()
+})
 </script>
 
 <template>

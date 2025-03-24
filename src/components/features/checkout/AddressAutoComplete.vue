@@ -1,0 +1,41 @@
+<script setup lang="ts">
+import { ref, watch } from "vue";
+import { getAddressSuggestions } from "@/services/addressService";
+import BaseInput from "@/components/base/BaseInput.vue";
+
+const address = ref("");
+const suggestions = ref<any[]>([]);
+const emit = defineEmits(["update:address"]);
+
+watch(address, async () => {
+  suggestions.value = await getAddressSuggestions(address.value);
+});
+
+const selectAddress = (suggestion: any) => {
+  address.value = suggestion.display_name;
+  emit("update:address", {
+    street: suggestion.street,
+    city: suggestion.city,
+    postalCode: suggestion.postalCode,
+    province: suggestion.province,
+    country: suggestion.country,
+  });
+  suggestions.value = [];
+};
+</script>
+
+<template>
+  <div>
+    <BaseInput v-model="address" placeholder="Search Address" />
+    <ul v-if="suggestions.length" class="bg-white border mt-2 max-h-40 overflow-auto">
+      <li
+        v-for="(suggestion, index) in suggestions"
+        :key="index"
+        @click="selectAddress(suggestion)"
+        class="p-2 hover:bg-gray-200 cursor-pointer"
+      >
+        {{ suggestion.display_name }}
+      </li>
+    </ul>
+  </div>
+</template>

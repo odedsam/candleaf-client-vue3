@@ -1,13 +1,47 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-// import vueDevTools from 'vite-plugin-vue-devtools'
+import vueDevTools from 'vite-plugin-vue-devtools'
 import tailwindcss from '@tailwindcss/vite'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
+import Components from 'unplugin-vue-components/vite'
 
-// https://vite.dev/config/
 export default defineConfig({
-  // plugins: [vue(), vueDevTools(), tailwindcss()],
-  plugins: [vue(), tailwindcss()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5001',
+        changeOrigin: true,
+        secure: false,
+       
+      }
+    }
+  },
+  
+  plugins: [
+    vue(),
+    vueDevTools(),
+    tailwindcss(),
+
+    // Auto-import components
+    Components({
+      resolvers: [
+        IconsResolver({
+          prefix: 'i', // מאפשר <i-user />
+          enabledCollections: ['tabler'], // רק סט Tabler
+        }),
+      ],
+    }),
+
+    // Load icon components
+    Icons({
+      compiler: 'vue3',
+      autoInstall: true,
+    }),
+  ],
+
+
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

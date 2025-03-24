@@ -1,3 +1,5 @@
+import {  type PaymentInfo, type ShippingInfo } from '@/utils/formValidations';
+
 export type ProductIdScheme = {
   productId: number
   productImage: string
@@ -75,12 +77,31 @@ export type UserDetails = {
 
 
 
+export interface CheckoutState {
+  step: number;
+  shipping: ShippingInfo;
+  payment: PaymentInfo;
+}
 
 
 
 
+export enum CheckoutStepRoutes {
+  CART = "/checkout/cart",
+  DETAILS = "/checkout/details",
+  SHIPPING = "/checkout/shipping",
+  PAYMENT = "/checkout/payment",
+  CONFIRMATION = "/checkout/confirmation",
+}
 
 
+
+export type User = {
+  id: string
+  name: string
+  email: string
+  avatar?: string
+}
 
 
 // checkout types 

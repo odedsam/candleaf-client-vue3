@@ -1,52 +1,80 @@
-export const loginWithGoogle = () => {
-  window.open('http://localhost:5001/api/auth/google')
+import { User, Credentials } from '@/types/User'
+import { loadGoogleScript } from '@/utils/loadGoogleScript'
+
+declare global {
+  interface Window {
+    google: any
+  }
 }
+
+
+/* Start Google OAuth login flow & Returns access_token */
+export const loginWithGoogle = async (): Promise<string> => {
+  await loadGoogleScript()
+
+  return await new Promise((resolve, reject) => {
+    if (!window.google?.accounts?.oauth2) {
+      return reject('Google OAuth2 not available')
+    }
+
+    const client = window.google.accounts.oauth2.initTokenClient({
+      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+      scope: 'openid profile email',
+      callback: (tokenResponse: any) => {
+        if (tokenResponse?.access_token) {
+          resolve(tokenResponse.access_token)
+        } else {
+          reject('No access token returned from Google')
+        }
+      },
+    })
+
+    client.requestAccessToken()
+  })
+}
+
+
+/* Send Google access_token to backend for verification + JWT creation */
+export const verifyGoogleToken = async (accessToken: string): Promise<User> => {
+  const res = await fetch('/api/auth/google', {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: accessToken }),
+  })
+
+  if (!res.ok) {
+    const { message } = await res.json().catch(() => ({ message: 'Google login failed' }))
+    throw new Error(message)
+  }
+
+   const { user } = await res.json()
+   return user
+}
+
 
 export const logout = async () => {
-  await fetch(`http://localhost:5001/api/auth/logout`, {credentials: 'include'})
-  localStorage.removeItem('user')
-  window.location.href = '/'
+  await fetch('/api/auth/logout', {
+    method: 'POST',
+    credentials: 'include',
+  })
+  location.href = '/'
 }
 
-export const getUserFromURL = () => {
-  const urlParams = new URLSearchParams(window.location.search)
-  const userInfo = urlParams.get('user')
 
-  if (userInfo) {
-    try {
-      const decodedUser = JSON.parse(decodeURIComponent(userInfo))
-      localStorage.setItem('user', JSON.stringify(decodedUser))
-      window.history.replaceState({}, document.title, window.location.pathname)
-      return decodedUser
-    } catch (error) {
-      console.error('Error parsing user data:', error)
-    }
+/* Local login email/password */
+export const login = async (credentials: Credentials): Promise<User> => {
+  const res = await fetch('/api/auth/login', {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(credentials)
+  })
+
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}))
+    throw new Error(error.message || 'Login failed')
   }
 
-  return null
-}
-
-export const fetchProfile = async () => {
-  try {
-    const req = await fetch('http://localhost:5001/api/user', {
-      credentials: 'include',
-    })
-    if (!req.ok) throw new Error('failed making request')
-
-    const data = await req.json()
-    return data
-  } catch (err: any) {
-    console.error(err)
-    return null
-  }
-}
-
-export const getUser = async () => {
-  try {
-    const user = localStorage.getItem('user')
-    return user ? JSON.parse(user) : null
-  } catch (error) {
-    console.error('Error fetching user:', error)
-    return null
-  }
+  return await res.json()
 }

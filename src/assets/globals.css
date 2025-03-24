@@ -8,6 +8,15 @@
   }
 }
 
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+
+
+
+
+
 @layer utilities {
   .text-pr {
     color: var(--primary-gr);

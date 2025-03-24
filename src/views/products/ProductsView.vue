@@ -3,7 +3,7 @@ import {ref, nextTick, onMounted} from 'vue'
 import {useProductStore} from '@/stores/productStore'
 import {useCartStore} from '@/stores/cartStore'
 import {storeToRefs} from 'pinia'
-import BaseButton from '@/components/shared/BaseButton.vue'
+import BaseButton from '@/components/base/BaseButton.vue'
 import {useNavigateToProduct} from '@/composables/useNavigateToProduct'
 
 

@@ -1,3 +1,6 @@
+import { User } from '@/types/User'
+
+
 export const normalizeTitle = (title: string, wordLimit: number = 4): string => {
   return title.split(' ').slice(0, wordLimit).join(' ') + (title.split(' ').length > wordLimit ? '' : '')
 }
@@ -28,4 +31,19 @@ export const formatShippingAddress = (shippingData: {
   }
 
   return `${shippingData.address},${shippingData.postalCode.toString()}, ${shippingData.city},${shippingData.province}, ${shippingData.country}`
+}
+
+
+export const getUserFromStorage = (): User | null => {
+  try {
+    const raw = localStorage.getItem('auth.user')
+    if (!raw) return null
+
+    const parsed = JSON.parse(raw)
+
+    // duplicate stringify fix 
+    return typeof parsed === 'string' ? JSON.parse(parsed) : parsed
+  } catch {
+    return null
+  }
 }

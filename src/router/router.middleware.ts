@@ -1,32 +1,47 @@
-import { useAuthStore } from '@/stores/authStore';
-import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
-import type { Router } from 'vue-router';
+// src/router/router.middleware.ts
+import type { NavigationGuardNext, RouteLocationNormalized, Router } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useCheckoutStore } from '@/stores/checkoutStore'
+import { useAuthStore } from '@/stores/authStore'
+
+const publicRoutes = ['/auth/login', '/auth/register']
+const checkoutRoutes = [
+  '/cart',
+  '/checkout/details',
+  '/checkout/shipping',
+  '/checkout/payment',
+  '/checkout/confirmation'
+]
 
 export const authMiddleware = (router: Router) => {
   router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
-    const authStore = useAuthStore();
-    const isLoggedIn = !!localStorage.getItem('access_token');
+    const checkoutStore = useCheckoutStore()
+    const { step } = storeToRefs(checkoutStore)
+    const expectedRoute = checkoutRoutes[step.value]
 
-    // 🚀 הגנה על נתיבים הדורשים התחברות
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-      if (!isLoggedIn) {
-        return next({ name: 'login-view' });
-      }
 
-      if (to.meta.roles && authStore.user) {
-        const userRole = authStore.user.role ?? ''; // הוספת ברירת מחדל ריקה
-        if (!Array.isArray(to.meta.roles) || !to.meta.roles.includes(userRole)) {
-          console.warn('403 Forbidden - Insufficient permissions');
-          return next({ name: 'home' });
-        }
-      }
-    }
 
-    // 🚀 מניעת גישה ל-login/signup אם כבר מחוברים
-    if (isLoggedIn && (to.name === 'login-view' || to.name === 'signup-view')) {
-      return next({ name: 'home' });
-    }
-    console.log("Navigating to:", to.fullPath);
-    next();
-  });
-};
+
+   // checkout step protection
+   if (to.path.startsWith('/checkout') && to.path !== expectedRoute) {
+    console.warn(`🛑 Checkout step mismatch! Redirecting to: ${expectedRoute}`)
+    return next(expectedRoute)
+  }
+
+  const auth = useAuthStore()
+
+  // only try fetching user if there's a token cookie
+  const hasToken = document.cookie.includes('token=')
+  if (!auth.user && hasToken && to.path !== '/auth/login/success') {
+    await auth.fetchCurrentUser()
+  }
+
+  // block authenticated users from visiting auth pages
+  const isPublic = publicRoutes.includes(to.path)
+  if (auth.user && isPublic) {
+    return next('/')
+  }
+
+  next()
+})
+}

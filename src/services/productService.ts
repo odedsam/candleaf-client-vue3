@@ -42,7 +42,7 @@ const updateItem = async (id: string, updatedData: any) => {
 const deleteItem = async (id: string) => {
   try {
     await axios.delete(`${API_URL}/${id}`)
-    console.log(`✅ Item ${id} deleted successfully`)
+    console.log(`Item ${id} deleted successfully`)
   } catch (error) {
     console.error(` Error deleting item ${id}:`, error)
     throw error

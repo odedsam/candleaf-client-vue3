@@ -1,16 +1,10 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { authMiddleware } from "@/router/router.middleware"
 
-// Layouts
-const DefaultLayout = () => import('@/layouts/DefaultLayout.vue');
-const AuthLayout = () => import('@/layouts/AuthLayout.vue');
-const CheckoutLayout = () => import('@/layouts/CheckoutLayout.vue')
-
-
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: DefaultLayout,
+    component: () => import('@/layouts/DefaultLayout.vue'),
     children: [
       { path: '/', name: 'home', component: () => import('@/views/HomeView.vue') },
       { path: 'about', name: 'about', component:  () => import('@/views/AboutView.vue')},
@@ -20,12 +14,13 @@ const routes: RouteRecordRaw[] = [
       { path: 'user/:id', name: 'user-profile', component: () => import('@/views/user/UserProfileView.vue') },
       { path: 'user/:id/orders', name: 'user-orders', component: () => import('@/views/user/UserOrdersView.vue') },
       { path: 'user/:id/orders/:orderId', name: 'order-details', component: () => import('@/views/user/OrderDetailsView.vue') },
+      { path: 'test', name: 'test', component: () => import('@/views/TestView.vue') },
     ],
   },
 
   {
     path: '/auth',
-    component: AuthLayout,
+    component: () => import('@/layouts/AuthLayout.vue'),
     children: [
       { path: 'login', name: 'login-view', component: () => import('@/views/auth/LoginView.vue') },
       { path: 'login/success', name: 'login-success', component:()=>import('@/views/auth/LoginSuccess.vue')},
@@ -36,19 +31,19 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/track-order',
     name: 'track-order',
-    component:  () => import('@/views/orders/OrderTrackingView.vue'),
+    component: () => import('@/views/orders/OrderTrackingView.vue'),
   },
 
-  
   {
     path: '/checkout',
-    component: CheckoutLayout, 
+    component: () => import('@/layouts/CheckoutLayout.vue'),
     children: [
-      {path: 'cart', name:'checkout-cart', component: () => import('@/components/checkout/CheckoutCart.vue')},
-      { path: 'details', name: 'checkout-details', component:()=> import('@/components/checkout/CheckoutDetails.vue') },
-      { path: 'shipping', name: 'checkout-shipping', component: () => import("@/components/checkout/CheckoutShipping.vue")},
-      { path: 'payment', name: 'checkout-payment', component:() => import('@/components/checkout/CheckoutPayment.vue')},
-      { path: 'confirmation', name: 'checkout-confirmation', component: () => import('@/components/checkout/CheckoutConfirmation.vue') },
+      { path: '', redirect: '/checkout/cart' },
+      { path: 'cart', component: () => import('@/views/checkout/CartView.vue') },
+      { path: 'details', component: () => import('@/views/checkout/DetailsView.vue') },
+      { path: 'shipping', component: () => import('@/views/checkout/ShippingView.vue') },
+      { path: 'payment', component: () => import('@/views/checkout/PaymentView.vue') },
+      { path: 'confirmation', component: () => import('@/views/checkout/ConfirmationView.vue') },
     ],
   },
 
@@ -60,36 +55,10 @@ const routes: RouteRecordRaw[] = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
 
-
-// navigation guard for checkout
-// router.beforeEach(async (to, from, next) => {
-//   if (to.path.startsWith('/checkout')) {
-//     const { useCartStore } = await import('@/stores/cartStore');
-//     const cartStore = useCartStore();
-
-//     if (to.path === '/checkout/shipping' && cartStore.cartItems.length === 0) {
-//       return next('/checkout/details');
-//     } else if (to.path === '/checkout/payment' && !cartStore.shippingInfo) {
-//       return next('/checkout/shipping');
-//     } else if (to.path === '/checkout/confirmation' && !cartStore.paymentConfirmed) {
-//       return next('/checkout/payment');
-//     }
-//   }
-
-//   next();
-// });
-
-authMiddleware(router);
-
-
-
-
-
-
-
+authMiddleware(router)
 
 export default router;

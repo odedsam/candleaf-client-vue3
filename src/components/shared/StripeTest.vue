@@ -2,10 +2,10 @@
 import { ref, onMounted } from "vue";
 import { loadStripe, Stripe, StripeElements, StripeCardElement } from "@stripe/stripe-js";
 
-// Define Stripe public key (Test Key)
-const STRIPE_PUBLIC_KEY = "pk_test_XXXXXXXXXXXXXXXXXXXXXXXX"; // Replace with your test key
+// define Stripe public key (Test Key)
+const STRIPE_PUBLIC_KEY = "pk_test_XXXXXXXXXXXXXXXXXXXXXXXX"; // replace to my test key
 
-// Refs for Stripe instances
+// refs for Stripe instances
 const stripe = ref<Stripe | null>(null);
 const elements = ref<StripeElements | null>(null);
 const cardElement = ref<StripeCardElement | null>(null);
@@ -14,7 +14,7 @@ const loading = ref<boolean>(false);
 const message = ref<string | null>(null);
 const success = ref<boolean>(false);
 
-// Load Stripe on component mount
+// load stripe on component mount
 onMounted(async () => {
   stripe.value = await loadStripe(STRIPE_PUBLIC_KEY);
   if (stripe.value) {
@@ -24,7 +24,7 @@ onMounted(async () => {
   }
 });
 
-// Handle Payment Submission
+// handle payment submission
 const handlePayment = async () => {
   if (!stripe.value || !cardElement.value) return;
   loading.value = true;
@@ -40,7 +40,7 @@ const handlePayment = async () => {
     message.value = error.message!;
     success.value = false;
   } else {
-    message.value = "✅ Test payment successful!";
+    message.value = "Test payment successful!";
     success.value = true;
   }
 

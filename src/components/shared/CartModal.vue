@@ -1,41 +1,42 @@
 <script lang="ts" setup>
-import {ref, computed, onMounted} from 'vue'
+import {ref,computed} from 'vue'
 import {useCartStore} from '@/stores/cartStore'
 import {storeToRefs} from 'pinia'
+import {useRouter} from 'vue-router'
 import RightArrow from '@/assets/icons/right-arrow.svg'
 import LeftArrow from '@/assets/icons/left-arrow.svg'
-import {useRouter} from 'vue-router'
 import CartItem from '@/components/shared/CartItem.vue'
 
 const router = useRouter()
-
 const cartStore = useCartStore()
 const {cartItems, isCartOpen, subTotal} = storeToRefs(cartStore)
+const {toggleCart} = cartStore
+import { watch } from 'vue'
 
-console.log('cartItems : ', cartItems)
+watch(isCartOpen, (open) => {
+  document.body.style.overflow = open ? 'hidden' : 'auto'
+})
+// My-Design const modalWidth = ref('w-[60%]')
+const modalWidth = ref('w-full sm:w-[80%] md:w-[60%] xl:w-[40%]')
+const arrowIconIndicator = computed(() => (modalWidth.value === 'w-full' ? RightArrow : LeftArrow))
+const toggleWidth = () =>modalWidth.value === 'w-[60%]' ? (modalWidth.value = 'w-full') : (modalWidth.value = 'w-[60%]')
+
 
 const navigateTo = () => {
   toggleCart()
   router.push('/checkout/details')
 }
-
 const backToShopping = () => {
   toggleCart()
   router.push('/products')
 }
 
-/* toggle cart */
-const {toggleCart} = cartStore
-
-const modalWidth = ref('w-[60%]')
-const arrowIconIndicator = computed(() => (modalWidth.value === 'w-full' ? RightArrow : LeftArrow))
-const toggleWidth = () =>
-  modalWidth.value === 'w-[60%]' ? (modalWidth.value = 'w-full') : (modalWidth.value = 'w-[60%]')
 </script>
 
 <template>
   <Transition name="slide-cart">
-    <div v-if="isCartOpen" :class="[modalWidth, 'p-10 fixed bottom-0 top-[80px] right-0 bg-white shadow-lg z-50']">
+    <!-- My Design : <div v-if="isCartOpen" :class="[modalWidth, 'p-10 fixed bottom-0 top-[80px] right-0 bg-white shadow-lg z-50']"> -->
+      <div v-if="isCartOpen" :class="[modalWidth, 'fixed bottom-0 right-0 h-[87.9dvh] bg-white shadow-lg z-50 p-10 overflow-y-auto']">
       <div class="flex justify-between items-center">
         <img :src="arrowIconIndicator" alt="left-icon" class="w-4 h-4 cursor-pointer" @click="toggleWidth()" />
         <img src="/close-icon.svg" alt="close-icon" class="w-4 h-4 cursor-pointer" @click="toggleCart()" />
@@ -66,6 +67,12 @@ const toggleWidth = () =>
     </div>
   </Transition>
 </template>
+
+
+
+
+
+
 <style scoped>
 .slide-cart-enter-active,
 .slide-cart-leave-active {

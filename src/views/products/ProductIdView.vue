@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import DetailsSection from '@/components/products/productId/DetailsSection.vue';
-import LoadingSpinner from '@/components/shared/LoadingSpinner.vue';
+import DetailsSection from '@/components/features/products/DetailsSection.vue';
+import LoadingSpinner from '@/components/feedback/LoadingSpinner.vue';
 import { ingredients, descriptionSection } from '@/utils/constants';
 import { useProductStore } from '@/stores/productStore';
 import { storeToRefs } from 'pinia';

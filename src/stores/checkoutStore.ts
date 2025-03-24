@@ -1,76 +1,57 @@
 import { defineStore } from 'pinia';
 import { computed, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { billingAddressSchema, shippingValidationSchema, contactValidationSchema, paymentSchema } from '@/utils/formValidations';
-import { CheckoutState, CheckoutStep, ContactInformation, ShippingInfo, ShippingOptions, PaymentInfo } from "@/types/checkout";
-import { z } from 'zod';
-import { formatShippingAddress } from "@/utils/formatters";
+import { type PaymentInfo, type ShippingInfo, ShippingOptions } from '@/utils/formValidations';
+import { shippingValidationSchema, paymentValidationSchema } from '@/utils/formValidations';
+import { formatShippingAddress } from '@/utils/formatters';
+import { useLocalStorage } from '@vueuse/core';
+import { CheckoutStepRoutes } from '@/types/index';
 
-// Define Store
+
 export const useCheckoutStore = defineStore('checkout', () => {
   const router = useRouter();
-  const step = ref<CheckoutState['step']>(1);
+  const step = ref(useLocalStorage<number>('checkout_step', 0).value);
+  const stepRoutes = Object.values(CheckoutStepRoutes);
 
-  /*  Steps & Routing Logic */
-
-
-  const stepRoutes: CheckoutStep[] = [
-    CheckoutStep.Cart,
-    CheckoutStep.Details,
-    CheckoutStep.Shipping,
-    CheckoutStep.Payment,
-    CheckoutStep.Confirmation
-  ];
-
-  const nextStep = () => {
-    if (step.value < stepRoutes.length - 1) {
-      step.value++;
-      router.push(stepRoutes[step.value]);
+  const updateStep = (direction: 1 | -1) => {
+    const newStep = step.value + direction;
+    if (newStep >= 0 && newStep < stepRoutes.length) {
+      step.value = newStep;
+      router.push(stepRoutes[newStep]);
+    } else if (direction === -1) {
+      router.push("/products");
     }
   };
 
-  const prevStep = () => {
-    if (step.value === 0) {
-      router.push('/products');
-    } else {
-      step.value--;
-      router.push(stepRoutes[step.value]);
-    }
-  };
+  const nextStep = () => updateStep(1);
+  const prevStep = () => updateStep(-1);
 
-  /*  Step 2: Contact Information */
-  const contactInformation = ref<ContactInformation>({
+  //  persisst step changes
+  watch(step, (newStep) => localStorage.setItem("checkout_step", JSON.stringify(newStep)));
+
+  //  local Storage State
+  const shipping = useLocalStorage<ShippingInfo>('checkout_shipping', {
     email: '',
-    subscribe: false
-  });
-
-  const contactErrors = ref<Partial<Record<keyof ContactInformation, string>>>({});
-
-  /*  Step 3: Shipping Information */
-  const shipping = ref<ShippingInfo>({
+    subscribe: false,
     name: '',
-    secondName: '',
+    lastName: '',
     address: '',
     shippingNote: '',
     postalCode: '',
     city: '',
     province: '',
-    country: 'Italy'
-  });
+    country: 'Italy',
+    saveInfo: false,
+  }, { mergeDefaults: true });
 
-  const shippingErrors = ref<Partial<Record<keyof ShippingInfo, string>>>({});
-
-  /* Step 4: Shipping Options */
   const shippingOptions = ref<ShippingOptions[]>([
     { id: 'standard', label: 'Standard Shipping', price: 0 },
     { id: 'express', label: 'Express Shipping', price: 10 }
   ]);
 
-  /* Computed formatted shipping address */
   const formattedShippingAddress = computed(() => formatShippingAddress(shipping.value));
 
-  /*  Step 5: Payment Information */
-  const payment = ref<PaymentInfo>({
+  const payment = useLocalStorage<PaymentInfo>('checkout_payment', {
     cardNumber: '',
     holderName: '',
     expiration: '',
@@ -87,92 +68,62 @@ export const useCheckoutStore = defineStore('checkout', () => {
     }
   });
 
+  //  validation Handling
+  const shippingErrors = ref<Partial<Record<keyof ShippingInfo, string>>>({});
   const paymentErrors = ref<Partial<Record<keyof PaymentInfo, string>>>({});
 
-  /*  Validation Functions */
-
-  const validateContact = () => {
-    const result = contactValidationSchema.safeParse(contactInformation.value);
-    contactErrors.value = {};
-    if (!result.success) {
-      result.error.errors.forEach((err) => {
-        contactErrors.value[err.path[0] as keyof ContactInformation] = err.message;
-      });
-      return false;
-    }
-    return true;
-  };
-
-  const validateShipping = () => {
+  const validateDetails = () => {
     const result = shippingValidationSchema.safeParse(shipping.value);
-    shippingErrors.value = {};
-    if (!result.success) {
-      result.error.errors.forEach((err) => {
-        shippingErrors.value[err.path[0] as keyof ShippingInfo] = err.message;
-      });
-      return false;
-    }
-    return true;
+    shippingErrors.value = result.success ? {} : Object.fromEntries(
+      Object.entries(result.error.format()).map(([key, value]) => [
+        key, (value as { _errors?: string[] })?._errors?.[0] ?? "Unknown validation error"
+      ])
+    );
   };
 
   const validatePayment = () => {
-    const result = paymentSchema.safeParse(payment.value);
-    paymentErrors.value = {};
+    const result = paymentValidationSchema.safeParse(payment.value);
     if (!result.success) {
-      result.error.errors.forEach((err) => {
-        paymentErrors.value[err.path[0] as keyof PaymentInfo] = err.message;
-      });
+      paymentErrors.value = Object.fromEntries(
+        Object.entries(result.error.format()).map(([key, value]) => [
+          key, (value as { _errors?: string[] })?._errors?.[0] ?? "Unknown validation error"
+        ])
+      );
       return false;
     }
+    paymentErrors.value = {};
     return true;
   };
 
-  /* Auto Validate When Data Changes */
-  watch(contactInformation, validateContact, { deep: true });
-  watch(shipping, validateShipping, { deep: true });
-  watch(payment, validatePayment, { deep: true });
+  //  step validation state
+  const stepValidations = ref<Record<string, boolean>>({
+    "/checkout/details": false,
+    "/checkout/payment": false
+  });
 
-  /* Combined Validation for Submission */
-  const validateAll = () => {
-    return validateContact() && validateShipping() && validatePayment();
-  };
+  //  dynamic step validation
+  const getStepValidation = (path: string) => ({
+    "/checkout/details": validateDetails,
+    "/checkout/payment": validatePayment
+  })[path];
 
-  /* Setter Functions */
-  const setContactInfo = (data: Partial<ContactInformation>) => {
-    contactInformation.value = { ...contactInformation.value, ...data };
-  };
-
-  const setShippingInfo = (data: Partial<ShippingInfo>) => {
-    shipping.value = { ...shipping.value, ...data };
-  };
-
-  const setPaymentInfo = (data: Partial<PaymentInfo>) => {
-    payment.value = { ...payment.value, ...data };
-  };
+  //  check if current step is valid
+  const isCurrentStepValid = (path: string) => stepValidations.value[path] ?? true;
 
   return {
     step,
     stepRoutes,
     nextStep,
     prevStep,
-
-    contactInformation,
-    contactErrors,
-    validateContact,
-    setContactInfo,
-
     shipping,
     shippingOptions,
     shippingErrors,
-    validateShipping,
-    setShippingInfo,
-
+    validateDetails,
     payment,
     paymentErrors,
     validatePayment,
-    setPaymentInfo,
-
     formattedShippingAddress,
-    validateAll
+    getStepValidation,
+    isCurrentStepValid 
   };
 });

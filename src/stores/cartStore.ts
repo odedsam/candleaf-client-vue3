@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
+import { showToast } from '@/utils'
 
 type CartItem = {
   id: number
@@ -8,6 +9,7 @@ type CartItem = {
   price: number
   quantity: number
 }
+
 
 export const useCartStore = defineStore('cart', () => {
   const cartItems = ref<CartItem[]>([])
@@ -31,13 +33,20 @@ export const useCartStore = defineStore('cart', () => {
     } else {
       cartItems.value.push({...product, quantity: 1})
     }
+
+    showToast({
+      ToastMessage: 'Item added to cart',
+      bgColor: '#56B280',
+      textColor: '#fff',
+      borderColor: '#56B280',
+      position: 'bottom-right'
+    })
   }
 
   // increase quantity of products synchronized with cart icon quantity
   const increaseQuantity = (productId: CartItem['id']) => {
     const index = cartItems.value.findIndex((item) => item.id === productId)
     if (index !== -1) {
-      //  replace the entire object so Vue detects the change
       cartItems.value[index] = {
         ...cartItems.value[index],
         quantity: cartItems.value[index].quantity + 1,
@@ -48,18 +57,24 @@ export const useCartStore = defineStore('cart', () => {
   const decreaseQuantity = (productId: CartItem['id']) => {
     const index = cartItems.value.findIndex((item) => item.id === productId)
     if (index !== -1 && cartItems.value[index].quantity > 1) {
-      //  replace the entire object
       cartItems.value[index] = {
         ...cartItems.value[index],
         quantity: cartItems.value[index].quantity - 1,
       }
     } else {
-      //  remove the item when quantity reaches 0
       cartItems.value.splice(index, 1)
     }
   }
   const removeFromCart = (productId: CartItem['id']) => {
     cartItems.value = cartItems.value.filter((item) => item.id !== productId)
+
+    showToast({
+      ToastMessage: 'Item removed from cart',
+      bgColor: '#56B280',
+      textColor: '#fff',
+      borderColor: '#56B280',
+      position: 'bottom-left'
+    })
   }
   const toggleCart = () => {
     isCartOpen.value = !isCartOpen.value
@@ -68,10 +83,10 @@ export const useCartStore = defineStore('cart', () => {
     cartItems,
     cartAmount, // total items for cart icon
     subTotal, // subtotal price
+    isCartOpen,
     addToCart,
     increaseQuantity,
     decreaseQuantity,
-    isCartOpen,
     toggleCart,
     removeFromCart,
   }

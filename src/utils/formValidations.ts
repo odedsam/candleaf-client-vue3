@@ -1,4 +1,21 @@
-import { z } from 'zod';
+import { z, ZodError } from 'zod'
+
+export function validate<T>(schema: z.ZodSchema<T>, data: T): Record<string, string> | null {
+  try {
+    schema.parse(data) // Validate data, throws error if invalid
+    return null // No errors, return null
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return error.errors.reduce((acc, err) => {
+        const key = err.path[0] as keyof T
+        acc[key as string] = err.message
+        return acc
+      }, {} as Record<string, string>)
+    }
+    return { general: 'Unexpected error occurred' } // Fallback error
+  }
+}
+
 
 export const billingAddressSchema = z.object({
   address: z.string().min(1, 'Address is required'),
@@ -9,25 +26,25 @@ export const billingAddressSchema = z.object({
 });
 
 
+
 export const shippingValidationSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  subscribe: z.boolean(),
   name: z.string().min(1, 'Name is required'),
-  secondName: z.string().optional(),
+  lastName: z.string().optional(),
   address: z.string().min(1, 'Address is required'),
   shippingNote: z.string().optional(),
   postalCode: z.string().min(1, 'Postal Code is required'),
   city: z.string().min(1, 'City is required'),
   province: z.string().min(1, 'Province is required'),  
   country: z.string().min(1, 'Country is required'),  
+  saveInfo:z.boolean().optional()
 });
 
 
-export const contactValidationSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  subscribe: z.boolean()
-});
 
 
-export const paymentSchema = z.object({
+export const paymentValidationSchema = z.object({
   cardNumber: z.string().min(16, 'Card number must be at least 16 characters'),
   holderName: z.string().min(1, 'Cardholder name is required'),
   expiration: z.string().regex(/^\d{2}\/\d{2}$/, 'Expiration must be in MM/YY format'),
@@ -37,3 +54,13 @@ export const paymentSchema = z.object({
   billingSameAsShipping: z.boolean(),
   billingAddress: billingAddressSchema
 });
+
+export type ShippingInfo = z.infer<typeof shippingValidationSchema>;
+export type PaymentInfo = z.infer<typeof paymentValidationSchema>;
+export type BillingAddress = z.infer<typeof billingAddressSchema>;
+
+export interface ShippingOptions {
+  id: string;
+  label: string;
+  price: number;
+}
