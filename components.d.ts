@@ -85,6 +85,7 @@ declare module 'vue' {
     ThemeToggle: typeof import('./src/components/shared/ThemeToggle.vue')['default']
     TrackingOrder: typeof import('./src/components/features/orders/TrackingOrder.vue')['default']
     TrackingStatus: typeof import('./src/components/features/orders/TrackingStatus.vue')['default']
+    UiCredit: typeof import('./src/components/shared/UiCredit.vue')['default']
     UserAvatar: typeof import('./src/components/ui/UserAvatar.vue')['default']
     UserProfile: typeof import('./src/components/features/user/UserProfile.vue')['default']
     UserProfileSec: typeof import('./src/components/features/user/UserProfileSec.vue')['default']
