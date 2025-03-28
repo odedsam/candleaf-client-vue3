@@ -9,7 +9,6 @@ const {cartAmount} = storeToRefs(cartStore)
 
 <template>
   <div class="relative">
-    <!-- <img src="/cartHeader.svg" alt="cart-white-icon" class="w-5 h-5 cursor-pointer"/> -->
     <i-tabler-shopping-cart class="w-6 h-6 cursor-pointer relative" />
     <span v-if="cartAmount > 0" class="absolute -top-4 -right-4 bg-[#56B280] text-white text-xs font-bold px-2 py-1 rounded-full">
     {{ cartAmount}}

@@ -59,7 +59,7 @@ const handleSubmit = async () => {
         type="submit"
         :disabled="isLoading">
         {{ isLoading ? 'Processing...' : isSignUp ? 'Sign Up' : 'Sign In' }}
-        </button>
+      </button>
          <p v-if="errorMessage" class="text-red-500 text-sm">{{ errorMessage }}</p>
     </form>
 

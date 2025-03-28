@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {ref} from 'vue'
-import InfoDisplay from '@/components/checkout/InfoDisplay.vue'
-import ShippingMethod from '@/components/checkout/ShippingMethod.vue'
+import InfoDisplay from '@/components/features/checkout/InfoDisplay.vue'
+import ShippingMethod from '@/components/features/checkout/ShippingMethod.vue'
 import {useCheckoutStore} from '@/stores/checkoutStore'
 import {storeToRefs} from 'pinia'
-import StepButtons from '@/components/checkout/StepButtons.vue'
+import StepButtons from '@/components/features/checkout/StepButtons.vue'
 
 const checkoutStore = useCheckoutStore()
 const {shipping, formattedShippingAddress, shippingOptions} = storeToRefs(checkoutStore)

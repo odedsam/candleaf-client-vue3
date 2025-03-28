@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import { authMiddleware } from "@/router/router.middleware"
+import { authMiddleware } from "@/router/router.middleware";
 
 const routes: RouteRecordRaw[] = [
   {

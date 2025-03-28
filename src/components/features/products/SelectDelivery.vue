@@ -21,8 +21,7 @@ const updateValue = (value: string) => {
         v-for="option in options"
         :key="option"
         @click="updateValue(option)"
-        class="option-item"
-      >
+        class="option-item">
         {{ option }}
       </li>
     </ul>

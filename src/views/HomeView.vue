@@ -43,7 +43,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main>
+  <main class="max-w-full">
     <HomeHero />
     <FetchStatus :isLoading="isLoading" :error="error" :data="productCatalog">
       <FeaturesInfo />

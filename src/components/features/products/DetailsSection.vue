@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed} from 'vue'
+import { storeToRefs } from 'pinia'
+import {useCartStore} from '@/stores/cartStore'
 import SubscriptionSelector from '@/components/features/products/SubscriptionSelector.vue'
 import QuantitySelector from '@/components/shared/QuantitySelector.vue'
 import IngredientsComp from '@/components/features/products/IngredientsComp.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
-import {useCartStore} from '@/stores/cartStore'
-import { storeToRefs } from 'pinia'
 
 const props = defineProps<{
   selectedProduct: {

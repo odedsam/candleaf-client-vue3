@@ -1,10 +1,23 @@
 <script setup lang="ts">
-import {RouterView} from 'vue-router'
-import { Toaster } from 'vue-sonner';
+import { RouterView } from 'vue-router'
+import { Toaster } from 'vue-sonner'
+
+
+
+
+
+const apper = document.querySelector("#app");
+const elementsWithOverflow = apper.querySelectorAll("*");
+const notVisibleOverflowElements = Array.from(elementsWithOverflow).filter(
+  el => getComputedStyle(el).overflow !== "visible"
+);
+console.log(notVisibleOverflowElements);
+
+
 </script>
 
 <template>
-   <Toaster position="top-right"  /> 
+  <Toaster position="top-right" />
   <RouterView />
 </template>
 

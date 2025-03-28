@@ -51,26 +51,10 @@ export const useCheckoutStore = defineStore('checkout', () => {
 
   const formattedShippingAddress = computed(() => formatShippingAddress(shipping.value));
 
-  const payment = useLocalStorage<PaymentInfo>('checkout_payment', {
-    cardNumber: '',
-    holderName: '',
-    expiration: '',
-    cvv: '',
-    vatNumber: '',
-    pec: '',
-    billingSameAsShipping: true,
-    billingAddress: {
-      address: '',
-      postalCode: '',
-      city: '',
-      province: '',
-      country: ''
-    }
-  });
+ 
 
   //  validation Handling
   const shippingErrors = ref<Partial<Record<keyof ShippingInfo, string>>>({});
-  const paymentErrors = ref<Partial<Record<keyof PaymentInfo, string>>>({});
 
   const validateDetails = () => {
     const result = shippingValidationSchema.safeParse(shipping.value);
@@ -81,19 +65,7 @@ export const useCheckoutStore = defineStore('checkout', () => {
     );
   };
 
-  const validatePayment = () => {
-    const result = paymentValidationSchema.safeParse(payment.value);
-    if (!result.success) {
-      paymentErrors.value = Object.fromEntries(
-        Object.entries(result.error.format()).map(([key, value]) => [
-          key, (value as { _errors?: string[] })?._errors?.[0] ?? "Unknown validation error"
-        ])
-      );
-      return false;
-    }
-    paymentErrors.value = {};
-    return true;
-  };
+
 
   //  step validation state
   const stepValidations = ref<Record<string, boolean>>({
@@ -101,11 +73,7 @@ export const useCheckoutStore = defineStore('checkout', () => {
     "/checkout/payment": false
   });
 
-  //  dynamic step validation
-  const getStepValidation = (path: string) => ({
-    "/checkout/details": validateDetails,
-    "/checkout/payment": validatePayment
-  })[path];
+
 
   //  check if current step is valid
   const isCurrentStepValid = (path: string) => stepValidations.value[path] ?? true;
@@ -119,11 +87,7 @@ export const useCheckoutStore = defineStore('checkout', () => {
     shippingOptions,
     shippingErrors,
     validateDetails,
-    payment,
-    paymentErrors,
-    validatePayment,
     formattedShippingAddress,
-    getStepValidation,
     isCurrentStepValid 
   };
 });

@@ -14,11 +14,10 @@ export default defineConfig({
         target: 'http://localhost:5001',
         changeOrigin: true,
         secure: false,
-       
-      }
-    }
+      },
+    },
   },
-  
+
   plugins: [
     vue(),
     vueDevTools(),
@@ -28,9 +27,11 @@ export default defineConfig({
     Components({
       resolvers: [
         IconsResolver({
-          prefix: 'i', // מאפשר <i-user />
-          enabledCollections: ['tabler'], // רק סט Tabler
+          prefix: 'i',
+          enabledCollections: ['tabler'],
         }),
+
+        
       ],
     }),
 
@@ -40,7 +41,6 @@ export default defineConfig({
       autoInstall: true,
     }),
   ],
-
 
   resolve: {
     alias: {

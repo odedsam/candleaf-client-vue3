@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, computed, defineModel } from 'vue';
+import { ref, watch, computed } from 'vue';
 import useDebouncer from '@/composables/useDebouncer';
 import BaseInput from '@/components/base/BaseInput.vue';
 

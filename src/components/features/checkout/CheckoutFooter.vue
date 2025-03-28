@@ -19,32 +19,32 @@ const buttonTexts = computed(() => {
 
 const stepTwo =localStorage.getItem('checkout_payment')
 
-const handleNextStep = () => {
-  let isValid = true
+// const handleNextStep = () => {
+//   let isValid = true
 
-  // Perform validation based on the current step
-  switch (step.value) {
-    case 1: // Shipping Information
-      isValid = checkoutStore.validateShipping()
-      // isValid = checkoutStore.validateContact();
-      break
-    case 2: // Shipping Information
-   isValid=true;
-      break
-    case 3: // Payment Information
-      isValid = checkoutStore.validatePayment()
-      break
-    default:
-      isValid = true // No validation needed for other steps
-  }
+  
+//   switch (step.value) {
+//     case 1: 
+//       isValid = checkoutStore.validateShipping()
+      
+//       break
+//     case 2: 
+//    isValid=true;
+//       break
+//     case 3: 
+//       isValid = checkoutStore.validatePayment()
+//       break
+//     default:
+//       isValid = true 
+//   }
 
-  // Proceed to the next step if validation passes
-  if (isValid) {
-    checkoutStore.nextStep()
-  } else {
-    console.error('Validation failed for step', step.value)
-  }
-}
+  
+//   if (isValid) {
+//     checkoutStore.nextStep()
+//   } else {
+//     console.error('Validation failed for step', step.value)
+//   }
+// }
 
 
 </script>
@@ -53,7 +53,6 @@ const handleNextStep = () => {
   <div class="text-center py-8 pt-4 flex flex-col justify-center items-center gap-3">
     <button
       class="w-full bg-[#56B280] max-w-[21.875rem] text-white text-lg font-medium py-3 rounded-md hover:bg-green-600 transition-all"
-      @click="handleNextStep"
     >
       {{ buttonTexts.primary }}
     </button>
