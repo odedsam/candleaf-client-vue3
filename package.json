@@ -17,7 +17,7 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
-    "@stripe/stripe-js": "^5.7.0",
+    "@stripe/stripe-js": "^5.10.0",
     "@vueuse/core": "^13.0.0",
     "axios": "^1.7.9",
     "lodash.debounce": "^4.0.8",
