@@ -32,13 +32,13 @@ const props = defineProps({
         class="cursor-pointer"
         @click="navigateToProduct(cat)">
      
-        <div class="bg-gray-200 shadow-lg rounded-lg p-4 text-center">
+        <div class="bg-gray-200 dark:bg-gray-700 shadow-lg rounded-lg p-4 text-center">
           <img :src="cat.image" :alt="cat.title" class="mx-auto w-30 h-30 object-cover" />
         </div>
 
-        <div class="bg-white shadow-lg rounded-xl pl-4">
+        <div class="bg-white dark:bg-gray-300 shadow-lg rounded-xl pl-4">
           <h3 class="font-poppins font-medium text-[#1D293F] text-base text-start pt-2.5">{{ cat.title }}</h3>
-          <p class="text-primary text-xl font-roboto font-medium text-start pt-2.5 pb-2">{{ cat.price }}</p>
+          <p class="text-primary text-xl font-roboto font-medium text-start pt-2.5 pb-2">${{ cat.price }}</p>
         </div>
       </div>
     </div>

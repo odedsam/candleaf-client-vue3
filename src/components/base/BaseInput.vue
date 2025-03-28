@@ -25,7 +25,7 @@ const uniqueId = computed(() => props.id || `input-${crypto.randomUUID()}`)
       @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       :placeholder="placeholder"
       :class="[
-        'w-full p-2 border rounded-md focus:ring-2 focus:ring-[#56b280]/50 focus:border-[#56b280] outline-none transition ease-in-out duration-200',
+        'w-full p-2 border dark:placeholder:text-gray-100 rounded-md focus:ring-2 focus:ring-[#56b280]/50 focus:border-[#56b280] outline-none transition ease-in-out duration-200',
         props.invalid ? 'border-red-500' : 'border-gray-300',
       ]"
     />
