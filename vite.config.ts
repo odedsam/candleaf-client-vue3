@@ -8,6 +8,9 @@ import IconsResolver from 'unplugin-icons/resolver'
 import Components from 'unplugin-vue-components/vite'
 
 export default defineConfig({
+  build: {
+    outDir: 'dist',
+  },
   server: {
     proxy: {
       '/api': {
@@ -31,7 +34,7 @@ export default defineConfig({
           enabledCollections: ['tabler'],
         }),
 
-        
+
       ],
     }),
 

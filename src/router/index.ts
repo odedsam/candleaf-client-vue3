@@ -24,7 +24,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: 'login', name: 'login-view', component: () => import('@/views/auth/LoginView.vue') },
       { path: 'login/success', name: 'login-success', component:()=>import('@/views/auth/LoginSuccess.vue')},
-      { path: 'signup', name: 'signup-view', component: () => import('@/views/auth/SignupView.vue') },
+      { path: 'signup', name: 'signup-view', component: () => import('@/views/auth/LoginView.vue') },
     ],
   },
 

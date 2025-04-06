@@ -23,10 +23,10 @@ export const authMiddleware = (router: Router) => {
 
 
    // checkout step protection
-   if (to.path.startsWith('/checkout') && to.path !== expectedRoute) {
-    console.warn(`🛑 Checkout step mismatch! Redirecting to: ${expectedRoute}`)
-    return next(expectedRoute)
-  }
+  //  if (to.path.startsWith('/checkout') && to.path !== expectedRoute) {
+  //   console.warn(`🛑 Checkout step mismatch! Redirecting to: ${expectedRoute}`)
+  //   return next(expectedRoute)
+  // }
 
   const auth = useAuthStore()
 

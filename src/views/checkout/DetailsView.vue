@@ -3,10 +3,10 @@ import { useCheckoutStore } from '@/stores/checkoutStore';
 import { computed } from 'vue';
 import BaseInput from '@/components/base/BaseInput.vue';
 import BaseError from '@/components/base/BaseError.vue';
-import LocationSelector from '@/components/checkout/AddressAutoComplete.vue';
-import CheckoutNewsLetter from '@/components/checkout/CheckoutNewsLetter.vue';
-import StepButtons from '@/components/checkout/StepButtons.vue';
-import AddressAutoComplete from '@/components/checkout/AddressAutoComplete.vue';
+import LocationSelector from '@/components/features/checkout/AddressAutoComplete.vue';
+import CheckoutNewsLetter from '@/components/features/checkout/CheckoutNewsLetter.vue';
+import StepButtons from '@/components/features/checkout/StepButtons.vue';
+import AddressAutoComplete from '@/components/features/checkout/AddressAutoComplete.vue';
 import { storeToRefs } from 'pinia';
 
 const checkoutStore = useCheckoutStore();

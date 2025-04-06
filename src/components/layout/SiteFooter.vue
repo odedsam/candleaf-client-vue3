@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import footerIcon from '@/assets/icons/FooterIcon.svg'
 import UiCredit from "@/components/shared/UiCredit.vue"
+const isProd = import.meta.env.PROD
 </script>
 <template>
   <main class="px-8 py-16 flex flex-wrap w-full bg-[#272727]">
@@ -35,9 +36,8 @@ import UiCredit from "@/components/shared/UiCredit.vue"
       </div>
     </div>
   </main>
-  <footer class="w-full text-center text-sm text-gray-500 py-4">
+  <footer v-if="isProd" class="w-full text-center text-sm text-gray-500 py-4">
     <UiCredit />
   </footer>
 </template>
 
-<style lang="css" scoped></style>

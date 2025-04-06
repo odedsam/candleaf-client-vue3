@@ -3,7 +3,6 @@ import { RouterView } from 'vue-router'
 import SiteHeader from '@/components/layout/SiteHeader.vue'
 import SiteFooter from '@/components/layout/SiteFooter.vue'
 import ThemeToggle from '@/components/shared/ThemeToggle.vue'
-import CherM from './CherM.vue'
 import CartModal from '@/components/shared/CartModal.vue'
 </script>
 
@@ -16,7 +15,6 @@ import CartModal from '@/components/shared/CartModal.vue'
       <RouterView />
     </main>
     <CartModal />
-    <CherM />
     <SiteFooter />
   </div>
 </template>

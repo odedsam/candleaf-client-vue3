@@ -18,7 +18,7 @@ const iconComponent = computed(() => (isExpanded.value ? TablerArrowRight : Tabl
 
 const navigateTo = () => {
   cartStore.toggleCart()
-  router.push('/checkout/details')
+  router.push('/checkout/cart')
 }
 
 const backToShopping = () => {
