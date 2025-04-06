@@ -1,5 +1,4 @@
 import { Face, Features } from '@/types/index'
-import { getImageUrl } from '@/utils/formatters'
 import blueBerries from '@/assets/catalog/blueberriesCup.svg'
 import cherries from '@/assets/catalog/cherriesCup.svg'
 import cinnamon from '@/assets/catalog/cinnamonCup.svg'
@@ -45,33 +44,33 @@ export const features: Features[] = [
 
 export const faces: Face[] = [
   {
-    personFace: getImageUrl('maleImage.svg'),
+    personFace: "faces/maleImage.svg",
     reviewText: 'love it! No more air fresheners',
     name: 'Sam',
   },
   {
-    personFace: getImageUrl('girlImage.svg'),
+    personFace: "faces/girlImage.svg",
     reviewText: 'love it! No more air fresheners',
     name: 'Luisa',
   },
 
   {
-    personFace: getImageUrl('maleImage.svg'),
+    personFace: "faces/maleImage.svg",
     reviewText: 'love it! No more air fresheners',
     name: 'Sam',
   },
   {
-    personFace: getImageUrl('girlImage.svg'),
+    personFace: "faces/girlImage.svg",
     reviewText: 'love it! No more air fresheners',
     name: 'Luisa',
   },
   {
-    personFace: getImageUrl('maleImage.svg'),
+    personFace: "faces/maleImage.svg",
     reviewText: 'love it! No more air fresheners',
     name: 'Sam',
   },
   {
-    personFace: getImageUrl('girlImage.svg'),
+    personFace: "faces/girlImage.svg",
     reviewText: 'love it! No more air fresheners',
     name: 'Luisa',
   },
