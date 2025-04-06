@@ -21,19 +21,19 @@ const selectedShippingMethod = shippingOptions.value[0]
 </script>
 
 <template>
-  <div>
+  <div class="dark:bg-gray-400 dark:border-2">
     <!-- Contact & Shipping Details -->
-    <InfoDisplay label="Contact" :value="shipping.email" @edit="editContact" />
-    <hr class="border-gray-200" />
+      <InfoDisplay label="Contact" :value="shipping.email" @edit="editContact" />
+      <hr class="border-gray-200" />
 
-    <InfoDisplay label="Ship to" :value="formattedShippingAddress" @edit="editShipping" />
-    <hr class="border-gray-200" />
+      <InfoDisplay label="Ship to" :value="formattedShippingAddress" @edit="editShipping" />
+      <hr class="border-gray-200" />
 
-    <InfoDisplay
-      label="Method"
-      :value="`${selectedShippingMethod.label} - ${selectedShippingMethod.price === 0 ? 'FREE' : `$${selectedShippingMethod.price.toFixed(2)}`}`"
-      @edit="editMethod"
-    />
+      <InfoDisplay
+        label="Method"
+        :value="`${selectedShippingMethod.label} - ${selectedShippingMethod.price === 0 ? 'FREE' : `$${selectedShippingMethod.price.toFixed(2)}`}`"
+        @edit="editMethod"
+      />
 
     <!-- Payment Method -->
     <PaymentMethods />
@@ -50,10 +50,10 @@ const selectedShippingMethod = shippingOptions.value[0]
 
 
     <StepButtons
-      primaryText="הבא"
-      secondaryText="חזור"
+      primaryText="Confirmation"
+      secondaryText="Back To Shipping"
       primaryRoute="/checkout/confirmation"
       secondaryRoute="/checkout/payment"
-    />    
+    />
   </div>
 </template>

@@ -13,7 +13,7 @@ const emit = defineEmits(['update:selected'])
   <label
     class="flex items-center justify-between border border-gray-300 rounded-md p-3 cursor-pointer hover:border-green-500"
     :class="{'border-green-500 bg-green-50': selected}">
- 
+
     <div class="flex items-center">
       <input
         type="radio"
@@ -32,11 +32,11 @@ const emit = defineEmits(['update:selected'])
 input[type='radio'] {
   width: 20px;
   height: 20px;
-  border: 1.5px solid #e5e7eb; 
+  border: 1.5px solid #e5e7eb;
   accent-color: #56b280;
 }
 
 input[type='radio']:checked {
-  border-color: #56b280; 
+  border-color: #56b280;
 }
 </style>

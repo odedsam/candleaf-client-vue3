@@ -9,7 +9,7 @@ const message = ref("")
 <template>
   <div class="container mx-auto px-24 py-12">
     <div class="text-center">
-      <h1 class="text-3xl font-bold text-gray-900">Contact Us</h1>
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Contact Us</h1>
       <p class="text-gray-600 mt-4">
         Have any questions? Fill in the form below and we'll get back to you as soon as possible.
       </p>

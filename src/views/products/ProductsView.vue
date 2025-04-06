@@ -15,7 +15,7 @@ const {navigateToProduct} = useNavigateToProduct()
 
 
 onMounted(async () => {
-  await productStore.fetchProducts(); 
+  await productStore.fetchProducts();
 });
 
 const normalizeTitle = (title: string) => {
@@ -87,7 +87,7 @@ const addToCartAnimation = async (event: MouseEvent, product: any) => {
           draggable="false"
           class="w-full h-80 object-contain rounded-lg mb-4"
         />
-        <h2 class="text-lg font-semibold">
+        <h2 class="text-lg font-semibold text-black dark:text-black">
           {{ normalizeTitle(product.title) }}
         </h2>
         <p class="text-gray-600 py-3">${{ product.price }}</p>

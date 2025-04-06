@@ -2,11 +2,11 @@
 </script>
 
 <template>
-  <div class="container mx-auto px-24 py-12">
+  <div class="container mx-auto h-screen px-24 py-12">
     <div class="text-center">
-      <h1 class="text-3xl font-bold text-gray-900">About Us</h1>
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">About Us</h1>
       <p class="text-gray-600 mt-4">
-        At Candleaf, we craft premium handmade candles using 100% natural soy wax.  
+        At Candleaf, we craft premium handmade candles using 100% natural soy wax.
         Our mission is to create an eco-friendly and aromatic experience that enhances every moment.
       </p>
     </div>

@@ -17,7 +17,7 @@ const toggleDetails = () => {
 
 <template>
   <div class="bg-[#f2f2f2] rounded-lg shadow-md overflow-hidden">
-    <div class="flex justify-between items-center bg-[#f2f2f2] py-5 px-6">
+    <div class="flex justify-between items-center bg-[#f2f2f2] dark:bg-gray-500 py-5 px-6">
       <CartIcon />
       <div class="flex gap-3 cursor-pointer items-center" @click="toggleDetails">
         <p class="text-[#56B280] text-lg font-semibold">See Your Details</p>
@@ -32,12 +32,12 @@ const toggleDetails = () => {
       <p class="text-lg font-semibold text-gray-700">$ {{ subTotal.toFixed(2) }}</p>
     </div>
 
-    <div v-show="showDetails" class="p-6 border-t bg-[#f2f2f2]">
+    <div v-show="showDetails" class="p-6 border-t bg-[#f2f2f2] dark:bg-gray-400">
       <div v-if="cartItems.length > 0" class="grid gap-4">
         <div
           v-for="item in cartItems"
           :key="item.id"
-          class="flex items-center gap-4 p-4 border border-gray-200 rounded-lg shadow-sm"
+          class="flex items-center gap-4 p-4 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm"
         >
           <img :src="item.image" :alt="item.title" class="w-20 h-20 object-cover rounded-lg" />
 

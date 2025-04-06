@@ -19,12 +19,12 @@ const steps = [
 </script>
 <template>
   <div>
-    <div class="flex flex-col">
+    <div class="flex flex-col dark:bg-black">
       <LogoIcon :grow="true" :disable-route="true"/>
       <OrderDetails />
       <BreadCrumb :steps="steps" />
     </div>
-   
+
   </div>
 </template>
 

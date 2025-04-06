@@ -16,7 +16,7 @@ const navigateTo = (path: string) => {
 <template>
   <div class="max-w-3xl mx-auto p-6">
     <div v-if="cartItems.length > 0">
-      <h2 class="text-2xl text-center font-semibold">Your Cart items</h2>
+      <h2 class="text-2xl text-center font-semibold dark:text-white">Your Cart items</h2>
       <button class="w-full text-green-600 text-center mt-2 cursor-pointer" @click="navigateTo('/products')">Back to shopping</button>
       <div class="mt-6 border-t border-gray-300">
         <div class="grid grid-cols-5 py-4 font-semibold text-gray-600 text-center">
@@ -36,12 +36,12 @@ const navigateTo = (path: string) => {
         />
 
         <div class="border-t border-gray-300 py-6 text-right">
-          <p class="text-lg font-semibold">
+          <p class="text-lg font-semibold dark:text-white">
             Sub-total:
             <span class="ml-4">$ {{ cartStore.subTotal.toFixed(2) }}</span>
           </p>
           <p class="text-gray-500 mt-1">Tax and shipping cost will be calculated later</p>
-          <button class="mt-4 px-6 py-2 bg-green-600 text-white rounded-lg" @click="navigateTo('/checkout/details')">
+          <button class="mt-4 px-6 py-2 bg-green-600 text-white rounded-lg cursor-pointer" @click="navigateTo('/checkout/details')">
             Check-out
           </button>
         </div>

@@ -4,7 +4,7 @@ import { RouterLink } from 'vue-router'
 <template>
   <div class="hero-container">
     <div
-      class="bg-[#ffffff4d] backdrop-blur-[86px] dark:bg-black/50 p-24 flex flex-col justify-center items-center rounded-3xl"
+      class="bg-[#ffffff4d] backdrop-blur-[86px] dark:bg-black/50 p-14 flex flex-col justify-center items-center rounded-3xl"
     >
       <small class="text-[3rem]">🌱</small>
       <h1 class="text-[2rem] font-roboto font-normal dark:text-[#cbd7ec]">The nature candle</h1>
@@ -65,7 +65,7 @@ import { RouterLink } from 'vue-router'
 } */
 
 /* .filtered {
-    background: rgba(255, 255, 255, 0.3); 
+    background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(86px);
 } */
 </style>

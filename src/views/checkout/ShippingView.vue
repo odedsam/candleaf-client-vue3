@@ -23,7 +23,7 @@ const editShipping = () => {
 
 <template>
   <div>
-    <div class="border border-green-300 rounded-md p-4">
+    <div class="border border-green-300  dark:bg-gray-400 rounded-md p-4">
       <InfoDisplay label="Contact" :value="shipping.email" @edit="editContact" />
       <hr class="border-gray-200" />
       <InfoDisplay label="Ship to" :value="formattedShippingAddress" @edit="editShipping" />
@@ -49,6 +49,6 @@ const editShipping = () => {
       secondaryRoute="/checkout/details"
     />
 
-    
+
   </div>
 </template>

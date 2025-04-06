@@ -61,7 +61,7 @@ const handleClick = () => {
       <div class="mx-auto h-full flex flex-col">
         <img :src="selectedProduct.image" alt="prod-image" class="w-full h-full object-contain"  draggable="false" />
         <div class="flex flex-col justify-center items-center max-md:mt-12 gap-3">
-          <p class="text-black text-base font-roboto font-semibold text-center">
+          <p class="text-black text-base font-roboto font-semibold text-center dark:text-white">
             {{ description }}
           </p>
           <p class="text-green text-base font-roboto font-semibold text-center text-[#56B280]">
@@ -73,7 +73,7 @@ const handleClick = () => {
 
     <div class="inline-flex flex-col  gap-12 max-md:mt-12">
       <div class="flex flex-col h-full">
-        <p class="text-2xl text-black max-md:mt-4 max-sm:text-break max-lg:text-center md:text-start">
+        <p class="text-2xl text-black max-md:mt-4 max-sm:text-break max-lg:text-center md:text-start dark:text-white">
           {{ selectedProduct.title }}
         </p>
         <p class="text-semibold font-roboto max-md:mt-4 text-[1.625rem] text-[#56B280] max-md:text-center">

@@ -7,7 +7,7 @@ import CheckoutHeader from "@/components/features/checkout/CheckoutHeader.vue";
 <template>
   <div>
     <CheckoutHeader />
-    <main class="flex-1 px-4 md:px-6 lg:px-8 pb-8">
+    <main class="flex-1 px-4 md:px-6 lg:px-8 pb-8 dark:bg-black">
       <RouterView />
     </main>
   </div>

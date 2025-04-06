@@ -16,7 +16,7 @@ const { shipping, shippingErrors } = storeToRefs(checkoutStore);
 </script>
 
 <template>
-  <div class="p-6 bg-white shadow-md rounded-lg">
+  <div class="p-6 bg-white dark:bg-gray-500 shadow-md rounded-lg">
     <form @submit.prevent="checkoutStore.validateDetails" class="grid gap-2.5">
       <!-- Email & Subscription -->
       <CheckoutNewsLetter
