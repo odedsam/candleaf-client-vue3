@@ -8,8 +8,6 @@ import ClosedIcon from '@/assets/icons/menu-closed.svg'
 import MobileMenu from '@/components/layout/MobileMenu.vue'
 
 const isOpen = ref(false)
-const toggle = () => (isOpen.value = !isOpen.value)
-const close = () => (isOpen.value = false)
 const windowSize = ref(window.innerWidth)
 const updateWindowSize = () => {windowSize.value = window.innerWidth}
 onMounted(() => {window.addEventListener('resize', updateWindowSize)})
@@ -19,7 +17,6 @@ const isMobileWidth = computed(() => windowSize.value < 768)
 const uiStore = useUIStore()
 const {isMenuOpen} = storeToRefs(uiStore)
 const imageSrc = computed(() => (isMenuOpen.value ? OpenIcon : ClosedIcon))
-const Menu = computed(() => (isMenuOpen.value ? TablerMenuOrder : TablerMenu2))
 
 
 </script>
