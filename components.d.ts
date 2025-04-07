@@ -49,6 +49,7 @@ declare module 'vue' {
     LoginForm: typeof import('./src/components/forms/LoginForm.vue')['default']
     LogoIcon: typeof import('./src/components/ui/LogoIcon.vue')['default']
     MenuBar: typeof import('./src/components/layout/MenuBar.vue')['default']
+    MobileMenu: typeof import('./src/components/layout/MobileMenu.vue')['default']
     NavBar: typeof import('./src/components/layout/NavBar.vue')['default']
     OrderDetails: typeof import('./src/components/features/checkout/OrderDetails.vue')['default']
     OrdersList: typeof import('./src/components/features/orders/OrdersList.vue')['default']
