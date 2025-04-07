@@ -10,7 +10,7 @@ import TablerMenuOrder from '~icons/tabler/menu-order';
 
 const windowSize = ref(window.innerWidth)
 const updateWindowSize = () => {windowSize.value = window.innerWidth}
-  
+
 onMounted(() => {window.addEventListener('resize', updateWindowSize)})
 onUnmounted(() => { window.removeEventListener('resize', updateWindowSize)})
 
@@ -26,9 +26,7 @@ const Menu = computed(() => (isMenuOpen.value ? TablerMenuOrder : TablerMenu2))
 <template>
   <div v-if="isMobileWidth">
     <img :src="imageSrc" alt="menu-icon" class="w-[34px] h-[34px]" @click="uiStore.toggleMenu()" />
-    <component :is="Menu" class="text-black dark:text-white w-8 h-8"
-     @click="uiStore.toggleMenu"
-      />
+
     <ul class="relative w-full" v-show="isMenuOpen">
       <li class="absolute flex flex-col justify-center items-center top-6 left-0 z-50 gap-5 bg-[#ccc]">
         <RouterLink to="/products" class="hover:underline max-md:text-sm">Discovery</RouterLink>

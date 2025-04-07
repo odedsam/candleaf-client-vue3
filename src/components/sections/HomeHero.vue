@@ -21,13 +21,6 @@ import { RouterLink } from 'vue-router'
         </button>
       </RouterLink>
 
-      <!-- <RouterLink to="/products">
-        <button
-          class="bg-primary hover:bg-emerald-600 transition cursor-pointer text-center font-roboto font-medium text-xl max-md:text-base py-4 rounded-lg text-white max-md:px-4 px-16"
-        >
-          Discovery our Collection
-        </button>
-      </RouterLink> -->
     </div>
   </div>
 </template>
