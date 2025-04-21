@@ -28,9 +28,9 @@ const imageSrc = computed(() => (isMenuOpen.value ? OpenIcon : ClosedIcon))
   </div>
 
   <div v-else class="flex justify-center items-center space-x-4">
-    <RouterLink to="/products" class="hover:underline max-md:text-sm">Discovery</RouterLink>
-    <RouterLink to="/about" class="hover:underline max-md:text-sm">About</RouterLink>
-    <RouterLink to="/contact" class="hover:underline max-md:text-sm text-nowrap">
+    <RouterLink to="/products" class="hover:underline max-md:text-sm font-poppins font-medium">Discovery</RouterLink>
+    <RouterLink to="/about" class="hover:underline max-md:text-sm font-poppins font-medium">About</RouterLink>
+    <RouterLink to="/contact" class="hover:underline max-md:text-sm text-nowrap font-poppins font-medium">
       Contact us
     </RouterLink>
   </div>

@@ -87,15 +87,16 @@ const addToCartAnimation = async (event: MouseEvent, product: any) => {
           draggable="false"
           class="w-full h-80 object-contain rounded-lg mb-4"
         />
-        <h2 class="text-lg font-semibold text-black dark:text-black">
+        <h2 class="text-lg font-poppins text-gray-500 dark:text-black">
           {{ normalizeTitle(product.title) }}
         </h2>
-        <p class="text-gray-600 py-3">${{ product.price }}</p>
+        <p class="text-gray-500 font-poppins text-xl font-semibold py-3">${{ product.price }}</p>
 
         <BaseButton
           label="Add To Cart"
           :grow="false"
           :disabled="false"
+          btn-class="font-poppins font-semibold text-base"
           @click="(event) => addToCartAnimation(event, product)"
         />
       </div>

@@ -19,7 +19,7 @@ const decrease = () => cartStore.decreaseQuantity(props.item.id as number);
 </script>
 
 <template>
-  <div class="border-t border-gray-300 py-4 grid grid-cols-5 items-center text-center">
+  <div class="border-t border-gray-300 py-4 grid grid-cols-5 gap-x-3 items-center text-center">
     <div class="flex items-center col-span-2 text-left">
       <img :src="item.image" alt="Product-Image" class="w-24 h-24 object-cover" />
       <div class="ml-4">
@@ -29,12 +29,12 @@ const decrease = () => cartStore.decreaseQuantity(props.item.id as number);
         </button>
       </div>
     </div>
-    <span class="text-center dark:text-white">$ {{ item.price.toFixed(2) }}</span>
+    <span class="text-center font-poppins font-medium dark:text-white">$ {{ item.price.toFixed(2) }}</span>
     <div class="flex items-center justify-center border rounded w-24 mx-auto dark:text-white">
-      <button @click="decrease" class="px-2 border-r dark:text-white">-</button>
-      <span class="px-4 dark:text-white">{{ item.quantity }}</span>
-      <button @click="increase" class="px-2 border-l dark:text-white">+</button>
+      <button @click="decrease" class="px-2 border-r font-poppins cursor-pointer dark:text-white">-</button>
+      <span class="px-4 font-helvetica dark:text-white">{{ item.quantity }}</span>
+      <button @click="increase" class="px-2 border-l font-poppins cursor-pointer dark:text-white">+</button>
     </div>
-    <span class="text-center dark:text-white">$ {{ (item.price * item.quantity).toFixed(2) }}</span>
+    <span class="text-center font-poppins font-medium text-sm md:text-base dark:text-white">$ {{ (item.price * item.quantity).toFixed(2) }}</span>
   </div>
 </template>

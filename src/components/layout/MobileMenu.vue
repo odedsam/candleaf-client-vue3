@@ -11,6 +11,7 @@ const props = defineProps<{
   <div
     v-if="isOpen"
     class="fixed inset-0 bg-black/70 z-50 flex flex-col items-center justify-center gap-8 text-white text-xl font-semibold transition-opacity duration-200">
+    <RouterLink to="/home" @click="close" class="font-sans font-medium text-sm text-white  hover:underline">Home</RouterLink>
     <RouterLink to="/products" @click="close" class="font-sans font-medium text-sm text-white  hover:underline">Discovery</RouterLink>
     <RouterLink to="/about" @click="close" class="font-sans font-medium text-sm text-white hover:underline">About</RouterLink>
     <RouterLink to="/contact" @click="close" class="font-sans font-medium text-sm text-white  hover:underline">Contact Us</RouterLink>

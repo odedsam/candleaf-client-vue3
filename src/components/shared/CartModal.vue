@@ -34,7 +34,7 @@ const backToShopping = () => {
       :class="[modalWidth, 'fixed inset-0 bg-white/50 dark:bg-black/50 backdrop-blur-sm z-40 ml-auto overflow-y-auto']"
       @click.self="cartStore.toggleCart"
     >
-      <div class="flex justify-between items-center p-4">
+      <div class="flex justify-between cursor-pointer items-center p-4">
         <component
           :is="iconComponent"
           @click.stop="toggleExpand"
@@ -43,28 +43,28 @@ const backToShopping = () => {
         <i-tabler-x class="w-6 h-6 text-black dark:text-white cursor-pointer" @click="cartStore.toggleCart" />
       </div>
 
-      <h2 class="text-2xl text-center font-semibold dark:text-white">
+      <h2 class="text-2xl text-center font-poppins font-semibold dark:text-white">
         {{ cartItems.length > 0 ? 'Your cart items' : 'No items In Cart' }}
       </h2>
 
-      <button class="w-full text-green-600 text-center mt-2 underline" @click="backToShopping">Back to shopping</button>
+      <button class="w-full text-green-600 text-center font-poppins cursor-pointer mt-2 underline" @click="backToShopping">Back to shopping</button>
 
-      <div v-if="cartItems.length > 0">
+      <div v-if="cartItems.length > 0" class="px-8">
         <div class="mt-6 border-t border-gray-300 dark:border-gray-600">
-          <div class="grid grid-cols-5 py-4 font-semibold text-gray-600 dark:text-gray-300 text-center">
+          <div class="grid grid-cols-5 py-4 gap-x-3 font-semibold text-gray-600 dark:text-gray-300 text-center">
             <span class="text-left col-span-2">Product</span>
-            <span>Price</span>
-            <span>Quantity</span>
-            <span>Total</span>
+            <span class="font-poppins font-medium">Price</span>
+            <span class="font-poppins font-medium">Quantity</span>
+            <span class="font-poppins font-medium">Total</span>
           </div>
           <CartItem v-for="item in cartItems" :key="item.id" :item="item" />
           <div class="border-t border-gray-300 dark:border-gray-600 py-6 text-right">
-            <p class="text-lg font-semibold dark:text-white">
+            <p class="text-lg font-poppins font-semibold dark:text-white">
               Sub-total:
-              <span class="ml-4">$ {{ subTotal.toFixed(2) }}</span>
+              <span class="ml-4 font-poppins">$ {{ subTotal.toFixed(2) }}</span>
             </p>
-            <p class="text-gray-500 mt-1 dark:text-gray-400">Tax and shipping cost will be calculated later</p>
-            <button class="mt-4 px-6 py-2 bg-green-600 text-white rounded-lg" @click="navigateTo">Check-out</button>
+            <p class="text-gray-500 mt-1 font-poppins dark:text-gray-400">Tax and shipping cost will be calculated later</p>
+            <button class="mt-4 px-6 cursor-pointer font-poppins py-2 bg-green-600/70 hover:bg-green-700/70 text-white rounded-lg" @click="navigateTo">Check-out</button>
           </div>
         </div>
       </div>
