@@ -38,6 +38,8 @@ declare module 'vue' {
     FetchStatus: typeof import('./src/components/feedback/FetchStatus.vue')['default']
     GoogleLogin: typeof import('./src/components/features/auth/GoogleLogin.vue')['default']
     HelperMessage: typeof import('./src/components/shared/HelperMessage.vue')['default']
+    HeroSummary: typeof import('./src/components/sections/HeroSummary.vue')['default']
+    HeroText: typeof import('./src/components/sections/HeroText.vue')['default']
     HomeHero: typeof import('./src/components/sections/HomeHero.vue')['default']
     InfoDisplay: typeof import('./src/components/features/checkout/InfoDisplay.vue')['default']
     IngredientsComp: typeof import('./src/components/features/products/IngredientsComp.vue')['default']

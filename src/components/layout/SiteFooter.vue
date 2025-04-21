@@ -9,7 +9,6 @@ const isProd = import.meta.env.PROD
 
     <section class="px-4 md:px-0 md:w-[90%] md:mx-auto">
       <DividerFooter />
-
       <div class="w-full gap-6 md:w-[50%] inline-flex flex-col justify-start items-start">
         <div class="flex items-center justify-center">
           <img :src="footerIcon" alt="footer-icon" class="w-[2.375rem] h-[2.375rem]" />
