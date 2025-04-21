@@ -4,10 +4,10 @@
 
 @layer base {
   :root {
-    --color-primary:  #56b280; 
-    --color-secondary: #3d8d61; 
+    --color-primary:  #56b280;
+    --color-secondary: #3d8d61;
     --color-tertiary:  #a0dbc0;
-    --color-accent: #f5b84c; 
+    --color-accent: #f5b84c;
     --color-light-green:#56B2801A;
     --color-haki:#849A8E;
     --color-mgr:#5E6E89;
@@ -22,7 +22,7 @@
   --font-roboto:'Roboto', sans-serif;
   --font-poppins:'Poppins', sans-serif;
   --font-helvetica:'Helvetica', sans-serif;
-} 
+}
 
 
 
@@ -61,5 +61,14 @@
 }
 
 
+@layer components {
+  .footer-container {
+    @apply pt-8 md:pt-[3.75rem] pb-20 md:pb-[7rem] px-4 md:px-0 flex flex-wrap w-full bg-[#272727];
+  }
 
+}
 
+.footer-links-container > * {
+  margin-bottom:1rem ;
+
+}

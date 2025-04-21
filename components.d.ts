@@ -29,6 +29,8 @@ declare module 'vue' {
     CustomRadio: typeof import('./src/components/features/products/CustomRadio.vue')['default']
     CustomSelect: typeof import('./src/components/ui/CustomSelect.vue')['default']
     DetailsSection: typeof import('./src/components/features/products/DetailsSection.vue')['default']
+    Divider: typeof import('./src/components/ui/Divider.vue')['default']
+    DividerFooter: typeof import('./src/components/ui/DividerFooter.vue')['default']
     EmptyState: typeof import('./src/components/feedback/EmptyState.vue')['default']
     ErrorMessage: typeof import('./src/components/feedback/ErrorMessage.vue')['default']
     ErrorResponse: typeof import('./src/components/feedback/ErrorResponse.vue')['default']
