@@ -52,7 +52,6 @@
     "unplugin-icons": "^22.1.0",
     "unplugin-vue-components": "^28.4.1",
     "vite": "^6.1.0",
-    "vite-plugin-vue-devtools": "^7.7.1",
     "vitest": "^3.0.8",
     "vue-tsc": "^2.2.0",
     "zod": "^3.24.2"
