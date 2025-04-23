@@ -101,7 +101,7 @@
     @apply pt-8 md:pt-[3.75rem] pb-20 md:pb-[7rem] px-4 md:px-0 flex flex-wrap w-full bg-[#272727];
   }
   .form-input {
-    @apply 'w-full p-2 border dark:placeholder:text-gray-100 rounded-md focus:ring-2 focus:ring-[#56b280]/50 focus:border-[#56b280] outline-none transition ease-in-out duration-200';
+    @apply w-full p-2 border dark:placeholder:text-gray-100 rounded-md focus:ring-2 focus:ring-[#56b280]/50 focus:border-[#56b280] outline-none transition ease-in-out duration-200;
   }
 
 
