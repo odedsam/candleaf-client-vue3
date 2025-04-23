@@ -8,6 +8,7 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
     "types": ["vite/client", "vue","vitest","vitest/globals","@pinia/testing"],
     "baseUrl": ".",
+    "outDir": "dist",
     "paths": {
       "@/*": ["./src/*"],
       // "@tests/*": ["./tests/*"]

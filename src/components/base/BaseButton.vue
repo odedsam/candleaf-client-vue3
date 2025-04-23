@@ -2,7 +2,7 @@
 import { ref, computed } from "vue";
 
 interface Props {
-  btnIcon?: string;
+  btnIconClr?: string;
   label?: string;
   grow?: boolean;
   disabled?: boolean;
@@ -12,6 +12,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   ripple: true,
+  disabled:false
 });
 
 const emit = defineEmits<{
@@ -20,7 +21,7 @@ const emit = defineEmits<{
 
 const baseClasses = `
   relative overflow-hidden flex items-center justify-center cursor-pointer gap-2 px-4 py-2 rounded-lg
-  bg-[#56B280] text-white font-medium transition-all hover:bg-[#4ca372]
+  bg-white border border-[#56B280] transition-all text-[#56B280] hover:bg-[#56B280] hover:text-white
   disabled:opacity-50 disabled:cursor-not-allowed min-w-[120px] max-w-md
 `;
 
@@ -60,10 +61,13 @@ const handleClick = (event: MouseEvent) => {
 
 <template>
   <button :class="classes" :disabled="disabled" @click="handleClick">
-    <img v-if="btnIcon" :src="btnIcon" alt="btn" class="w-5 h-5" />
-    <span>{{ label }}</span>
-
-    <!-- ripple animation effect -->
+  <div class="group flex items-center gap-2">
+      <i-tabler-shopping-cart
+        class="w-5 h-5 text-[#56B280] group-hover:text-white group-hover:bg-[#56B280]"
+        :class="props.btnIconClr"
+      />
+      <span class="text-[#56B280] group-hover:text-white group-hover:bg-[#56B280]">{{ label }}</span>
+    </div>
     <span
       v-for="ripple in ripples"
       :key="ripple.id"
@@ -76,26 +80,6 @@ const handleClick = (event: MouseEvent) => {
       }"
     />
   </button>
-  <!-- <button
-  class="group relative inline-flex items-center justify-center w-full px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-400"
->
-  <i-tabler-shopping-cart class="w-5 h-5 mr-2 transition-transform group-hover:-rotate-6" />
-  <span>+ Add To Cart</span>
-</button> -->
 </template>
 
-<style>
-@keyframes ripple {
-  0% {
-    transform: scale(0);
-    opacity: 0.4;
-  }
-  100% {
-    transform: scale(3);
-    opacity: 0;
-  }
-}
-.animate-ripple {
-  animation: ripple 0.6s ease-out;
-}
-</style>
+

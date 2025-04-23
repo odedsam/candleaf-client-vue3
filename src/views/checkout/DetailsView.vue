@@ -16,8 +16,8 @@ const { shipping, shippingErrors } = storeToRefs(checkoutStore);
 </script>
 
 <template>
-  <div class="p-6 bg-white dark:bg-gray-500 shadow-md rounded-lg">
-    <form @submit.prevent="checkoutStore.validateDetails" class="grid gap-2.5">
+  <div class=" bg-white dark:bg-gray-500 shadow-md rounded-lg">
+    <form @submit.prevent="checkoutStore.validateDetails" class="grid gap-2.5 px-2">
       <!-- Email & Subscription -->
       <CheckoutNewsLetter
         v-model:email="shipping.email"
@@ -27,10 +27,10 @@ const { shipping, shippingErrors } = storeToRefs(checkoutStore);
       />
 
       <!-- Address AutoComplete -->
-      <AddressAutoComplete v-model="shipping.address" />
+      <!-- <AddressAutoComplete v-model="shipping.address" /> -->
 
       <!-- Form Header -->
-      <h2 class="text-lg font-semibold my-4">Shipping Address</h2>
+      <h2 class="text-base md:text-lg font-poppins font-semibold my-4">Shipping Address</h2>
 
       <!-- Individual Input Fields -->
       <BaseInput v-model="shipping.name" placeholder="Name" :invalid="!!shippingErrors.name" />

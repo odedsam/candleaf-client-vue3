@@ -2,7 +2,9 @@ import { User } from '@/types/User'
 
 
 export const normalizeTitle = (title: string, wordLimit: number = 4): string => {
-  return title.split(' ').slice(0, wordLimit).join(' ') + (title.split(' ').length > wordLimit ? '' : '')
+  const cleaned = title.replace(/-/g, ' ')
+  const words = cleaned.split(' ')
+  return words.slice(0, wordLimit).join(' ')
 }
 
 export const getImageUrl = (imageName: string) => {
@@ -27,7 +29,7 @@ export const formatShippingAddress = (shippingData: {
     !shippingData.province ||
     !shippingData.country
   ) {
-    return 'כתובת לא זמינה'
+    return 'Address Not Available'
   }
 
   return `${shippingData.address},${shippingData.postalCode.toString()}, ${shippingData.city},${shippingData.province}, ${shippingData.country}`
@@ -41,7 +43,7 @@ export const getUserFromStorage = (): User | null => {
 
     const parsed = JSON.parse(raw)
 
-    // duplicate stringify fix 
+    // duplicate stringify fix
     return typeof parsed === 'string' ? JSON.parse(parsed) : parsed
   } catch {
     return null

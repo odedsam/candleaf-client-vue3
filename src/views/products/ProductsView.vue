@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import {ref, nextTick, onMounted} from 'vue'
-import {useProductStore} from '@/stores/productStore'
-import {useCartStore} from '@/stores/cartStore'
-import {storeToRefs} from 'pinia'
+import { ref, nextTick, onMounted } from 'vue'
+import { useProductStore } from '@/stores/productStore'
+import { useCartStore } from '@/stores/cartStore'
+import { storeToRefs } from 'pinia'
+import { useNavigateToProduct } from '@/composables/useNavigateToProduct'
 import BaseButton from '@/components/base/BaseButton.vue'
-import {useNavigateToProduct} from '@/composables/useNavigateToProduct'
 
 
 const cartStore = useCartStore()
@@ -38,8 +38,7 @@ const addToCartAnimation = async (event: MouseEvent, product: any) => {
   clonedImg.style.width = '80px'
   clonedImg.style.height = '80px'
   clonedImg.style.borderRadius = '50%'
-  clonedImg.style.transition =
-    'transform 1.5s cubic-bezier(0.42, 0, 0.58, 1), opacity 1.2s ease-in-out'
+  clonedImg.style.transition = 'transform 1.5s cubic-bezier(0.42, 0, 0.58, 1), opacity 1.2s ease-in-out'
   clonedImg.style.opacity = '1'
   clonedImg.style.pointerEvents = 'none'
 
@@ -83,20 +82,19 @@ const addToCartAnimation = async (event: MouseEvent, product: any) => {
       >
         <img
           :src="product.image"
-          alt="Product"
+          alt="product-image"
+          class="cursor-pointer w-full h-80 object-contain rounded-lg mb-4"
           draggable="false"
-          class="w-full h-80 object-contain rounded-lg mb-4"
         />
         <h2 class="text-lg font-poppins text-gray-500 dark:text-black">
           {{ normalizeTitle(product.title) }}
         </h2>
-        <p class="text-gray-500 font-poppins text-xl font-semibold py-3">${{ product.price }}</p>
+        <p class="text-gray-500 font-poppins text-xl font-semibold py-3">$ {{ product.price }}</p>
 
         <BaseButton
           label="Add To Cart"
           :grow="false"
-          :disabled="false"
-          btn-class="font-poppins font-semibold text-base"
+          btn-class="text-base"
           @click="(event) => addToCartAnimation(event, product)"
         />
       </div>

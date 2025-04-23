@@ -7,7 +7,7 @@ import SelectDelivery from '@/components/features/products/SelectDelivery.vue'
 const cartStore = useCartStore()
 
 const selectedOption = ref<'one-time' | 'subscribe' | null>(null)
-const deliveryInterval = ref('4 weeks')
+const deliveryInterval = ref('4 Weeks')
 
 const selectionData = computed(() => ({
   type: selectedOption.value,
@@ -22,7 +22,7 @@ const borderToggle = (option: 'one-time' | 'subscribe') => {
   <div class="w-full grid grid-auto-rows-2">
     <div class="option-container" :class="borderToggle('one-time')" @click="selectedOption = 'one-time'">
       <RadioInput
-        :label-style="'max-sm:pl-2 pl-4 max-sm:text-xs text-break text-sm lg:text-md font-roboto'"
+        :label-style="'max-md:pl-2 pl-4 max-md:text-sm text-break text-sm lg:text-md font-poppins'"
         v-model="selectedOption"
         :value="'one-time'"
         radio-label="One Time Purchase"
@@ -30,17 +30,17 @@ const borderToggle = (option: 'one-time' | 'subscribe') => {
     </div>
 
     <div class="option-container" :class="borderToggle('subscribe')" @click="selectedOption = 'subscribe'">
-      <div class="flex gap-4 max-sm:gap-3 items-center lg:text-nowrap">
+      <div class="flex gap-2 md:justify-between items-center lg:text-nowrap">
         <RadioInput
-          :label-style="'max-sm:pl-2 pl-4 max-sm:text-xs text-break text-sm lg:text-md font-roboto'"
+          :label-style="'max-md:pl-2 pl-4 max-md:text-sm text-break text-sm lg:text-md font-poppins'"
           v-model="selectedOption"
           :value="'subscribe'"
-          radio-label="Subscribe and delivery every"
+          radio-label="Subscribe & Delivery Every"
         />
 
-        <SelectDelivery v-model="deliveryInterval" :options="['2 weeks', '4 weeks', '6 weeks']" />
+        <SelectDelivery v-model="deliveryInterval" :options="['2 Weeks', '4 Weeks', '6 Weeks']" />
       </div>
-      <p class="text-[.975rem] py-3 max-sm:py-2 max-sm:text-xs font-roboto text-[#818181]">
+      <p class="text-[.975rem] py-3 max-md:py-2 max-md:text-xs font-poppins text-[#818181]">
         Subscribe now and get 10% off on every recurring order.
         <br class="hidden max-md:block" />
         The discount will be applied at checkout.

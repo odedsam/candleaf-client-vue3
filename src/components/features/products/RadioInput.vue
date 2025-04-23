@@ -19,7 +19,7 @@ const selectOption = () => {
     <div class="radio-circle">
       <div v-if="modelValue === value" class="radio-dot"></div>
     </div>
-    <span :class="labelStyle">{{ radioLabel }}</span>
+    <p class="font-poppins inline-flex text-base" :class="labelStyle">{{ radioLabel }}</p>
   </div>
 </template>
 
@@ -33,6 +33,8 @@ const selectOption = () => {
 .radio-circle {
   width: 20px;
   height: 20px;
+  min-width: 20px;
+  min-height: 20px;
   border: 2px solid #ccc;
   border-radius: 50%;
   display: flex;

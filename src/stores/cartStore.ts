@@ -15,17 +15,14 @@ export const useCartStore = defineStore('cart', () => {
   const cartItems = ref<CartItem[]>([])
   const isCartOpen = ref<boolean>(false)
 
-  //  total items count for cart icon
   const cartAmount = computed(() => {
     return cartItems.value.reduce((total, item) => total + item.quantity, 0)
   })
 
-  //  computed subtotal price
   const subTotal = computed(() => {
     return cartItems.value.reduce((total, item) => total + item.price * item.quantity, 0)
   })
 
-  //  function to add an item to the cart or increase quantity
   const addToCart = (product: CartItem) => {
     const existingProduct = cartItems.value.find((item) => item.id === product.id)
     if (existingProduct) {
@@ -43,7 +40,6 @@ export const useCartStore = defineStore('cart', () => {
     })
   }
 
-  // increase quantity of products synchronized with cart icon quantity
   const increaseQuantity = (productId: CartItem['id']) => {
     const index = cartItems.value.findIndex((item) => item.id === productId)
     if (index !== -1) {
@@ -81,8 +77,8 @@ export const useCartStore = defineStore('cart', () => {
   }
   return {
     cartItems,
-    cartAmount, // total items for cart icon
-    subTotal, // subtotal price
+    cartAmount,
+    subTotal,
     isCartOpen,
     addToCart,
     increaseQuantity,

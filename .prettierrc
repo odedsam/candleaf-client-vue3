@@ -1,11 +1,13 @@
 {
-  "printWidth":120,
+  "printWidth":140,
+  "trailingComma": "all",
   "tabWidth": 2,
   "useTabs": false,
-  "semi": false,
+  "semi": true,
   "singleQuote": true,
   "bracketSpacing": true,
+  "bracketSameLine": true,
   "html.autoClosingTags": false,
   "htmlWhitespaceSensitivity": "ignore"
-   
+
 }

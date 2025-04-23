@@ -34,11 +34,10 @@ const props = defineProps({
         </div>
         <div class="bg-white dark:bg-gray-300 shadow-lg rounded-bl-lg rounded-br-lg pt-4 pl-3">
           <h3 class="text-start text-black font-poppins font-medium pt-2.5">{{ popular.title }}</h3>
-          <p class="text-start text-xl text-primary font-roboto font-medium mt-1 pb-2">${{ popular.price }}</p>
+          <p class="text-start text-xl text-[#56b280] font-roboto font-medium mt-1 pb-2">${{ popular.price }}</p>
         </div>
       </div>
     </div>
   </section>
 </template>
 
-<style scoped></style>

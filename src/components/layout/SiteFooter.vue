@@ -20,21 +20,21 @@ const isProd = import.meta.env.PROD
       </div>
 
       <div class="pt-[3.25rem] w-full md:w-[50%] inline-grid grid-cols-2 md:grid-cols-3 max-md:grid-rows-2 gap-y-10 items-center justify-center gap-x-8">
-        <div class="footer-links-container">
+        <div class="footer-links-cnt">
           <h1 class="text-[#56B280]">Discovery</h1>
           <p class="text-[#E1E1E1]">New Season</p>
           <p class="text-[#E1E1E1]">Most Searched</p>
           <p class="text-[#E1E1E1]">Most Selled</p>
         </div>
 
-        <div class="footer-links-container">
+        <div class="footer-links-cnt">
           <p class="text-[#56B280]">About</p>
           <p class="text-[#E1E1E1]">Help</p>
           <p class="text-[#E1E1E1]">Shipping</p>
           <p class="text-[#E1E1E1]">Affiliate</p>
         </div>
 
-        <div class="footer-links-container">
+        <div class="footer-links-cnt">
           <p class="text-[#56B280]">Info</p>
           <p class="text-[#E1E1E1]">Contanct Us</p>
           <p class="text-[#E1E1E1]">Privacy Policies</p>

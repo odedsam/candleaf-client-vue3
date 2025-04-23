@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import DetailsSection from '@/components/features/products/DetailsSection.vue';
-import LoadingSpinner from '@/components/feedback/LoadingSpinner.vue';
 import { ingredients, descriptionSection } from '@/utils/constants';
 import { useProductStore } from '@/stores/productStore';
 import { storeToRefs } from 'pinia';
+import DetailsSection from '@/components/features/products/DetailsSection.vue';
+import LoadingSpinner from '@/components/feedback/LoadingSpinner.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -14,13 +14,12 @@ const { products, selectedProduct, isLoading } = storeToRefs(productStore);
 
 const productId = computed(() => Number(route.params.id));
 
-//  Function to find and set selected product
 const setProduct = () => {
   const product = products.value.find((p) => p.id === productId.value);
   if (product) {
     selectedProduct.value = product;
   } else {
-    console.error("⚠️ Product Not Found:", productId.value);
+    console.error(" Product Not Found:", productId.value);
   }
 };
 
@@ -33,7 +32,6 @@ onMounted(async () => {
   isLoading.value = false;
 });
 
-//  Watch for route changes (e.g., navigating to a different product)
 watch(() => route.params.id, () => {
   setProduct();
 });
@@ -41,8 +39,8 @@ watch(() => route.params.id, () => {
 <template>
   <main
     v-if="selectedProduct"
-    class="grid grid-flow-row h-full w-full max-sm:py-12 items-center"
-  >
+    class="grid grid-flow-row h-full w-full items-center">
+
     <DetailsSection
       :selectedProduct="selectedProduct"
       :ingredients="ingredients"

@@ -17,6 +17,13 @@ export const useUIStore = defineStore('ui', () => {
     isMenuOpen.value = !isMenuOpen.value;
   };
 
+  const closeMenu = () => {
+    isMenuOpen.value = false;
+  };
+  const openMenu = () => {
+    isMenuOpen.value = true;
+  };
+
   const showToast = (message: string, type: ToastType = 'success', duration = 3000) => {
     const id = Date.now(); // Unique ID for each toast
     toasts.value.push({ id, message, type });

@@ -25,5 +25,3 @@ const linkTo = computed(() => (props.disableRoute ? '' : '/'))
     </div>
   </RouterLink>
 </template>
-
-<style lang="css" scoped></style>

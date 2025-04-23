@@ -1,43 +1,34 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
+import CiChevronRightMd from '~icons/ci/chevron-right-md';
 
 const props = defineProps<{ steps: { name: string; path: string }[] }>();
-
 const route = useRoute();
 
-//  get the current step index
 const currentStepIndex = computed(() => {
   return props.steps.findIndex(step => route.path.includes(step.path));
 });
 
-// define step classes for visual indication only
 const stepClass = (index: number) => {
   return {
-    'font-bold text-green-600': index <= currentStepIndex.value, //  highlight completed & current step
-    'text-gray-500': index > currentStepIndex.value // future steps in gray
+    'font-poppins font-semibold text-green-600': index <= currentStepIndex.value,
+    'font-poppins-text-gray-500': index > currentStepIndex.value
   };
 };
 </script>
 
 <template>
-  <div class="flex justify-center items-center space-x-4 py-4 text-gray-600">
+  <div class="inline-flex justify-center items-center p-4 text-gray-600">
     <template v-for="(step, index) in steps" :key="index">
-      <span :class="stepClass(index)">
+      <p :class="stepClass(index)" class="font-poppins text-xs md:text-base">
         {{ step.name }}
-      </span>
+      </p>
 
-      <svg
+      <CiChevronRightMd
         v-if="index < steps.length - 1"
-        class="mx-2 w-4 h-4 text-gray-400"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
-      </svg>
+        class="w-4 h-4 md:h-6 md:w-6 mx-1 md:mx-2 text-gray-400" />
+
     </template>
-  </div>
+    </div>
 </template>

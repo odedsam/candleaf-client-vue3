@@ -28,4 +28,3 @@ const steps = [
   </div>
 </template>
 
-<style lang="css" scoped></style>

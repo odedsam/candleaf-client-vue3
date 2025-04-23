@@ -24,7 +24,7 @@ const props = defineProps({
 <template>
   <section class="text-center py-12 px-4">
     <h2 class="text-3xl font-poppins font-medium dark:text-white text-gray-900">Products</h2>
-    <p class="text-mgr font-poppins font-medium mt-4">Order it for you or for your beloved ones</p>
+    <p class="text-[#5e6e89] font-poppins font-medium mt-4">Order it for you or for your beloved ones</p>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
       <div v-for="cat in props.products"

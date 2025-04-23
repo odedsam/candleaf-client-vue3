@@ -14,10 +14,10 @@ const emit = defineEmits(['update:email', 'update:subscribe'])
 </script>
 
 <template>
-  <div class="w-full grid mb-12 py-1">
+  <div class="w-full grid my-8 py-1">
     <div class="flex justify-between items-center mb-2">
-      <h2 class="text-lg font-semibold">Contact</h2>
-      <p class="text-sm text-gray-500">
+      <h2 class="text-base md:text-lg font-semibold font-poppins">Contact</h2>
+      <p class="text-sm text-gray-500 font-poppins">
         Do you have an account?
         <RouterLink to="/auth/login" class="text-green-600 hover:underline">Login</RouterLink>
       </p>
@@ -29,8 +29,8 @@ const emit = defineEmits(['update:email', 'update:subscribe'])
       type="email"
       placeholder="Email"
       :class="[
-        'w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500',
-        props.invalid ? 'border-red-500' : 'border-green-300'
+        'form-input',
+        props.invalid && 'border-red-500'
       ]"
     />
 
@@ -45,19 +45,7 @@ const emit = defineEmits(['update:email', 'update:subscribe'])
         id="newsletter"
         class="w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500"
       />
-      <label for="newsletter" class="text-gray-700">Add me to Candleaf newsletter for a 10% discount</label>
+      <label for="newsletter" class="text-gray-700 font-poppins text-sm md:text-base">Add me to Candleaf newsletter for a 10% discount</label>
     </div>
   </div>
 </template>
-
-<style scoped>
-input {
-  outline: none;
-  transition: 0.2s ease-in-out;
-}
-
-input:focus {
-  border-color: #56b280;
-  box-shadow: 0 0 4px rgba(86, 178, 128, 0.5);
-}
-</style>

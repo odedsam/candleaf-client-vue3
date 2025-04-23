@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { computed} from 'vue'
 
-// Define Props
 const props = defineProps<{
   modelValue: string | number
   placeholder: string
-  icon?: string // Optional icon (emoji or image path)
-  size?: 'full' | 'half' // Default: full-width
-  id?: string //  Optional
-  invalid?: boolean | string // Optional
+  icon?: string
+  size?: 'full' | 'half'
+  id?: string
+  invalid?: boolean | string
 }>()
 
 const emit = defineEmits(['update:modelValue'])

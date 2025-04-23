@@ -3,7 +3,7 @@ import { RouterLink } from 'vue-router'
 import HeroSummary from './HeroSummary.vue'
 </script>
 <template>
-  <div class="hero-container">
+  <div class="hero-cnt">
     <div class="hero-wrapper">
       <HeroSummary />
       <RouterLink to="/products" class="pb-11">

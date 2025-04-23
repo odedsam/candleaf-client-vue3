@@ -19,24 +19,18 @@ export default defineConfig({
       },
     },
   },
-
   plugins: [
-    vue(),
-    tailwindcss(),
-
-    // Auto-import components
+    vue(), tailwindcss(),
+    /* Auto-import components */
     Components({
       resolvers: [
         IconsResolver({
           prefix: 'i',
           enabledCollections: ['tabler'],
         }),
-
-
       ],
     }),
-
-    // Load icon components
+    /* Load icon components */
     Icons({
       compiler: 'vue3',
       autoInstall: true,
