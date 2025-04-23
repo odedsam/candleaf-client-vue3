@@ -14,7 +14,8 @@
   }
 }
 
-html, body {
+html,
+body {
   touch-action: manipulation;
 }
 @custom-variant dark (&:where(.dark, .dark *));
@@ -56,8 +57,6 @@ html, body {
     }
   }
 
-
-
   @keyframes fadeIn {
     0% {
       opacity: 0;
@@ -70,6 +69,20 @@ html, body {
   }
 
   @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-id-view {
+    animation: fade-id-view 0.5s ease-out forwards;
+  }
+
+  @keyframes fade-id-view {
     0% {
       opacity: 0;
       transform: translateY(1rem);
@@ -106,7 +119,4 @@ html, body {
   .form-input {
     @apply w-full p-2 border dark:placeholder:text-gray-100 rounded-md focus:ring-2 focus:ring-[#56b280]/50 focus:border-[#56b280] outline-none transition ease-in-out duration-200 placeholder:font-helvetica;
   }
-
-
-
 }

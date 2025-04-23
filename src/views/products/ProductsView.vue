@@ -65,14 +65,13 @@ const addToCartAnimation = async (event: MouseEvent, product: any) => {
   setTimeout(() => {
     document.body.removeChild(clonedImg)
 
-    // adding to cart after
   }, 1500)
   cartStore.addToCart(product)
 }
 </script>
 
 <template>
-  <div class="p-6">
+  <div class="p-6 animate-fade-id-view">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <div
         v-for="product in products"

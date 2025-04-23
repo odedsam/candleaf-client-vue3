@@ -2,11 +2,12 @@
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useCartStore } from '@/stores/cartStore';
+import { normalizeTitleId } from '@/utils';
 import SubscriptionSelector from '@/components/features/products/SubscriptionSelector.vue';
-import QuantitySelector from '@/components/shared/QuantitySelector.vue';
 import IngredientsComp from '@/components/features/products/IngredientsComp.vue';
-import BaseButton from '@/components/base/BaseButton.vue';
 import QuantityInput from '@/components/shared/QuantityInput.vue';
+import ProductImage from '@/components/features/products/ProductImage.vue';
+
 
 const props = defineProps<{
   selectedProduct: {
@@ -27,9 +28,10 @@ const props = defineProps<{
   description: string;
 }>();
 
-const normalizeTitle = (title: string, wordLimit: number = 4): string => {
-  return title.split(' ').slice(0, wordLimit).join(' ') + (title.split(' ').length > wordLimit ? '' : '');
-};
+
+
+
+
 const cartStore = useCartStore();
 const increase = () => cartStore.increaseQuantity(props.selectedProduct.id as number);
 const decrease = () => cartStore.decreaseQuantity(props.selectedProduct.id as number);
@@ -58,23 +60,24 @@ const handleClick = () => {
 
 <template>
   <div class="grid grid-cols-1 lg:gap-x-12 md:grid-cols-2 py-12 max-md:gap-12 items-strech">
-    <!-- Left Section (Product-Image)  -->
-    <div class="w-full flex items-stretch">
+    <!-- <div class="w-full flex items-stretch">
       <div class="mx-auto flex flex-col">
-        <div class="flex flex-col justify-center items-center max-md:mt-12 gap-3">
-          <img :src="selectedProduct.image" alt="prod-image" class="w-full h-full object-contain" draggable="false" />
+        <div class="flex flex-col justify-center items-center gap-3">
+          <img :src="selectedProduct.image" alt="prod-image" class="w-[90%] h-[90%] object-cover rounded-lg md:w-full md:h-full md:object-contain" draggable="false" />
           <p class="text-black text-base font-sans font-semibold text-center dark:text-white">
             {{ description }}
           </p>
           <p class="text-green text-base font-sans font-semibold text-center text-[#56B280]">🚚 FREE SHIPPING</p>
         </div>
       </div>
-    </div>
+    </div> -->
+    <ProductImage :image="selectedProduct.image" :description="description" />
 
-    <div class="flex flex-col h-full px-4 md:px-8 gap-12 max-md:mt-12">
+
+    <div class="flex flex-col h-full px-4 md:px-8 gap-12 xl:min-h-[1000px] xl:max-h-[1000px]">
       <div class="flex flex-col">
         <p class="text-xl md:text-2xl text-black font-poppins font-semibold max-md:mt-4 max-sm:text-break max-lg:text-center md:text-start dark:text-white">
-          {{ normalizeTitle(selectedProduct.title) }}
+          {{ normalizeTitleId(selectedProduct.title) }}
         </p>
         <p class="text-semibold font-roboto font-bold mt-4 text-xl md:text-2xl text-[#56B280] max-md:text-center">$ {{ totalPrice }}</p>
         <p class="text-semibold font-roboto text-xl text-black dark:text-white max-md:text-center text-start mt-4 md:self-start">

@@ -9,29 +9,28 @@ defineProps<{
 </script>
 
 <template>
-   <div v-if="isLoading" class="flex h-[600px] justify-center items-center py-20">
-    <div class="relative w-16 h-16">
-      <div class="absolute inset-0 rounded-full border-4 border-t-transparent border-green-500 animate-spin"></div>
-      <div class="absolute inset-2 rounded-full border-4 border-t-transparent border-green-300 animate-[spin_3s_linear_infinite]"></div>
-      <span class="absolute inset-0 flex items-center justify-center text-sm font-medium text-green-400 animate-pulse">
-        Loading...
-      </span>
-    </div>
-  </div>
+  <div class="min-h-[600px] w-full">
+    <template v-if="isLoading">
+      <div class="flex h-[600px] justify-center items-center">
+        <i-tabler-loader-2 class="w-10 h-10 text-[#56B280] animate-spin" />
+      </div>
+    </template>
 
+    <template v-else-if="error">
+      <div class="flex h-[600px] justify-center items-center text-center text-red-500">
+        <p>{{ error }}</p>
+      </div>
+    </template>
 
+    <template v-else-if="!data">
+      <div class="flex h-[600px] justify-center items-center text-center text-gray-500">
+        <p>No products found.</p>
+      </div>
+    </template>
 
-  <div v-else-if="error" class="text-center py-4 text-red-500">
-    <p>{{ error }}</p>
-  </div>
-
-  <div v-else-if="!data" class="text-center py-4 text-gray-500">
-    <p>No products found.</p>
-  </div>
-
-  <div v-else>
-    <CatalogGrid :products="data" />
-    <slot />
-
+    <template v-else>
+      <CatalogGrid :products="data" />
+      <slot />
+    </template>
   </div>
 </template>

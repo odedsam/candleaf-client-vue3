@@ -26,7 +26,7 @@ const data = ref<any | null>(null)
 onMounted(async () => {
   // await authStore.fetchCurrentUser()
   try {
-    
+
     await productStore.fetchProducts()
     setTimeout(() => {
       data.value = catalogProducts
@@ -43,7 +43,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main class="max-w-full">
+  <main class="max-w-full animate-fade-id-view">
     <HomeHero />
     <FetchStatus :isLoading="isLoading" :error="error" :data="productCatalog">
       <FeaturesInfo />

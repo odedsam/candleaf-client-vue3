@@ -10,7 +10,7 @@ import CartModal from '@/components/shared/CartModal.vue'
 <template>
   <div class="relative flex flex-col min-h-screen bg-white text-black dark:bg-zinc-900 dark:text-white transition-colors duration-300">
     <SiteHeader />
-    <main class="">
+    <main class="animate-fade-id-view">
       <ThemeToggle />
       <RouterView />
     </main>

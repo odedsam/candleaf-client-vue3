@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import {onMounted, ref} from 'vue'
-import LoadingSpinner from '@/components/feedback/LoadingSpinner.vue'
 
 const profileName = ref('')
 const userItems = ref([''])
@@ -37,8 +36,14 @@ onMounted(fetchUserData())
         </div>
       </div>
     </div>
-    <div v-else><LoadingSpinner /></div>
+    <div v-else>
+      <template>
+      <div class="flex h-[600px] justify-center items-center">
+        <i-tabler-loader-2 class="w-10 h-10 text-[#56B280] animate-spin" />
+      </div>
+    </template>
+
+    </div>
   </div>
 </template>
 
-<style lang="css" scoped></style>

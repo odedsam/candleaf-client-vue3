@@ -18,7 +18,6 @@ const { shipping, shippingErrors } = storeToRefs(checkoutStore);
 <template>
   <div class=" bg-white dark:bg-gray-500 shadow-md rounded-lg">
     <form @submit.prevent="checkoutStore.validateDetails" class="grid gap-2.5 px-2">
-      <!-- Email & Subscription -->
       <CheckoutNewsLetter
         v-model:email="shipping.email"
         v-model:subscribe="shipping.subscribe"
@@ -26,13 +25,10 @@ const { shipping, shippingErrors } = storeToRefs(checkoutStore);
         :errMessage="shippingErrors.email"
       />
 
-      <!-- Address AutoComplete -->
       <!-- <AddressAutoComplete v-model="shipping.address" /> -->
 
-      <!-- Form Header -->
       <h2 class="text-base md:text-lg font-poppins font-semibold my-4">Shipping Address</h2>
 
-      <!-- Individual Input Fields -->
       <BaseInput v-model="shipping.name" placeholder="Name" :invalid="!!shippingErrors.name" />
       <BaseError v-if="shippingErrors.name" :message="shippingErrors.name" />
 
@@ -50,7 +46,6 @@ const { shipping, shippingErrors } = storeToRefs(checkoutStore);
       <BaseInput v-model="shipping.city" placeholder="City" :invalid="!!shippingErrors.city" />
       <BaseError v-if="shippingErrors.city" :message="shippingErrors.city" />
 
-      <!-- Dropdowns -->
       <LocationSelector
         v-model:country="shipping.country"
         v-model:province="shipping.province"
@@ -58,13 +53,11 @@ const { shipping, shippingErrors } = storeToRefs(checkoutStore);
         :errors="shippingErrors"
       />
 
-      <!-- Save Info Checkbox -->
       <div class="flex items-center">
         <input type="checkbox" v-model="shipping.saveInfo" />
         <span class="ml-3">Save this information for a future fast checkout</span>
       </div>
 
-      <!-- Navigation Buttons -->
       <StepButtons
         primaryText="Go To Shipping"
         secondaryText="Back to Cart"

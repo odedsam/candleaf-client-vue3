@@ -31,8 +31,8 @@ const profileImage = computed(() => user?.value.avatar ?? ProfileIcon)
       <i-tabler-user-circle class="w-6 h-6 cursor-pointer" />
     </RouterLink>
 
-    
-    <div @click="cartStore.toggleCart()">
+
+    <div class="max-md:pr-4" @click="cartStore.toggleCart()">
       <CartIcon />
     </div>
   </div>

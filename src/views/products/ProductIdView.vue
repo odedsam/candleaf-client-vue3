@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import { computed, onMounted, watch } from 'vue';
+import { computed, nextTick, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ingredients, descriptionSection } from '@/utils/constants';
 import { useProductStore } from '@/stores/productStore';
 import { storeToRefs } from 'pinia';
 import DetailsSection from '@/components/features/products/DetailsSection.vue';
-import LoadingSpinner from '@/components/feedback/LoadingSpinner.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -19,9 +18,15 @@ const setProduct = () => {
   if (product) {
     selectedProduct.value = product;
   } else {
-    console.error(" Product Not Found:", productId.value);
+    console.error(' Product Not Found:', productId.value);
   }
 };
+
+onMounted(async () => {
+  if (window.innerWidth >= 768) return;
+  await nextTick();
+  document.querySelector('#product-content')?.scrollIntoView({ behavior: 'auto', block: 'start' });
+});
 
 onMounted(async () => {
   isLoading.value = true;
@@ -32,22 +37,18 @@ onMounted(async () => {
   isLoading.value = false;
 });
 
-watch(() => route.params.id, () => {
-  setProduct();
-});
+watch(
+  () => route.params.id,
+  () => {
+    setProduct();
+  },
+);
 </script>
 <template>
   <main
     v-if="selectedProduct"
-    class="grid grid-flow-row h-full w-full items-center">
-
-    <DetailsSection
-      :selectedProduct="selectedProduct"
-      :ingredients="ingredients"
-      :description="descriptionSection"
-    />
+    id="product-content"
+    class="grid grid-flow-row h-full w-full items-center transition-all duration-500 ease-in-out opacity-0 translate-y-4 animate-fade-id-view">
+    <DetailsSection :selectedProduct="selectedProduct" :ingredients="ingredients" :description="descriptionSection" />
   </main>
-  <div v-else>
-    <LoadingSpinner />
-  </div>
 </template>
