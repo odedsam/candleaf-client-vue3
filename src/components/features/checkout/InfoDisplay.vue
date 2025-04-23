@@ -11,15 +11,10 @@ const emit = defineEmits(["edit"])
 <template>
   <div class="flex justify-between items-center py-2">
     <p class="text-gray-500">
-      <span class="font-medium text-gray-700">{{ label }}</span>
-      <span class="ml-2 text-gray-800 block">{{ value }}</span>
+      <span class="font-poppins dark:text-gray-400 text-[#818181]">{{ label }}</span>
+      <span class="ml-2 font-poppins font-semibold text-black dark:text-gray-200 block">{{ value }}</span>
     </p>
-    <button @click="emit('edit')" class="text-green-600 hover:underline">Edit</button>
+    <button @click="emit('edit')" class="text-green-600 font-poppins cursor-pointer font-sm hover:underline">Edit</button>
   </div>
 </template>
 
-<style scoped>
-button {
-  font-size: 14px;
-}
-</style>

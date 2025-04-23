@@ -9,9 +9,8 @@ import StepButtons from '@/components/features/checkout/StepButtons.vue'
 const checkoutStore = useCheckoutStore()
 const {shipping, formattedShippingAddress, shippingOptions} = storeToRefs(checkoutStore)
 
-const selectedShippingMethod = ref(shippingOptions.value[0]) // Default to first method
+const selectedShippingMethod = ref(shippingOptions.value[0])
 
-// Edit Handlers
 const editContact = () => {
   console.log('Edit Contact Clicked')
 }

@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import BaseInput from '@/components/base/BaseInput.vue'
+import TablerLock from '~icons/tabler/lock'
+import TablerCreditCard from '~icons/tabler/credit-card'
+import TablerCalendar from '~icons/tabler/calendar'
+import TablerUser from '~icons/tabler/user'
 
-// Reactive form data
+
 const paymentData = ref({
   cardNumber: '',
   holderName: '',
@@ -12,19 +16,14 @@ const paymentData = ref({
 </script>
 
 <template>
-  <div class="p-4">
+  <div class="font-poppins my-4">
     <h2 class="text-lg font-semibold mb-3">Payment method</h2>
+    <BaseInput v-model="paymentData.cardNumber" placeholder="Card Number" :icon="TablerCreditCard" />
+    <BaseInput v-model="paymentData.holderName" placeholder="Holder Name" :icon="TablerUser" />
 
-    <!-- Card Number -->
-    <BaseInput v-model="paymentData.cardNumber" placeholder="Card Number" icon="🔒" />
-
-    <!-- Holder Name -->
-    <BaseInput v-model="paymentData.holderName" placeholder="Holder Name" />
-
-    <!-- Expiration & CVV Row -->
     <div class="flex gap-2">
-      <BaseInput v-model="paymentData.expiration" placeholder="Expiration (MM/YY)" size="half" />
-      <BaseInput v-model="paymentData.cvv" placeholder="CVV" icon="ℹ️" size="half" />
+      <BaseInput v-model="paymentData.expiration" placeholder="EXP (MM/YY)" :icon="TablerCalendar" size="half" />
+      <BaseInput v-model="paymentData.cvv" placeholder="CVV" :icon="TablerLock" size="half" />
     </div>
   </div>
 </template>

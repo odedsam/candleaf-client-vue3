@@ -40,9 +40,8 @@ const validatePayment = () => {
 
 <template>
   <div>
-    <h1 class="text-lg font-semibold mt-6 mb-3">Billing Address</h1>
+    <h1 class="text-lg font-semibold font-poppins mt-6 mb-3">Billing Address</h1>
 
-    <!-- Billing Address Selection -->
     <div class="border border-gray-300 rounded-md p-4 flex flex-col">
       <RadioInput
         v-model="payment.billingSameAsShipping"
@@ -59,8 +58,7 @@ const validatePayment = () => {
       />
     </div>
 
-    <!-- Billing Address Form (Only if different from Shipping) -->
-    <div v-if="!payment.billingSameAsShipping" class="mt-4">
+    <div v-if="!payment.billingSameAsShipping" class="mt-4 space-y-4">
       <BaseInput v-model="payment.billingAddress.address" placeholder="Address and number" />
       <BaseInput v-model="payment.billingAddress.city" placeholder="City" />
       <BaseInput v-model="payment.billingAddress.postalCode" placeholder="Postal Code" />

@@ -28,10 +28,8 @@ const emit = defineEmits(['update:email', 'update:subscribe'])
       @input="emit('update:email', ($event.target as HTMLInputElement).value)"
       type="email"
       placeholder="Email"
-      :class="[
-        'form-input',
-        props.invalid && 'border-red-500'
-      ]"
+      :class="[ 'form-input',props.invalid && 'border-red-500']"
+
     />
 
     <BaseError v-if="props.invalid" :message="props.errMessage" />

@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { computed} from 'vue'
+import { computed } from 'vue';
+import type { Component } from 'vue';
 
 const props = defineProps<{
-  modelValue: string | number
-  placeholder: string
-  icon?: string
-  size?: 'full' | 'half'
-  id?: string
-  invalid?: boolean | string
-}>()
+  modelValue: string | number;
+  placeholder: string;
+  icon?: string | Component;
+  size?: 'full' | 'half';
+  id?: string;
+  invalid?: boolean | string;
+}>();
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
 
-// Generate a unique ID if none is provided
-const uniqueId = computed(() => props.id || `input-${crypto.randomUUID()}`)
+const uniqueId = computed(() => props.id || `input-${crypto.randomUUID()}`);
 </script>
 
 <template>
@@ -23,17 +23,9 @@ const uniqueId = computed(() => props.id || `input-${crypto.randomUUID()}`)
       :value="modelValue"
       @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       :placeholder="placeholder"
-      :class="[
-        'w-full p-2 border dark:placeholder:text-gray-100 rounded-md focus:ring-2 focus:ring-[#56b280]/50 focus:border-[#56b280] outline-none transition ease-in-out duration-200',
-        props.invalid ? 'border-red-500' : 'border-gray-300',
-      ]"
-    />
-
-    <!-- Optional Icon -->
-    <span v-if="icon" class="absolute right-3 top-2.5 text-gray-400">
-      <img v-if="icon.startsWith('/')" :src="icon" alt="icon" class="w-5 h-5" />
-      <span v-else>{{ icon }}</span>
-      <!-- Emoji Support -->
+      :class="['form-input', props.invalid ? 'border-red-500' : 'border-gray-300']" />
+    <span v-if="icon" class="absolute right-3 top-2.5 text-[#3d8d61]">
+      <component :is="icon" class="w-5 h-5" />
     </span>
   </div>
 </template>

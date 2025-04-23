@@ -11,7 +11,7 @@ const emit = defineEmits(['update:selected'])
 
 <template>
   <label
-    class="flex items-center justify-between border border-gray-300 rounded-md p-3 cursor-pointer hover:border-green-500"
+    class="flex items-center justify-between border border-gray-300 font-poppins rounded-md p-3 cursor-pointer hover:border-green-500"
     :class="{'border-green-500 bg-green-50': selected}">
 
     <div class="flex items-center">
@@ -21,9 +21,9 @@ const emit = defineEmits(['update:selected'])
         :checked="selected"
         @change="emit('update:selected', true)"
       />
-      <span class="ml-3 text-gray-800">{{ label }}</span>
+      <span class="ml-3 text-gray-800 font-poppins">{{ label }}</span>
     </div>
-    <span class="font-semibold text-gray-800">{{ price }}</span>
+    <span class="font-semibold text-gray-800 font-poppins">{{ price }}</span>
   </label>
 </template>
 

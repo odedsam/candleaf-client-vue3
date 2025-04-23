@@ -15,7 +15,7 @@ const selectOption = () => {
 </script>
 
 <template>
-  <div class="radio-input" :class="{ selected: modelValue === value }" @click="selectOption">
+  <div class="radio-input font-poppins" :class="{ selected: modelValue === value }" @click="selectOption">
     <div class="radio-circle">
       <div v-if="modelValue === value" class="radio-dot"></div>
     </div>
