@@ -6,7 +6,7 @@ declare global {
     google: any
   }
 }
-
+const url = `https://candleaf-back-production.up.railway.app`
 
 export const loginWithGoogle = async (): Promise<string> => {
   await loadGoogleScript()
@@ -17,7 +17,7 @@ export const loginWithGoogle = async (): Promise<string> => {
     }
 
     const client = window.google.accounts.oauth2.initTokenClient({
-      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+      client_id: '862144583076-dqc27f94f62pimk1du7uvi1kidj2q1mk.apps.googleusercontent.com',
       scope: 'openid profile email',
       callback: (tokenResponse: any) => {
         if (tokenResponse?.access_token) {
@@ -34,7 +34,7 @@ export const loginWithGoogle = async (): Promise<string> => {
 
 
 export const verifyGoogleToken = async (accessToken: string): Promise<User> => {
-  const res = await fetch('/api/auth/google', {
+  const res = await fetch(`${url}/api/auth/google`, {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
@@ -52,7 +52,7 @@ export const verifyGoogleToken = async (accessToken: string): Promise<User> => {
 
 
 export const logout = async () => {
-  await fetch('/api/auth/logout', {
+  await fetch(`${url}/api/auth/logout`, {
     method: 'POST',
     credentials: 'include',
   })
@@ -61,7 +61,7 @@ export const logout = async () => {
 
 
 export const login = async (credentials: Credentials): Promise<User> => {
-  const res = await fetch('/api/auth/login', {
+  const res = await fetch(`${url}/api/auth/login`, {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
