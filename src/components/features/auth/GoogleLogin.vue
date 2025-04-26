@@ -22,9 +22,8 @@ const handleLogin = async () => {
       @click="handleLogin"
       :disabled="isLoading"
       class="bg-white flex justify-center items-center text-gray-500 border-[#ccc] gap-3 py-2.5 px-3.5 cursor-pointer transition-all duration-300 font-bold hover:bg-[#f1f1f1] hover:border-1 rounded-xl">
-    
+
       <svg class="w-6 h-6" viewBox="0 0 48 48">
-        <!-- Google Logo Paths -->
         <path fill="#4285F4" d="M24 9.5c3.64 0 6.43 1.39 8.28 2.56l6.15-6.15C34.58 2.03 29.71 0 24 0 14.71 0 6.9 5.39 2.82 13.23l7.32 5.69C13.13 12.08 18.02 9.5 24 9.5z" />
         <path fill="#34A853" d="M46.9 24.48c0-1.49-.13-2.92-.37-4.31H24v8.18h13.06c-.6 3.18-2.24 5.83-4.63 7.63l7.26 5.62C44.18 36.69 46.9 31.14 46.9 24.48z" />
         <path fill="#FBBC05" d="M11.54 28.04c-.55-1.56-.85-3.22-.85-4.96s.3-3.4.85-4.96L4.18 12.45C2.54 15.78 1.6 19.33 1.6 23.08s.94 7.3 2.58 10.63l7.36-5.67z" />

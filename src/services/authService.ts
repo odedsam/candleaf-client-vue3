@@ -8,7 +8,6 @@ declare global {
 }
 
 
-/* Start Google OAuth login flow & Returns access_token */
 export const loginWithGoogle = async (): Promise<string> => {
   await loadGoogleScript()
 
@@ -34,7 +33,6 @@ export const loginWithGoogle = async (): Promise<string> => {
 }
 
 
-/* Send Google access_token to backend for verification + JWT creation */
 export const verifyGoogleToken = async (accessToken: string): Promise<User> => {
   const res = await fetch('/api/auth/google', {
     method: 'POST',
@@ -62,7 +60,6 @@ export const logout = async () => {
 }
 
 
-/* Local login email/password */
 export const login = async (credentials: Credentials): Promise<User> => {
   const res = await fetch('/api/auth/login', {
     method: 'POST',
