@@ -6,6 +6,8 @@ import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import Components from 'unplugin-vue-components/vite'
 
+const backendUrl = process.env.VITE_BACKEND_URL || 'http://localhost:5001';
+
 export default defineConfig({
   build: {
     outDir: 'dist',
@@ -13,7 +15,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5001',
+        target:backendUrl,
         changeOrigin: true,
         secure: false,
       },

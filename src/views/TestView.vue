@@ -15,7 +15,6 @@ interface NominatimResponse {
   address?: Address;
 }
 
-// Use defineModel for two-way binding
 const country = defineModel<string>('country', { default: '' });
 const city = defineModel<string>('city', { default: '' });
 const street = defineModel<string>('street', { default: '' });
@@ -33,6 +32,6 @@ const zip = defineModel<string>('zip', { default: '' });
       <BaseInput v-model="city" placeholder="City" />
       <BaseInput v-model="country" placeholder="Country" />
     </div>
-    
+
  </div>
 </template>
