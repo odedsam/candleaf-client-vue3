@@ -10,17 +10,14 @@ import {useAuthStore} from '@/stores/authStore'
 import {storeToRefs} from 'pinia'
 import {useProductStore} from '@/stores/productStore'
 
-/*  AuthStore */
 const authStore = useAuthStore()
 const productStore = useProductStore()
 const {catalogProducts, popularProducts} = storeToRefs(productStore)
 
 
-/* Error Fetching Products Handling  */
 const isLoading = ref(true)
 const error = ref<string | null>(null)
 const data = ref<any | null>(null)
-
 
 
 onMounted(async () => {

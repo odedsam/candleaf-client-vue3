@@ -73,6 +73,6 @@ const handleSubmit = async () => {
           {{ isSignUp ? 'Sign in' : 'Sign up' }}
         </span>
     </p>
-    
+
   </div>
 </template>
