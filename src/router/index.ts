@@ -56,7 +56,7 @@ const routes: RouteRecordRaw[] = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(productionUrl),
+  history: createWebHistory('/'),
   routes,
 });
 

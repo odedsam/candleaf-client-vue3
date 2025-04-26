@@ -6,7 +6,7 @@ import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import Components from 'unplugin-vue-components/vite'
 
-const backendUrl = process.env.VITE_BACKEND_URL ||'https://candleaf-back.railway.internal';
+const backendUrl = process.env.VITE_BACKEND_URL ||'http://localhost:500/api';
 export default defineConfig({
   build: {
     outDir: 'dist',
