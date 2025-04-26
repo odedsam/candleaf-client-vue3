@@ -5,6 +5,9 @@ import tailwindcss from '@tailwindcss/vite'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import Components from 'unplugin-vue-components/vite'
+
+
+
 export default defineConfig({
   build: {
     outDir: 'dist',
@@ -12,7 +15,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://candleaf-back-production.up.railway.app',
+        target: import.meta.env.VITE_BACKEND_URL,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
@@ -21,7 +24,6 @@ export default defineConfig({
   },
   plugins: [
     vue(), tailwindcss(),
-    /* Auto-import components */
     Components({
       resolvers: [
         IconsResolver({
@@ -30,7 +32,6 @@ export default defineConfig({
         }),
       ],
     }),
-    /* Load icon components */
     Icons({
       compiler: 'vue3',
       autoInstall: true,
