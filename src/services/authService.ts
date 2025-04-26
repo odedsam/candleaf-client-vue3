@@ -6,7 +6,9 @@ declare global {
     google: any
   }
 }
-
+const isMobile = (): boolean => {
+  return /Mobi|Android/i.test(navigator.userAgent)
+}
 
 export const loginWithGoogle = async (): Promise<string> => {
   await loadGoogleScript()

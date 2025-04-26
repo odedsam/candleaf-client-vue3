@@ -15,7 +15,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: import.meta.env.VITE_BACKEND_URL,
+        target:"https://candleaf-back-production.up.railway.app",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
