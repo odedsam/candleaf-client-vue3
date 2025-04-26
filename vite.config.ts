@@ -5,8 +5,6 @@ import tailwindcss from '@tailwindcss/vite'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import Components from 'unplugin-vue-components/vite'
-const backendUrl = process.env.VITE_BACKEND_URL;
-console.log(backendUrl);
 export default defineConfig({
   build: {
     outDir: 'dist',
@@ -14,7 +12,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://candleaf-back.railway.internal',
+        target: 'candleaf-back-production.up.railway.app',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

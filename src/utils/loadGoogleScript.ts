@@ -1,4 +1,3 @@
-// utils/loadGoogleScript.ts
 export const loadGoogleScript = (): Promise<void> => {
   const scriptId = 'google-client-script'
 

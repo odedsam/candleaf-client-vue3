@@ -1,4 +1,3 @@
-// טיפוס בסיסי של משתמש
 export type User = {
     _id: string
     name: string
@@ -9,7 +8,7 @@ export type User = {
     updatedAt: string
     role?:'user' | 'admin'
   }
-  
+
 
 export type GoogleCredentialResponse = {
   credential: string
@@ -25,30 +24,26 @@ export type Credentials = {
 
 
 
-// extended user for dashboard 
   export type ExtendedUser = User & {
     orders?: OrderSummary[]
     address?: UserAddress
   }
 
-  // order summary for dashboard
   export type OrderSummary = {
     orderId: string
     total: number
     status: 'pending' | 'paid' | 'shipped' | 'cancelled'
     createdAt: string
   }
-  
-  // כתובת משתמש
+
   export type UserAddress = {
     street: string
     city: string
     postalCode: string
     country: string
   }
-  
 
-  // בעת יצירת משתמש חדש
+
   export type RegisterInput = {
     name: string
     email: string

@@ -6,6 +6,7 @@ interface ImportMetaEnv {
   readonly BASE_URL: string;
   readonly PROD: boolean;
   readonly DEV: boolean;
+  readonly VITE_GOOGLE_CLIENT_ID:string;
 }
 
 interface ImportMeta {
