@@ -7,7 +7,7 @@ import lavender from '@/assets/catalog/lavenderCup.svg'
 import orange from '@/assets/catalog/orangeCup.svg'
 import spiced from '@/assets/catalog/spicedCup.svg'
 import strawberry from '@/assets/catalog/strawberryCup.svg'
-
+export const productionUrl = 'https://candleaf-front.vercel.app/'
 export const descriptionSection = 'All hand-made with natural soy wax, Candleaf is made for your pleasure moments.'
 export const ingredients = {
   wax: 'Top grade Soy wax that delivers a smoke less, consistent burn',
