@@ -24,6 +24,7 @@ export default defineConfig({
       autoInstall: true,
     }),
   ],
+  base:"/",
 
   resolve: {
     alias: {

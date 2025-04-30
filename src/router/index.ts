@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { authMiddleware } from "@/router/router.middleware";
-import { productionUrl } from '@/utils';
 
 const routes: RouteRecordRaw[] = [
   {
