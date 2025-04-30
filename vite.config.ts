@@ -24,7 +24,7 @@ export default defineConfig({
       autoInstall: true,
     }),
   ],
-  base:"/",
+  base:process.env.VITE_BASE_PATH || "/candleaf-front",
 
   resolve: {
     alias: {
