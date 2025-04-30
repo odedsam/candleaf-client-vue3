@@ -40,7 +40,7 @@ export const verifyGoogleToken = async (accessToken: string): Promise<User> => {
     const res = await fetch(`${BASE_URL}/api/auth/google`, {
       method: 'POST',
       credentials: 'include',
-      headers: {  'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ token: accessToken }),
     });
     if (!res.ok) {

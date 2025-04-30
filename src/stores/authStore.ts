@@ -2,8 +2,8 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { loginWithGoogle, verifyGoogleToken, logout } from '@/services/authService'
 import { User } from '@/types/User'
-import router from '@/router'
 import { BASE_URL } from '@/utils'
+import router from '@/router'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('auth', () => {
       const userData = await verifyGoogleToken(accessToken)
       if (userData) {
         user.value = userData
-        router.push('/auth/login/success')
+        router.push('/products')
       }
     } catch (err: any) {
       console.error('Google login failed:', err)
