@@ -2,11 +2,16 @@
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import { useRouter } from 'vue-router'
+import { BASE_URL } from '@/utils'
 import BaseInput from '../base/BaseInput.vue'
 import GoogleLogin from '@/components/features/auth/GoogleLogin.vue'
 
 const authStore = useAuthStore()
 const router = useRouter()
+
+const isSignUp = ref(false)
+const isLoading = ref(false)
+const errorMessage = ref<string | null>(null)
 
 const form = ref({
   name: '',
@@ -14,16 +19,16 @@ const form = ref({
   password: '',
 })
 
-const isSignUp = ref(false)
-const isLoading = ref(false)
-const errorMessage = ref<string | null>(null)
+
+
+const registerUrl =`${BASE_URL}/api/auth/register`;
+const loginUrl = `${BASE_URL}/api/auth/login`;
 
 const handleSubmit = async () => {
   isLoading.value = true
   errorMessage.value = null
   try {
-    const endpoint = isSignUp.value ? '/api/auth/register' : '/api/auth/login'
-
+    const endpoint = isSignUp.value ? registerUrl : loginUrl
     const res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
