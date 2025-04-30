@@ -10,7 +10,6 @@ import TestimonialsComp from '@/components/sections/TestimonialsComp.vue'
 import PopularPr from '@/components/sections/PopularPr.vue'
 import FetchStatus from '@/components/feedback/FetchStatus.vue'
 
-import LoginForm from '@/components/forms/LoginForm.vue'
 const authStore = useAuthStore()
 const productStore = useProductStore()
 const {catalogProducts, popularProducts} = storeToRefs(productStore)
@@ -41,7 +40,6 @@ onMounted(async () => {
 
 <template>
   <main class="max-w-full animate-fade-id-view">
-    <LoginForm />
     <HomeHero />
     <FetchStatus :isLoading="isLoading" :error="error" :data="productCatalog">
       <FeaturesInfo />

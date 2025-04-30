@@ -33,6 +33,7 @@ const handleSubmit = async () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
+      mode:'no-cors',
       body: JSON.stringify(form.value),
     })
 
@@ -41,7 +42,7 @@ const handleSubmit = async () => {
       throw new Error(message)
     }
     await authStore.fetchCurrentUser()
-    router.push('/')
+    router.push('/auth/login/success')
   } catch (err: any) {
     errorMessage.value = err.message || 'Login failed'
   } finally {
