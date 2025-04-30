@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import { loginWithGoogle, verifyGoogleToken, logout } from '@/services/authService'
 import { User } from '@/types/User'
 import router from '@/router'
+import { BASE_URL } from '@/utils'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
@@ -30,20 +31,20 @@ export const useAuthStore = defineStore('auth', () => {
 
   const fetchCurrentUser = async () => {
     try {
-      const res = await fetch('/api/auth/verify', {
+      const res = await fetch(`${BASE_URL}/api/auth/verify`, {
         method: 'POST',
         credentials: 'include',
       })
-  
+
       if (res.status === 401) {
         user.value = null
         return
       }
-  
+
       if (!res.ok) {
         throw new Error()
       }
-  
+
       const data = await res.json()
       user.value = data
     } catch(err:any) {
