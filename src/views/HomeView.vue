@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import {ref, onMounted} from 'vue'
+import {productCatalog} from '@/utils/constants'
+import {useAuthStore} from '@/stores/authStore'
+import {storeToRefs} from 'pinia'
+import {useProductStore} from '@/stores/productStore'
 import HomeHero from '@/components/sections/HomeHero.vue'
 import FeaturesInfo from '@/components/sections/FeaturesInfo.vue'
 import TestimonialsComp from '@/components/sections/TestimonialsComp.vue'
 import PopularPr from '@/components/sections/PopularPr.vue'
 import FetchStatus from '@/components/feedback/FetchStatus.vue'
-import {productCatalog} from '@/utils/constants'
-import {useAuthStore} from '@/stores/authStore'
-import {storeToRefs} from 'pinia'
-import {useProductStore} from '@/stores/productStore'
+
 
 const authStore = useAuthStore()
 const productStore = useProductStore()

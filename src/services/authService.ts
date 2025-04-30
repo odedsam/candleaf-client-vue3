@@ -1,5 +1,7 @@
 import { User, Credentials } from '@/types/User'
 import { loadGoogleScript } from '@/utils/loadGoogleScript'
+import { BASE_URL, GOOGLE_CLIENT_ID } from '@/utils'
+
 
 declare global {
   interface Window {
@@ -19,7 +21,7 @@ export const loginWithGoogle = async (): Promise<string> => {
     }
 
     const client = window.google.accounts.oauth2.initTokenClient({
-      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+      client_id: GOOGLE_CLIENT_ID,
       scope: 'openid profile email',
       callback: (tokenResponse: any) => {
         if (tokenResponse?.access_token) {
@@ -36,7 +38,7 @@ export const loginWithGoogle = async (): Promise<string> => {
 
 
 export const verifyGoogleToken = async (accessToken: string): Promise<User> => {
-  const res = await fetch('/api/auth/google', {
+  const res = await fetch(`${BASE_URL}/api/auth/google`, {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
@@ -54,7 +56,7 @@ export const verifyGoogleToken = async (accessToken: string): Promise<User> => {
 
 
 export const logout = async () => {
-  await fetch('/api/auth/logout', {
+  await fetch(`${BASE_URL}/api/auth/logout`, {
     method: 'POST',
     credentials: 'include',
   })
@@ -63,7 +65,7 @@ export const logout = async () => {
 
 
 export const login = async (credentials: Credentials): Promise<User> => {
-  const res = await fetch('/api/auth/login', {
+  const res = await fetch(`${BASE_URL}/api/auth/login`, {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },

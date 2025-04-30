@@ -9,19 +9,6 @@ import Components from 'unplugin-vue-components/vite'
 
 
 export default defineConfig({
-  build: {
-    outDir: 'dist',
-  },
-  server: {
-    proxy: {
-      '/api': {
-        target:"https://candleaf-back-production.up.railway.app",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-    },
-    host: true,
-  },
   plugins: [
     vue(), tailwindcss(),
     Components({
@@ -42,5 +29,9 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap:true,
   },
 })
