@@ -2,8 +2,9 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { loginWithGoogle, verifyGoogleToken, logout } from '@/services/authService'
 import { User } from '@/types/User'
-import { BASE_URL } from '@/utils'
 import router from '@/router'
+
+const url = `https://candleaf-back-production.up.railway.app`
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
@@ -31,7 +32,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const fetchCurrentUser = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/api/auth/verify`, {
+      const res = await fetch(`${url}/api/auth/verify`, {
         method: 'POST',
         credentials: 'include',
       })

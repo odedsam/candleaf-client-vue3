@@ -1,7 +1,7 @@
 import { User, Credentials } from '@/types/User';
 import { loadGoogleScript } from '@/utils/loadGoogleScript';
-import { BASE_URL, GOOGLE_CLIENT_ID } from '@/utils';
-
+import { GOOGLE_CLIENT_ID } from '@/utils';
+const url = `https://candleaf-back-production.up.railway.app`
 declare global {
   interface Window {
     google: any;
@@ -37,7 +37,7 @@ export const loginWithGoogle = async (): Promise<string> => {
 
 export const verifyGoogleToken = async (accessToken: string): Promise<User> => {
   try {
-    const res = await fetch(`${BASE_URL}/api/auth/google`, {
+    const res = await fetch(`${url}/api/auth/google`, {
       method: 'POST',
       credentials: 'include',
       headers: {'Content-Type': 'application/json'},
@@ -57,7 +57,7 @@ export const verifyGoogleToken = async (accessToken: string): Promise<User> => {
 };
 
 export const login = async (credentials: Credentials): Promise<User> => {
-  const res = await fetch(`${BASE_URL}/api/auth/login`, {
+  const res = await fetch(`${url}/api/auth/login`, {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
@@ -78,7 +78,7 @@ export const login = async (credentials: Credentials): Promise<User> => {
 };
 
 export const logout = async () => {
-  await fetch(`${BASE_URL}/api/auth/logout`, {
+  await fetch(`${url}/api/auth/logout`, {
     method: 'POST',
     credentials: 'include',
   });

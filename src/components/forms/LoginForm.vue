@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import { useRouter } from 'vue-router'
-import { BASE_URL } from '@/utils'
 import BaseInput from '../base/BaseInput.vue'
 import GoogleLogin from '@/components/features/auth/GoogleLogin.vue'
 
@@ -21,8 +20,9 @@ const form = ref({
 
 
 
-const registerUrl =`${BASE_URL}/api/auth/register`;
-const loginUrl = `${BASE_URL}/api/auth/login`;
+
+const registerUrl =`https://candleaf-back-production.up.railway.app/api/auth/register`
+const loginUrl = `https://candleaf-back-production.up.railway.app/api/auth/login`;
 
 const handleSubmit = async () => {
   isLoading.value = true
@@ -60,8 +60,7 @@ const handleSubmit = async () => {
       <BaseInput v-model="form.password" type="password" placeholder="Password" class="mb-12" />
 
       <button
-        class="bg-[#56B280] cursor-pointer w-full
-        max-w-[13.375rem] text-white p-2 rounded-md"
+        class="bg-[#56B280] cursor-pointer w-full max-w-[13.375rem] text-white p-2 rounded-md"
         type="submit"
         :disabled="isLoading">
         {{ isLoading ? 'Processing...' : isSignUp ? 'Sign Up' : 'Sign In' }}
