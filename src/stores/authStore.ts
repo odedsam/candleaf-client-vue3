@@ -3,7 +3,6 @@ import { ref, computed } from 'vue'
 import { loginWithGoogle, verifyGoogleToken, logout } from '@/services/authService'
 import { User } from '@/types/User'
 import { API } from '@/utils';
-
 import router from '@/router'
 
 
