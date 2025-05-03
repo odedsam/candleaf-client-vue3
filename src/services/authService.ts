@@ -1,22 +1,20 @@
 import { User, Credentials } from '@/types/User';
 import { loadGoogleScript } from '@/utils/loadGoogleScript';
-import { GOOGLE_CLIENT_ID } from '@/utils';
-const url = `https://candleaf-back-production.up.railway.app`
+import { API, GOOGLE_CLIENT_ID } from '@/utils';
+
 declare global {
   interface Window {
     google: any;
   }
 }
-const isMobile = (): boolean => {
-  return /Mobi|Android/i.test(navigator.userAgent);
-};
+
 
 export const loginWithGoogle = async (): Promise<string> => {
   await loadGoogleScript();
 
-  return await new Promise((resolve, reject) => {
+  return await new Promise<string>((resolve, reject) => {
     if (!window.google?.accounts?.oauth2) {
-      return reject('Google OAuth2 not available');
+      return reject(new Error('Google OAuth2 not available'));
     }
 
     const client = window.google.accounts.oauth2.initTokenClient({
@@ -34,33 +32,39 @@ export const loginWithGoogle = async (): Promise<string> => {
     client.requestAccessToken();
   });
 };
-
 export const verifyGoogleToken = async (accessToken: string): Promise<User> => {
   try {
-    const res = await fetch(`${url}/api/auth/google`, {
+    const res = await fetch(`${API}/api/v1/auth/google`, {
       method: 'POST',
       credentials: 'include',
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ token: accessToken }),
     });
+
     if (!res.ok) {
       const { message } = await res.json().catch(() => ({ message: 'Google login failed' }));
-      console.log('res.status : ', res.status);
+      console.error('Failed Google token verification:', res.status, message);
       throw new Error(message);
     }
 
     const { user } = await res.json();
     return user;
-  } catch (err: any) {
-    console.log("err verifying google token : ",err);
+  } catch (err) {
+    console.error('Error verifying Google token:', err);
+    throw err;
   }
 };
 
+
 export const login = async (credentials: Credentials): Promise<User> => {
-  const res = await fetch(`${url}/api/auth/login`, {
+  const res = await fetch(`${API}/api/v1/auth/login`, {
     method: 'POST',
     credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(credentials),
   });
 
@@ -70,38 +74,16 @@ export const login = async (credentials: Credentials): Promise<User> => {
   }
 
   const { user } = await res.json();
-  if (!user) {
-    throw new Error('User data not returned after login');
-  }
-
+  if (!user) throw new Error('User data not returned after login');
   return user;
 };
 
-export const logout = async () => {
-  await fetch(`${url}/api/auth/logout`, {
+
+export const logout = async (): Promise<void> => {
+  await fetch(`${API}/api/v1/auth/logout`, {
     method: 'POST',
     credentials: 'include',
   });
-  location.href = '/';
+
+  window.location.href = '/';
 };
-
-// const client = google.accounts.oauth2.initTokenClient({
-//   client_id: 'YOUR_GOOGLE_CLIENT_ID',
-//   callback: "onTokenResponse",
-//   scope: 'https://www.googleapis.com/auth/documents.readonly',
-// });
-// client.requestAccessToken();
-
-// const client = google.accounts.oauth2.initTokenClient({
-//   client_id: 'YOUR_GOOGLE_CLIENT_ID',
-//   callback: "onTokenResponse",
-//   scope: 'https://www.googleapis.com/auth/calendar.readonly',
-// });
-// client.requestAccessToken();
-
-// const client = google.accounts.oauth2.initTokenClient({
-//   client_id: 'YOUR_GOOGLE_CLIENT_ID',
-//   callback: "onTokenResponse",
-//   scope: 'https://www.googleapis.com/auth/photoslibrary.readonly',
-// });
-// client.requestAccessToken();

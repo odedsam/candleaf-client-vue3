@@ -1,3 +1,6 @@
+# me
+tasks/
+
 # Logs
 logs
 *.log
@@ -35,3 +38,4 @@ docs/*
 
 
 
+.vercel

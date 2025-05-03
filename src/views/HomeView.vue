@@ -10,6 +10,7 @@ import TestimonialsComp from '@/components/sections/TestimonialsComp.vue'
 import PopularPr from '@/components/sections/PopularPr.vue'
 import FetchStatus from '@/components/feedback/FetchStatus.vue'
 
+
 const authStore = useAuthStore()
 const productStore = useProductStore()
 const {catalogProducts, popularProducts} = storeToRefs(productStore)

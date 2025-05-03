@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import { useRouter } from 'vue-router'
+import { API } from "@/utils"
 import BaseInput from '../base/BaseInput.vue'
 import GoogleLogin from '@/components/features/auth/GoogleLogin.vue'
 
@@ -19,10 +20,9 @@ const form = ref({
 })
 
 
+const loginUrl = `${API}/api/v1/auth/login`;
+const registerUrl = `${API}/api/v1/auth/register`;
 
-
-const registerUrl =`https://candleaf-back-production.up.railway.app/api/auth/register`
-const loginUrl = `https://candleaf-back-production.up.railway.app/api/auth/login`;
 
 const handleSubmit = async () => {
   isLoading.value = true

@@ -2,9 +2,12 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { loginWithGoogle, verifyGoogleToken, logout } from '@/services/authService'
 import { User } from '@/types/User'
+import { API } from '@/utils';
+
 import router from '@/router'
 
-const url = `https://candleaf-back-production.up.railway.app`
+
+
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
@@ -20,7 +23,7 @@ export const useAuthStore = defineStore('auth', () => {
       const userData = await verifyGoogleToken(accessToken)
       if (userData) {
         user.value = userData
-        router.push('/products')
+        router.push('/auth/login/success')
       }
     } catch (err: any) {
       console.error('Google login failed:', err)
@@ -32,7 +35,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const fetchCurrentUser = async () => {
     try {
-      const res = await fetch(`${url}/api/auth/verify`, {
+      const res = await fetch(`${API}/api/v1/auth/verify`, {
         method: 'POST',
         credentials: 'include',
       })
@@ -52,6 +55,16 @@ export const useAuthStore = defineStore('auth', () => {
       console.error(err)
       user.value = null
     }
+
+
+
+
+
+
+
+
+
+
   }
   const handleLogout = async () => {
     try {

@@ -3,9 +3,9 @@ import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
 import { storeToRefs } from 'pinia'
+import { useCartStore } from '@/stores/cartStore'
 import ProfileIcon from '@/assets/icons/userProfile.svg'
 import CartIcon from './CartIcon.vue'
-import { useCartStore } from '@/stores/cartStore'
 
 const authStore = useAuthStore()
 const cartStore = useCartStore()
@@ -27,7 +27,6 @@ const profileImage = computed(() => user?.value.avatar ?? ProfileIcon)
       </RouterLink>
     </div>
     <RouterLink v-else :to="'/auth/login'">
-      <!-- <img :src="ProfileIcon" class="w-6 h-6 cursor-pointer" alt="profile-icon" /> -->
       <i-tabler-user-circle class="w-6 h-6 cursor-pointer" />
     </RouterLink>
 
