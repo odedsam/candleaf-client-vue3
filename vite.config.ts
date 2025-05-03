@@ -1,16 +1,15 @@
-import { fileURLToPath, URL } from 'node:url'
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import tailwindcss from '@tailwindcss/vite'
-import Icons from 'unplugin-icons/vite'
-import IconsResolver from 'unplugin-icons/resolver'
-import Components from 'unplugin-vue-components/vite'
-
-
+import { fileURLToPath, URL } from 'node:url';
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import tailwindcss from '@tailwindcss/vite';
+import Icons from 'unplugin-icons/vite';
+import IconsResolver from 'unplugin-icons/resolver';
+import Components from 'unplugin-vue-components/vite';
 
 export default defineConfig({
   plugins: [
-    vue(), tailwindcss(),
+    vue(),
+    tailwindcss(),
     Components({
       resolvers: [
         IconsResolver({
@@ -24,8 +23,7 @@ export default defineConfig({
       autoInstall: true,
     }),
   ],
-  // base:process.env.NODE_ENV === 'production' ? process.env.VITE_BASE_PATH || "/candleaf-front" : '/',
-
+  base: process.env.NODE_ENV === 'production' ? process.env.VITE_BASE_PATH || '/candleaf-front' : '/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -33,6 +31,6 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap:true,
+    sourcemap: true,
   },
-})
+});
