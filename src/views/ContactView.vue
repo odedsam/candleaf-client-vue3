@@ -1,9 +1,45 @@
 <script lang="ts" setup>
-import { ref } from "vue"
+import { API, errorToast, successToast } from '@/utils';
+import { ref } from 'vue';
 
-const name = ref("")
-const email = ref("")
-const message = ref("")
+const name = ref('');
+const email = ref('');
+const message = ref('');
+
+const handleSubmit = async () => {
+  try {
+    const response = await fetch(`${API}/api/v1/contact`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name.value,
+        email: email.value,
+        message: message.value,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Error sending message:', errorData);
+      errorToast(errorData?.message || 'Something went wrong.');
+      return;
+    }
+
+    const responseData = await response.json();
+    console.log('Message sent successfully:', responseData);
+    successToast('Message sent successfully!');
+    name.value = '';
+    email.value = '';
+    message.value = '';
+
+  } catch (error) {
+    console.error('Fetch error:', error);
+    errorToast('Network error. Please try again.');
+  }
+};
+
 </script>
 
 <template>
@@ -15,9 +51,9 @@ const message = ref("")
       </p>
     </div>
 
-    <form class="max-w-lg mx-auto mt-8 space-y-6">
+    <form @submit.prevent="handleSubmit" class="max-w-lg mx-auto mt-8 space-y-6">
       <div>
-        <label class="block text-gray-700 font-semibold mb-2 font-poppins dark:text-gray-400">Full Name</label>
+        <label class="block text-gray-700 font-semibold mb-2 font-poppins dark:placeholder:text-gray-200 dark:text-gray-400">Full Name</label>
         <input v-model="name" type="text" class="w-full border rounded-md p-3 font-poppins" placeholder="Enter your name" />
       </div>
 

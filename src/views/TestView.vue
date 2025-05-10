@@ -3,7 +3,6 @@ import { ref, watch, computed  } from 'vue';
 import useDebouncer from '@/composables/useDebouncer';
 import BaseInput from '@/components/base/BaseInput.vue';
 
-// Interface for Nominatim response
 interface Address {
   country?: string;
   city?: string;

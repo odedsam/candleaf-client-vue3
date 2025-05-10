@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import PaymentConfirmation from '@/components/features/checkout/PaymentConfirmation.vue';
 import { ref } from 'vue';
+import PaymentConfirmation from '@/components/features/checkout/PaymentConfirmation.vue';
 
-// Dynamic data
-const isPaymentConfirmed = ref(true); // Toggle this for testing
+const isPaymentConfirmed = ref(true);
 const orderId = ref("2039");
 const userName = ref("Joe");
 </script>

@@ -8,7 +8,6 @@ declare global {
   }
 }
 
-
 export const loginWithGoogle = async (): Promise<string> => {
   await loadGoogleScript();
 
@@ -56,8 +55,6 @@ export const verifyGoogleToken = async (accessToken: string): Promise<User> => {
     throw err;
   }
 };
-
-
 export const login = async (credentials: Credentials): Promise<User> => {
   const res = await fetch(`${API}/api/v1/auth/login`, {
     method: 'POST',
@@ -77,8 +74,6 @@ export const login = async (credentials: Credentials): Promise<User> => {
   if (!user) throw new Error('User data not returned after login');
   return user;
 };
-
-
 export const logout = async (): Promise<void> => {
   await fetch(`${API}/api/v1/auth/logout`, {
     method: 'POST',

@@ -5,9 +5,6 @@ import { User } from '@/types/User'
 import { API } from '@/utils';
 import router from '@/router'
 
-
-
-
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
   const isLoading = ref(false)
@@ -54,15 +51,6 @@ export const useAuthStore = defineStore('auth', () => {
       console.error(err)
       user.value = null
     }
-
-
-
-
-
-
-
-
-
 
   }
   const handleLogout = async () => {

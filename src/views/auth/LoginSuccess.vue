@@ -4,11 +4,9 @@ import {useRouter} from 'vue-router'
 import {useAuthStore} from '@/stores/authStore'
 import {storeToRefs} from 'pinia'
 
-
 const router = useRouter()
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
-
 
 onMounted(() => {
   if (user) {

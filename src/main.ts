@@ -1,5 +1,5 @@
 // import StripeTest from './components/shared/StripeTest.vue'
-// app.component("StripeTest", StripeTest); 
+// app.component("StripeTest", StripeTest);
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import './assets/globals.css'
@@ -13,4 +13,4 @@ const pinia = createPinia()
 app.use(VueSonner)
 app.use(pinia)
 app.use(router)
-app.mount('#app')  
+app.mount('#app')

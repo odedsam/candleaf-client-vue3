@@ -41,8 +41,6 @@ export const features: Features[] = [
   },
 ]
 
-
-
 export const faces: Face[] = [
   {
     personFace: "faces/maleImage.svg",

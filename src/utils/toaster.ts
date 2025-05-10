@@ -20,7 +20,7 @@ export function showToast({
 }: ToastOptions) {
   toast(ToastMessage, {
     position,
-    icon: IconCheck, 
+    icon: IconCheck,
     duration,
     style: {
       background: bgColor ?? '#0f172a',
@@ -29,3 +29,30 @@ export function showToast({
     }
   })
 }
+
+const elegantGreen = '#a7f3d0';
+const elegantBlack = '#1e293b';
+const elegantWhite = '#f8fafc';
+const errorRed = '#dc2626'
+
+
+export const successToast = (message: string) => {
+    showToast({
+      ToastMessage: message,
+      bgColor: elegantGreen,
+      textColor: elegantBlack,
+      borderColor: elegantGreen,
+      position: 'top-right',
+    });
+
+};
+
+export const errorToast = (message: string) => {
+  showToast({
+      ToastMessage: `Failed: ${message}`,
+      bgColor: elegantBlack,
+      textColor: elegantWhite,
+      borderColor: errorRed,
+      position: 'bottom-right',
+  });
+};

@@ -25,16 +25,14 @@ export const useUIStore = defineStore('ui', () => {
   };
 
   const showToast = (message: string, type: ToastType = 'success', duration = 3000) => {
-    const id = Date.now(); // Unique ID for each toast
+    const id = Date.now();
     toasts.value.push({ id, message, type });
 
-    // Auto-remove toast after duration
     setTimeout(() => {
       removeToast(id);
     }, duration);
   };
 
-  // Remove Toast by ID
   const removeToast = (id: number) => {
     toasts.value = toasts.value.filter((toast) => toast.id !== id);
   };

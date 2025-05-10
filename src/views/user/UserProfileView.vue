@@ -2,7 +2,6 @@
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { API } from "@/utils"
-
 type Order = {
   id: string
   date: string

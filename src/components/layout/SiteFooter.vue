@@ -5,7 +5,7 @@ import DividerFooter from '../ui/DividerFooter.vue'
 const isProd = import.meta.env.PROD
 </script>
 <template>
-  <main class="footer-container">
+  <footer class="footer-container mt-auto">
 
     <section class="px-4 md:px-0 md:w-[90%] md:mx-auto">
       <DividerFooter />
@@ -42,8 +42,8 @@ const isProd = import.meta.env.PROD
         </div>
       </div>
     </section>
-  </main>
-  <footer v-if="isProd" class="w-full text-center text-sm text-gray-500 py-4">
-    <UiCredit />
   </footer>
+  <div v-if="isProd" class="w-full text-center text-sm text-gray-500 py-4">
+    <UiCredit />
+  </div>
 </template>
