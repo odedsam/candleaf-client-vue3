@@ -24,14 +24,12 @@ const normalizeTitle = (title: string) => {
 
 const addToCartAnimation = async (event: MouseEvent, product: any) => {
   event.stopPropagation()
-  // find the product image
   const productImg = (event.currentTarget as HTMLElement)
     .closest('div')
     ?.querySelector('img')
 
   if (!productImg) return
 
-  // creation of copy of the image
   const clonedImg = productImg.cloneNode(true) as HTMLElement
   clonedImg.style.position = 'fixed'
   clonedImg.style.zIndex = '1000'
@@ -44,14 +42,12 @@ const addToCartAnimation = async (event: MouseEvent, product: any) => {
 
   document.body.appendChild(clonedImg)
 
-  // start location
   const rect = productImg.getBoundingClientRect()
   clonedImg.style.left = `${rect.left}px`
   clonedImg.style.top = `${rect.top}px`
 
   await nextTick()
 
-  // destination place to --> (cart-icon-header)
   const cartX = window.innerWidth - 80
   const cartY = 50
 

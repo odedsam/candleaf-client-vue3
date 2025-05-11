@@ -33,7 +33,7 @@ export const authMiddleware = (router: Router) => {
   // only try fetching user if there's a token cookie
   const hasToken = document.cookie.includes('token=')
   if (!auth.user && hasToken && to.path !== '/auth/login/success') {
-    await auth.fetchCurrentUser()
+    // await auth.fetchCurrentUser()
   }
 
   // block authenticated users from visiting auth pages

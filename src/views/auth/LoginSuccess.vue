@@ -25,6 +25,7 @@ onMounted(() => {
     <i-tabler-loader class="w-8 h-8 sm:w-10 sm:h-10 animate-spin text-emerald-500" />
   </div>
   <div v-else>
+      <i-tabler-loader class="w-8 h-8 sm:w-10 sm:h-10 animate-spin text-emerald-500" />
     <p> Logging you in...</p>
   </div>
 </template>

@@ -1,27 +1,24 @@
 <script setup lang="ts">
-import {computed} from 'vue'
+import { computed } from 'vue';
 
 const props = defineProps<{
-  isConfirmed: boolean
-  orderId?: string
-  userName?: string
-}>()
+  isConfirmed: boolean;
+  orderId?: string;
+  userName?: string;
+}>();
 
-// Dynamic order message
 const confirmationMessage = computed(() => {
   return props.isConfirmed
     ? `Thank you ${props.userName} for buying Candleaf. The nature is grateful to you. Now that your order is confirmed, it will be ready to ship in 2 days. Please check your inbox in the future for order updates.`
-    : 'Your payment is being processed. Please wait...'
-})
+    : 'Your payment is being processed. Please wait...';
+});
 </script>
 
 <template>
   <div class="flex flex-col items-center text-center p-6 max-w-md mx-auto">
-    <!-- Success Icon -->
     <div
       v-if="isConfirmed"
-      class="flex justify-center opacity-60 items-cente w-[6.25rem] h-[6.25rem] bg-green-white border-6 border-[#56B280] rounded-full mb-4"
-    >
+      class="flex justify-center opacity-60 items-cente w-[6.25rem] h-[6.25rem] bg-green-white border-6 border-[#56B280] rounded-full mb-4">
       <img src="/order-confirmed.svg" alt="" class="" />
     </div>
 

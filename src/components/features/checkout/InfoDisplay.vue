@@ -1,11 +1,13 @@
 <script setup lang="ts">
-
 const props = defineProps<{
-  label: string
-  value: string
-}>()
+  label: string;
+  value: string;
+}>();
 
-const emit = defineEmits(["edit"])
+const emit = defineEmits(['edit']);
+const editContent = (editedData?: any) => {
+  emit('edit', editedData);
+};
 </script>
 
 <template>
@@ -14,7 +16,6 @@ const emit = defineEmits(["edit"])
       <span class="font-poppins dark:text-gray-400 text-[#818181]">{{ label }}</span>
       <span class="ml-2 font-poppins font-semibold text-black dark:text-gray-200 block">{{ value }}</span>
     </p>
-    <button @click="emit('edit')" class="text-green-600 font-poppins cursor-pointer font-sm hover:underline">Edit</button>
+    <button @click="editContent" class="text-green-600 font-poppins cursor-pointer font-sm hover:underline">Edit</button>
   </div>
 </template>
-

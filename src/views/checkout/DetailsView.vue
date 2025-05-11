@@ -43,15 +43,22 @@ const { shipping, shippingErrors } = storeToRefs(checkoutStore);
       <BaseInput v-model="shipping.postalCode" placeholder="Postal Code" :invalid="!!shippingErrors.postalCode" />
       <BaseError v-if="shippingErrors.postalCode" :message="shippingErrors.postalCode" />
 
+
+      <BaseInput v-model="shipping.country" placeholder="Country" :invalid="!!shippingErrors.country" />
+      <BaseError v-if="shippingErrors.country" :message="shippingErrors.country" />
+
+      <BaseInput v-model="shipping.province" placeholder="Province" :invalid="!!shippingErrors.province" />
+      <BaseError v-if="shippingErrors.province" :message="shippingErrors.province" />
+
       <BaseInput v-model="shipping.city" placeholder="City" :invalid="!!shippingErrors.city" />
       <BaseError v-if="shippingErrors.city" :message="shippingErrors.city" />
 
-      <LocationSelector
+      <!-- <AddressAutoComplete
         v-model:country="shipping.country"
         v-model:province="shipping.province"
         v-model:city="shipping.city"
         :errors="shippingErrors"
-      />
+      /> -->
 
       <div class="flex items-center">
         <input type="checkbox" v-model="shipping.saveInfo" />

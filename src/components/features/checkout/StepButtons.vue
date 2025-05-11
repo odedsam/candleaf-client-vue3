@@ -10,6 +10,7 @@ const props = defineProps<{
   primaryRoute: string;
   secondaryRoute: string;
   validate?: () => boolean;
+  submitInfo?:()=>boolean
 }>();
 
 // ensure validate function is only called when needed
@@ -34,7 +35,7 @@ const handleSecondaryClick = () => {
       class="w-full max-w-[21.875rem] cursor-pointer text-white text-lg font-medium py-3 rounded-md transition-all"
       :class="{ 'bg-[#56B280] hover:bg-green-600': !isDisabled, 'bg-gray-400 cursor-not-allowed': isDisabled }"
       @click="handlePrimaryClick"
-      type="button"
+       type="button"
       :disabled="isDisabled">
 
       {{ primaryText }}

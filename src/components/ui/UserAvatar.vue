@@ -22,7 +22,7 @@ const profileImage = computed(() => user?.value.avatar ?? ProfileIcon)
       <RouterLink :to="`/user/${user?._id}`" class="flex justify-center items-center gap-x-2">
         <span class="text-xs font-medium text-gray-800 dark:text-white">Hey,</span>
         <span class="text-md font-sans text-gray-800 dark:text-white hover:underline">{{ firstName }}</span>
-        <img  :src="profileImage" class="w-8 h-8 rounded-full cursor-pointer" alt="User Profile" />
+        <img :src="profileImage" class="w-8 h-8 rounded-full cursor-pointer" alt="User Profile" />
         <span class="text-red-500 text-xs"  @click="authStore.handleLogout">Logout</span>
       </RouterLink>
     </div>
@@ -31,7 +31,7 @@ const profileImage = computed(() => user?.value.avatar ?? ProfileIcon)
     </RouterLink>
 
 
-    <div class="max-md:pr-4" @click="cartStore.toggleCart()">
+    <div class="cart-btn max-md:pr-4" @click="cartStore.toggleCart()">
       <CartIcon />
     </div>
   </div>
