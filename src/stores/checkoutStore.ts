@@ -32,7 +32,6 @@ export const useCheckoutStore = defineStore('checkout', () => {
   const prevStep = () => updateStep(-1);
   watch(step, (newStep) => localStorage.setItem('checkout_step', JSON.stringify(newStep)));
 
-  //  local Storage State
   const shipping = useLocalStorage<ShippingInfo>(
     'checkout_shipping',
     {
@@ -82,10 +81,9 @@ export const useCheckoutStore = defineStore('checkout', () => {
 
       if (response.data) {
         orderConfirmation.value = response.data;
-        setTimeout(()=>{
-         return router.push('/checkout/confirmation');
-        },600)
-
+        setTimeout(() => {
+          return router.push('/checkout/confirmation');
+        }, 600);
       }
 
       showToast({
@@ -113,13 +111,11 @@ export const useCheckoutStore = defineStore('checkout', () => {
         );
   };
 
-  //  step validation state
   const stepValidations = ref<Record<string, boolean>>({
     '/checkout/details': false,
     '/checkout/payment': false,
   });
 
-  //  check if current step is valid
   const isCurrentStepValid = (path: string) => stepValidations.value[path] ?? true;
 
   return {
