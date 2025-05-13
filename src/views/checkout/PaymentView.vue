@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useCheckoutStore } from '@/stores/checkoutStore';
-import { formatShippingAddress, ShippingOptions } from '@/utils';
 import { ref } from 'vue';
 import InfoDisplay from '@/components/features/checkout/InfoDisplay.vue';
 import BaseInput from '@/components/base/BaseInput.vue';
@@ -15,47 +14,42 @@ import StepButtons from '@/components/features/checkout/StepButtons.vue';
 
 const checkoutStore = useCheckoutStore();
 
-const { shipping, formattedShippingAddress, paymentData,shippingOptions } = storeToRefs(checkoutStore);
-
+const { shipping, formattedShippingAddress, paymentData, shippingOptions } = storeToRefs(checkoutStore);
 
 const newInfo = ref({
-  newContact:'',
-  newShippingInfo:'',
-  newMethod:''
-})
+  newContact: '',
+  newShippingInfo: '',
+  newMethod: '',
+});
 
 const selectedShippingMethod = shippingOptions.value[0];
 const editContact = (contact?: any) => {
-  if(contact) newInfo.value.newContact = contact
+  if (contact) newInfo.value.newContact = contact;
 };
 const editShipping = (newShipping?: any) => {
-  if (shipping) newInfo.value.newShippingInfo =  newShipping
-
+  if (shipping) newInfo.value.newShippingInfo = newShipping;
 };
 const editMethod = (method?: any) => {
-  if (method) newInfo.value.newMethod = method
+  if (method) newInfo.value.newMethod = method;
 };
 
 // const router = useRouter()
-const submitted=ref(false);
-const errorMessage = ref('')
+const submitted = ref(false);
+const errorMessage = ref('');
 // const navigateT = router.push('/checkout/confirmation')
 // const navigateB = router.push('/checkout/shipping')
 
-
 const handleSubmit = async () => {
-  submitted.value =true
+  submitted.value = true;
   try {
     checkoutStore.submitFormData();
   } catch (err: any) {
     console.log(err);
-    submitted.value = false
-    errorMessage.value = err
-  }finally{
-    submitted.value = false
-
+    submitted.value = false;
+    errorMessage.value = err;
+  } finally {
+    submitted.value = false;
   }
-
 };
 </script>
 
@@ -88,7 +82,9 @@ const handleSubmit = async () => {
       <!-- <BaseInput v-model="payment.vatNumber" size="full" placeholder="VAT number (optional)" />
       <BaseInput v-model="payment.pec" size="full" placeholder="PEC (optional)" /> -->
     </div>
-    <button @click="handleSubmit" id="confirmation" type="submit" class="text-green-600 py-12 px-12 mx-auto text-lg font-sans">Confimartion</button>
+    <button @click="handleSubmit" id="confirmation" type="submit" class="text-green-600 py-12 px-12 mx-auto text-lg font-sans">
+      Confimartion
+    </button>
 
     <BillingAddress />
     <!-- <StepButtons
