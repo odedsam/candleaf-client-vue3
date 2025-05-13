@@ -1,7 +1,7 @@
 import {defineStore} from 'pinia'
 import {ref, computed} from 'vue'
 import { showToast } from '@/utils'
-
+import { useLocalStorage } from '@vueuse/core';
 type CartItem = {
   id: number
   title: string
@@ -12,7 +12,7 @@ type CartItem = {
 
 
 export const useCartStore = defineStore('cart', () => {
-  const cartItems = ref<CartItem[]>([])
+   const cartItems = useLocalStorage<CartItem[]>('cart-items', [])
   const isCartOpen = ref<boolean>(false)
 
   const cartAmount = computed(() => {
