@@ -36,5 +36,5 @@ test('should complete checkout with mocked POST API to localhost:5001/api/v1/che
 
   await expect(page).toHaveURL(/.*checkout\/confirmation/);
   // await expect(page.locator('h2')).toHaveText('Payment Confirmed');
-  await page.waitForTimeout(30000);
+  // await page.waitForTimeout(30000);
 });

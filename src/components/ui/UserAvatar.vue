@@ -1,35 +1,40 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
 import { storeToRefs } from 'pinia'
 import { useCartStore } from '@/stores/cartStore'
 import ProfileIcon from '@/assets/icons/userProfile.svg'
 import CartIcon from './CartIcon.vue'
+import BaseDropDown from '../base/BaseDropDown.vue'
 
 const authStore = useAuthStore()
 const cartStore = useCartStore()
 const { isAuthenticated, user } = storeToRefs(authStore)
-const firstName = computed(()=>user?.value?.name.split(' ')[0] ?? 'User')
-const profileImage = computed(() => user?.value.avatar ?? ProfileIcon)
+const firstName = computed(() => user?.value?.name.split(' ')[0] ?? 'User')
+const profileImage = computed(() => user?.value?.avatar ?? ProfileIcon)
+const profileLink = ref('/auth/login')
 
+watch([isAuthenticated, user], () => {
+  profileLink.value = isAuthenticated.value && user.value?._id
+    ? `/user/${user.value._id}`
+    : '/auth/login'
+}, { immediate: true })
 </script>
 
 <template>
   <div class="order-3 flex justify-center items-center space-x-4">
+      <BaseDropDown :icon-place-holder="profileImage" >
+      <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100" />
+      <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">View Profile</RouterLink>
+      <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100" >Settings</RouterLink>
+      <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100" >Preferences </RouterLink>
+      <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100" >Support</RouterLink>
+      <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100" >Help</RouterLink>
+      <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100" >Notifications</RouterLink>
 
-    <div v-if="isAuthenticated">
-      <RouterLink :to="`/user/${user?._id}`" class="flex justify-center items-center gap-x-2">
-        <span class="text-xs font-medium text-gray-800 dark:text-white">Hey,</span>
-        <span class="text-md font-sans text-gray-800 dark:text-white hover:underline">{{ firstName }}</span>
-        <img :src="profileImage" class="w-8 h-8 rounded-full cursor-pointer" alt="User Profile" />
-        <span class="text-red-500 text-xs"  @click="authStore.handleLogout">Logout</span>
-      </RouterLink>
-    </div>
-    <RouterLink v-else :to="'/auth/login'">
-      <i-tabler-user-circle class="w-6 h-6 cursor-pointer" />
-    </RouterLink>
-
+      <span v-if="isAuthenticated" class="text-red-500 text-xs" @click="authStore.handleLogout">Logout</span>
+    </BaseDropDown>
 
     <div class="cart-btn max-md:pr-4" @click="cartStore.toggleCart()">
       <CartIcon />

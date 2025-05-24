@@ -4,7 +4,7 @@ import { useLocalStorage } from '@vueuse/core'
 
 const darkMode = useLocalStorage('theme.dark', false)
 
-watch(darkMode, (enabled) => {
+watch(darkMode, (enabled:boolean) => {
   document.documentElement.classList.toggle('dark', enabled)
 }, { immediate: true })
 
