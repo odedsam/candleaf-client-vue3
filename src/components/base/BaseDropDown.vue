@@ -1,8 +1,16 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps<{ iconPlaceHolder?: any }>();
 const open = ref(false);
+
+
+const icon = ref(props.iconPlaceHolder || ''); // default local
+
+watch( () => props.iconPlaceHolder,(newIcon) => {
+    icon.value = newIcon || '';
+  });
+
 </script>
 
 <template>
@@ -10,7 +18,7 @@ const open = ref(false);
     <button
       @click="open = !open"
       class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition dark:bg-gray-400 cursor-pointer">
-      <img :src="props.iconPlaceHolder" alt="holder-icon" draggable="false" />
+      <img :src="icon" alt="holder-icon" draggable="false" />
     </button>
 
     <Transition
@@ -22,7 +30,7 @@ const open = ref(false);
       leave-to-class="transform opacity-0 scale-95">
       <div
         v-if="open"
-        class="origin-top-right cursor-pointer absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white dark:bg-gray-600 ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+        class="origin-top-right cursor-pointer absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white dark:bg-zinc-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
         <div class="py-1">
           <slot />
         </div>
