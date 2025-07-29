@@ -8,7 +8,7 @@ const errorMessage = ref<string | null>(null)
 
 const fetchOrderDetails = async () => {
   try {
-    const response = await fetch(`http://localhost:5001/api/orders/${route.params.id}`, {
+    const response = await fetch(`http://localhost:5001/api/v1/orders/${route.params.id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
       }

@@ -65,6 +65,7 @@ declare module 'vue' {
     NavSettings: typeof import('./src/components/layout/NavSettings.vue')['default']
     OrderDetails: typeof import('./src/components/features/checkout/OrderDetails.vue')['default']
     OrdersList: typeof import('./src/components/features/orders/OrdersList.vue')['default']
+    PasswordInput: typeof import('./src/components/base/PasswordInput.vue')['default']
     PaymentConfirmation: typeof import('./src/components/features/checkout/PaymentConfirmation.vue')['default']
     PaymentMethods: typeof import('./src/components/features/checkout/PaymentMethods.vue')['default']
     PeopleReview: typeof import('./src/components/sections/PeopleReview.vue')['default']

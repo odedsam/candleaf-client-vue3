@@ -9,6 +9,8 @@ const props = defineProps<{
   size?: 'full' | 'half';
   id?: string;
   invalid?: boolean | string;
+  required?:boolean;
+  autocomplete?:string;
 }>();
 
 const emit = defineEmits(['update:modelValue']);
@@ -23,6 +25,8 @@ const uniqueId = computed(() => props.id || `input-${crypto.randomUUID()}`);
       :value="modelValue"
       @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       :placeholder="placeholder"
+      :autocomplete="props.autocomplete"
+      :required="props.required" v-bind="$attrs"
       :class="['form-input', props.invalid ? 'border-red-500' : 'border-gray-300']" />
     <span v-if="icon" class="absolute right-3 top-2.5 text-[#3d8d61]">
       <component :is="icon" class="w-5 h-5" />

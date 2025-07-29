@@ -6,7 +6,7 @@ const errorMessage = ref<string | null>(null)
 
 const fetchOrders = async () => {
   try {
-    const response = await fetch('http://localhost:5001/api/orders', {
+    const response = await fetch('http://localhost:5001/api/v1/orders', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },

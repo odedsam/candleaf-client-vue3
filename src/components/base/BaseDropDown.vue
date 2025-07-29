@@ -3,9 +3,7 @@ import { ref, watch } from 'vue';
 
 const props = defineProps<{ iconPlaceHolder?: any }>();
 const open = ref(false);
-
-
-const icon = ref(props.iconPlaceHolder || ''); // default local
+const icon = ref(props.iconPlaceHolder || ''); // default-local-icon
 
 watch( () => props.iconPlaceHolder,(newIcon) => {
     icon.value = newIcon || '';
@@ -18,7 +16,7 @@ watch( () => props.iconPlaceHolder,(newIcon) => {
     <button
       @click="open = !open"
       class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition dark:bg-gray-400 cursor-pointer">
-      <img :src="icon" alt="holder-icon" draggable="false" />
+      <img :src="icon" alt="holder-icon" draggable="false" class="size-6" />
     </button>
 
     <Transition

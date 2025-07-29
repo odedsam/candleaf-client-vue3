@@ -8,12 +8,16 @@ import { getCookiesByKeys, getCookiesByKeysAndNames, showCookiesTable, findCooki
 import ProfileIcon from '@/assets/icons/userProfile.svg';
 import CartIcon from './CartIcon.vue';
 import BaseDropDown from '../base/BaseDropDown.vue';
+
+
 const authStore = useAuthStore();
 const cartStore = useCartStore();
 const { isAuthenticated, user } = storeToRefs(authStore);
-const firstName = computed(() => user?.value?.name.split(' ')[0] ?? 'User');
+
+const firstName = computed(() => user?.value?.name.split(' ')[0] ?? 'Guest');
 const profileImage = computed(() => user?.value?.avatar ?? ProfileIcon);
 const profileLink = ref('/auth/login');
+
 const userImage = ref('');
 console.log(' userImage:', userImage.value);
 
@@ -25,10 +29,11 @@ watch(
   { immediate: true },
 );
 
-showCookiesTable();
-// See all cookies
-findCookie('token'); // Search for cookies containing "token"
-findCookie('session'); // Search for cookies containing "session"
+const myCookie = document.cookie
+console.log('myCookie : ',typeof myCookie);
+console.log(firstName.value);
+
+
 </script>
 
 <template>

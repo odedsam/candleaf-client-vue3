@@ -1,0 +1,8 @@
+POST http://localhost:5001/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "name": "fraggylasd",
+  "email": "fragglarence26@gmail.com",
+  "password": "Password125A"
+}

@@ -2,14 +2,16 @@
 import { onMounted, ref, computed } from 'vue';
 import { useCheckoutStore } from '@/stores/checkoutStore';
 import { storeToRefs } from 'pinia';
+import { RouterLink } from 'vue-router';
 import PaymentConfirmation from '@/components/features/checkout/PaymentConfirmation.vue';
 
-const store = useCheckoutStore();
-const { orderConfirmation } = storeToRefs(store);
 
 const isPaymentConfirmed = ref(false);
 const userOrderId = ref('');
 const userName = ref('');
+const store = useCheckoutStore();
+const { orderConfirmation } = storeToRefs(store);
+
 
 onMounted(() => {
   if (orderConfirmation.value?.success && orderConfirmation.value?.userConfirmation) {
@@ -30,12 +32,13 @@ const order = computed(() => ({
   shippingMethod: orderConfirmation.value?.userConfirmation?.shipping_method,
 }));
 
-const orderItems = computed(() =>
-  orderConfirmation.value?.userConfirmation?.products || []
-);
+const orderItems = computed(() => orderConfirmation.value?.userConfirmation?.products || []);
+
+
 </script>
 
 <template>
+
   <PaymentConfirmation :isConfirmed="isPaymentConfirmed" :orderId="userOrderId" :userName="userName" />
 
   <div class="p-6 bg-[#f9f9f9] min-h-screen">
@@ -77,6 +80,13 @@ const orderItems = computed(() =>
           </div>
         </div>
       </div>
+
+    <div class="flex items-center  gap-2 px-4 py-12">
+      <i-tabler-shopping-cart class="h-8 w-8 text-[#56B280]" />
+      <RouterLink to="/products" class="text-xl font-semibold text-gray-700 hover:text-[#56B280] transition-colors duration-200 underline">
+        Back To Shopping
+      </RouterLink>
+    </div>
     </div>
   </div>
 </template>
