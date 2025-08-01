@@ -39,15 +39,19 @@ console.log(firstName.value);
 <template>
   <div class="order-3 flex justify-center items-center space-x-4">
     <BaseDropDown :icon-place-holder="profileImage">
-      <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100" />
-      <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">View Profile</RouterLink>
-      <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Settings</RouterLink>
-      <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Preferences</RouterLink>
-      <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Support</RouterLink>
-      <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Help</RouterLink>
-      <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Notifications</RouterLink>
+      <RouterLink v-if="!isAuthenticated" :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Login</RouterLink>
 
-      <span v-if="isAuthenticated" class="text-red-500 flex pl-7 gap-x-2 dark:text-red-400" @click="authStore.handleLogout">Logout</span>
+      <div v-if="isAuthenticated">
+        <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100" />
+        <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">View Profile</RouterLink>
+        <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Settings</RouterLink>
+        <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Preferences</RouterLink>
+        <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Support</RouterLink>
+        <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Help</RouterLink>
+        <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Notifications</RouterLink>
+
+        <span v-if="isAuthenticated" class="text-red-500 flex pl-7 gap-x-2 dark:text-red-400" @click="authStore.handleLogout">Logout</span>
+      </div>
     </BaseDropDown>
 
     <div class="cart-btn max-md:pr-4" @click="cartStore.toggleCart()">

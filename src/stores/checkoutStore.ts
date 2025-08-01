@@ -1,19 +1,27 @@
 import { defineStore, storeToRefs } from 'pinia';
 import { computed, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
+
 import { type PaymentInfo, type ShippingInfo, ShippingOptions } from '@/utils/formValidations';
 import { shippingValidationSchema, paymentValidationSchema } from '@/utils/formValidations';
 import { formatShippingAddress } from '@/utils/formatters';
+
+import { CartItem, CheckoutStepRoutes } from '@/types/index';
+
 import { useLocalStorage } from '@vueuse/core';
-import { CheckoutStepRoutes } from '@/types/index';
 import { showToast } from '@/utils';
 import { useCartStore } from './cartStore';
 import axios from 'axios';
+import { useAuthStore } from '@/stores/authStore';
 
 export const useCheckoutStore = defineStore('checkout', () => {
   const router = useRouter();
   const cartStore = useCartStore();
+  const authStore = useAuthStore();
+
   const { cartItems, subTotal } = storeToRefs(cartStore);
+  const { isAuthenticated,user } = storeToRefs(authStore);
+
   const step = ref(useLocalStorage<number>('checkout_step', 0).value);
   const stepRoutes = Object.values(CheckoutStepRoutes);
   const orderConfirmation = ref<any>({});
@@ -70,9 +78,17 @@ export const useCheckoutStore = defineStore('checkout', () => {
         ...shipping.value,
       },
       cartItems: items.value,
+      user,
+      isGuest:!isAuthenticated,
       payment: paymentData.value,
     };
   });
+
+
+
+
+
+
   const submitFormData = async () => {
     const formData = aggregateFormData.value;
     try {
@@ -85,6 +101,7 @@ export const useCheckoutStore = defineStore('checkout', () => {
           return router.push('/checkout/confirmation');
         }, 600);
       }
+      useLocalStorage<CartItem[]>('cart-items', null)
 
       showToast({
         ToastMessage: 'Item Successfuly Purchased ! ',

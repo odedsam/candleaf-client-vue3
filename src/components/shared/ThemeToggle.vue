@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { watch } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
-
+// useLocalStorage
 const darkMode = useLocalStorage('theme.dark', false)
 
 watch(darkMode, (enabled:boolean) => {

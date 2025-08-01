@@ -6,11 +6,13 @@ import { RouterLink } from 'vue-router';
 import PaymentConfirmation from '@/components/features/checkout/PaymentConfirmation.vue';
 
 
+
+const store = useCheckoutStore();
+const { orderConfirmation } = storeToRefs(store);
+
 const isPaymentConfirmed = ref(false);
 const userOrderId = ref('');
 const userName = ref('');
-const store = useCheckoutStore();
-const { orderConfirmation } = storeToRefs(store);
 
 
 onMounted(() => {

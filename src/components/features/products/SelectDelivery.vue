@@ -14,8 +14,8 @@ const updateValue = (value: string) => {
 </script>
 <template>
   <div class="custom-select group bg-white">
-    <span class="text-sm p-2 text-center font-poppins">{{ modelValue || defaultValue }}</span>
-    <ul class="font-poppins transition-all duration-300 ease-out opacity-0 translate-y-[-10px] group-hover:opacity-100 group-hover:translate-y-0">
+    <span class="text-sm p-2 text-center font-poppins dark:text-black">{{ modelValue || defaultValue }}</span>
+    <ul class="font-poppins transition-all duration-300 ease-out opacity-0 translate-y-[-10px] dark:text-black group-hover:opacity-100 group-hover:translate-y-0">
       <li
         v-for="option in options"
         :key="option"

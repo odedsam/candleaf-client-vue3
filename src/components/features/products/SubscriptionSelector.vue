@@ -38,7 +38,7 @@ const borderToggle = (option: 'one-time' | 'subscribe') => {
           radio-label="Subscribe & Delivery Every"
         />
 
-        <SelectDelivery v-model="deliveryInterval" :options="['2 Weeks', '4 Weeks', '6 Weeks']" />
+        <SelectDelivery v-model="deliveryInterval" :default-value="'2 Weeks'" :options="['2 Weeks', '4 Weeks', '6 Weeks']" />
       </div>
       <p class="text-[.975rem] py-3 max-md:py-2 max-md:text-xs font-poppins text-[#818181]">
         Subscribe now and get 10% off on every recurring order.
