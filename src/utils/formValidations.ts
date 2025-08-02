@@ -26,22 +26,25 @@ export const billingAddressSchema = z.object({
 });
 
 
-
-export const shippingValidationSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  subscribe: z.boolean(),
-  name: z.string().min(1, 'Name is required'),
-  lastName: z.string().optional(),
-  address: z.string().min(1, 'Address is required'),
-  shippingNote: z.string().optional(),
-  postalCode: z.string().min(1, 'Postal Code is required'),
-  city: z.string().min(1, 'City is required'),
-  province: z.string().min(1, 'Province is required'),
-  country: z.string().min(1, 'Country is required'),
-  saveInfo:z.boolean().optional()
-});
-
-
+export function createShippingValidationSchema(shippingOptionsIds: string[]) {
+  return z.object({
+    email: z.string().email('Invalid email address'),
+    subscribe: z.boolean(),
+    name: z.string().min(1, 'Name is required'),
+    lastName: z.string().optional(),
+    address: z.string().min(1, 'Address is required'),
+    shippingNote: z.string().optional(),
+    postalCode: z.string().min(1, 'Postal Code is required'),
+    city: z.string().min(1, 'City is required'),
+    province: z.string().min(1, 'Province is required'),
+    country: z.string().min(1, 'Country is required'),
+    saveInfo: z.boolean().optional(),
+    shippingMethod: z.string().refine(
+      (val) => shippingOptionsIds.includes(val),
+      { message: 'Invalid shipping method' }
+    ),
+  })
+}
 
 
 export const paymentValidationSchema = z.object({
@@ -55,10 +58,10 @@ export const paymentValidationSchema = z.object({
   billingSameAsShipping: z.boolean(),
   billingAddress: billingAddressSchema
 });
+export type BillingAddress = z.infer<typeof billingAddressSchema>
+export type ShippingInfo = z.infer<ReturnType<typeof createShippingValidationSchema>>
+export type PaymentInfo = z.infer<typeof paymentValidationSchema>
 
-export type ShippingInfo = z.infer<typeof shippingValidationSchema>;
-export type PaymentInfo = z.infer<typeof paymentValidationSchema>;
-export type BillingAddress = z.infer<typeof billingAddressSchema>;
 
 export interface ShippingOptions {
   id: string;
