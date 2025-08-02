@@ -1,7 +1,9 @@
 import {defineStore} from 'pinia'
-import {ref, computed} from 'vue'
+import { ref, computed} from 'vue'
 import { showToast } from '@/utils'
-import { useLocalStorage } from '@vueuse/core';
+import { useCustomStorage } from '@/composables/useCustomStorage';
+import { ITEM_ADDED_TO_CART, ITEM_REMOVED_FROM_CART } from '@/utils/feedBack';
+
 type CartItem = {
   id: number
   title: string
@@ -12,16 +14,12 @@ type CartItem = {
 
 
 export const useCartStore = defineStore('cart', () => {
-   const cartItems = useLocalStorage<CartItem[]>('cart-items', [])
   const isCartOpen = ref<boolean>(false)
+  const cartItems = useCustomStorage<CartItem[]>('cart-items', [],localStorage, { mergeDefaults:true})
+  const cartAmount = computed(() => {return cartItems.value.reduce((total, item) => total + item.quantity, 0)})
+  const subTotal = computed(() => {return cartItems.value.reduce((total, item) => total + item.price * item.quantity, 0)})
 
-  const cartAmount = computed(() => {
-    return cartItems.value.reduce((total, item) => total + item.quantity, 0)
-  })
 
-  const subTotal = computed(() => {
-    return cartItems.value.reduce((total, item) => total + item.price * item.quantity, 0)
-  })
 
   const addToCart = (product: CartItem) => {
     const existingProduct = cartItems.value.find((item) => item.id === product.id)
@@ -31,13 +29,7 @@ export const useCartStore = defineStore('cart', () => {
       cartItems.value.push({...product, quantity: 1})
     }
 
-    showToast({
-      ToastMessage: 'Item added to cart',
-      bgColor: '#56B280',
-      textColor: '#fff',
-      borderColor: '#56B280',
-      position: 'bottom-right'
-    })
+    showToast(ITEM_ADDED_TO_CART)
   }
 
   const increaseQuantity = (productId: CartItem['id']) => {
@@ -63,18 +55,12 @@ export const useCartStore = defineStore('cart', () => {
   }
   const removeFromCart = (productId: CartItem['id']) => {
     cartItems.value = cartItems.value.filter((item) => item.id !== productId)
+    showToast(ITEM_REMOVED_FROM_CART)
+  }
+  const cleanAllCart = ()=> { cartItems.value = [] }
+  const toggleCart = () => { isCartOpen.value = !isCartOpen.value }
 
-    showToast({
-      ToastMessage: 'Item removed from cart',
-      bgColor: '#56B280',
-      textColor: '#fff',
-      borderColor: '#56B280',
-      position: 'bottom-left'
-    })
-  }
-  const toggleCart = () => {
-    isCartOpen.value = !isCartOpen.value
-  }
+
   return {
     cartItems,
     cartAmount,
@@ -85,5 +71,6 @@ export const useCartStore = defineStore('cart', () => {
     decreaseQuantity,
     toggleCart,
     removeFromCart,
+    cleanAllCart,
   }
 })

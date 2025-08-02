@@ -1,4 +1,5 @@
 import {  type PaymentInfo, type ShippingInfo } from '@/utils/formValidations';
+import { Ref } from 'vue';
 
 export type Features = {
   id: number
@@ -108,8 +109,11 @@ export type User = {
   email: string
   avatar?: string
 }
+export type NavItem ={
+  name: string;
+  to: string;
+}
 
-
-// checkout types 
+// checkout types
 
 

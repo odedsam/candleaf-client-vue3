@@ -1,7 +1,7 @@
 import { toast } from 'vue-sonner'
 import IconCheck from '~icons/tabler/check'
 
-type ToastOptions = {
+export type ToastOptions = {
   ToastMessage: string
   bgColor?: string
   textColor?: string

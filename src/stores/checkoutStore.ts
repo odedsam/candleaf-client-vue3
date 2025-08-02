@@ -1,18 +1,18 @@
 import { defineStore, storeToRefs } from 'pinia';
 import { computed, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-
+import { PURCHASE_FAILED, PURCHASE_SUCCUES } from '@/utils/feedBack';
 import { type PaymentInfo, type ShippingInfo, ShippingOptions } from '@/utils/formValidations';
 import { shippingValidationSchema, paymentValidationSchema } from '@/utils/formValidations';
 import { formatShippingAddress } from '@/utils/formatters';
 
 import { CartItem, CheckoutStepRoutes } from '@/types/index';
 
-import { useLocalStorage } from '@vueuse/core';
 import { showToast } from '@/utils';
 import { useCartStore } from './cartStore';
 import axios from 'axios';
 import { useAuthStore } from '@/stores/authStore';
+import { useCustomStorage } from '@/composables/useCustomStorage';
 
 export const useCheckoutStore = defineStore('checkout', () => {
   const router = useRouter();
@@ -22,7 +22,7 @@ export const useCheckoutStore = defineStore('checkout', () => {
   const { cartItems, subTotal } = storeToRefs(cartStore);
   const { isAuthenticated,user } = storeToRefs(authStore);
 
-  const step = ref(useLocalStorage<number>('checkout_step', 0).value);
+  const step = ref(useCustomStorage<number>('checkout_step', 0).value);
   const stepRoutes = Object.values(CheckoutStepRoutes);
   const orderConfirmation = ref<any>({});
   const items = ref({ cartItems, subTotal });
@@ -40,7 +40,7 @@ export const useCheckoutStore = defineStore('checkout', () => {
   const prevStep = () => updateStep(-1);
   watch(step, (newStep) => localStorage.setItem('checkout_step', JSON.stringify(newStep)));
 
-  const shipping = useLocalStorage<ShippingInfo>(
+  const shipping = useCustomStorage<ShippingInfo>(
     'checkout_shipping',
     {
       email: '',
@@ -55,6 +55,7 @@ export const useCheckoutStore = defineStore('checkout', () => {
       country: 'Italy',
       saveInfo: false,
     },
+    localStorage,
     { mergeDefaults: true },
   );
 
@@ -97,21 +98,14 @@ export const useCheckoutStore = defineStore('checkout', () => {
 
       if (response.data) {
         orderConfirmation.value = response.data;
-        setTimeout(() => {
-          return router.push('/checkout/confirmation');
-        }, 600);
+        setTimeout(() => {return router.push('/checkout/confirmation');}, 600);
       }
-      useLocalStorage<CartItem[]>('cart-items', null)
-
-      showToast({
-        ToastMessage: 'Item Successfuly Purchased ! ',
-        bgColor: '#56B280',
-        textColor: '#fff',
-        borderColor: '#56B280',
-        position: 'bottom-right',
-      });
+      useCustomStorage<CartItem[]>('cart-items', null)
+      cartStore.cleanAllCart()
+      showToast(PURCHASE_SUCCUES);
     } catch (error) {
       console.error('Error submitting form:', error);
+      showToast(PURCHASE_FAILED)
     }
   };
 
@@ -127,6 +121,17 @@ export const useCheckoutStore = defineStore('checkout', () => {
           ]),
         );
   };
+
+
+
+
+
+
+
+
+
+
+
 
   const stepValidations = ref<Record<string, boolean>>({
     '/checkout/details': false,
@@ -151,3 +156,7 @@ export const useCheckoutStore = defineStore('checkout', () => {
     isCurrentStepValid,
   };
 });
+function cleanAllCart() {
+  throw new Error('Function not implemented.');
+}
+

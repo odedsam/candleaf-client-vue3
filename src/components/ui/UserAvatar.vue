@@ -1,39 +1,35 @@
 <script setup lang="ts">
+import type { NavItem } from '@/types';
 import { computed, ref, watch } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useAuthStore } from '@/stores/authStore';
 import { storeToRefs } from 'pinia';
 import { useCartStore } from '@/stores/cartStore';
-import { getCookiesByKeys, getCookiesByKeysAndNames, showCookiesTable, findCookie } from '@/utils';
 import ProfileIcon from '@/assets/icons/userProfile.svg';
 import CartIcon from './CartIcon.vue';
 import BaseDropDown from '../base/BaseDropDown.vue';
 
-
 const authStore = useAuthStore();
 const cartStore = useCartStore();
 const { isAuthenticated, user } = storeToRefs(authStore);
-
+const userImage = ref('');
 const firstName = computed(() => user?.value?.name.split(' ')[0] ?? 'Guest');
 const profileImage = computed(() => user?.value?.avatar ?? ProfileIcon);
-const profileLink = ref('/auth/login');
+const profileLink = ref<string>('/auth/login');
 
-const userImage = ref('');
-console.log(' userImage:', userImage.value);
+const navItems = computed<NavItem[]>(() => [
+  { name: 'View Profile', to: profileLink.value },
+  { name: 'Settings', to: `${profileLink.value}/settings` },
+  { name: 'Preferences', to: `${profileLink.value}/preferences` },
+  { name: 'Support', to: `${profileLink.value}/support` },
+  { name: 'Help', to: `${profileLink.value}/help` },
+  { name: 'Notifications', to: `${profileLink.value}/notifications` },
+]);
 
-watch(
-  [isAuthenticated, user],
-  () => {
-    profileLink.value = isAuthenticated.value && user.value?._id ? `/user/${user.value._id}` : '/auth/login';
-  },
+watch([isAuthenticated, user], () => {
+    profileLink.value = isAuthenticated.value && user.value?._id ? `/user/${user.value._id}` : '/auth/login';},
   { immediate: true },
 );
-
-const myCookie = document.cookie
-console.log('myCookie : ',typeof myCookie);
-console.log(firstName.value);
-
-
 </script>
 
 <template>
@@ -42,13 +38,9 @@ console.log(firstName.value);
       <RouterLink v-if="!isAuthenticated" :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Login</RouterLink>
 
       <div v-if="isAuthenticated">
-        <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100" />
-        <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">View Profile</RouterLink>
-        <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Settings</RouterLink>
-        <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Preferences</RouterLink>
-        <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Support</RouterLink>
-        <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Help</RouterLink>
-        <RouterLink :to="profileLink" class="flex pl-7 gap-x-2 dark:text-gray-100">Notifications</RouterLink>
+        <RouterLink v-for="item in navItems" :key="item.name" :to="item.to" class="flex pl-7 gap-x-2 dark:text-gray-100">
+          {{ item.name }}
+        </RouterLink>
 
         <span v-if="isAuthenticated" class="text-red-500 flex pl-7 gap-x-2 dark:text-red-400" @click="authStore.handleLogout">Logout</span>
       </div>
