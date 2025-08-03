@@ -38,7 +38,7 @@ const error = ref<string | null>(null);
 async function fetchOrder(id: string) {
   try {
     isLoading.value = true;
-    const res = await fetch(`${API}/orders/${id}`);
+    const res = await fetch(`${API}/api/v1/orders/${id}`);
     if (!res.ok) throw new Error('Failed to fetch order');
     order.value = await res.json();
   } catch (e: any) {

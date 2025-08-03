@@ -107,7 +107,7 @@ export const useCheckoutStore = defineStore('checkout', () => {
   const submitFormData = async () => {
       const formData = aggregateFormData.value;
     try {
-      const response = await axios.post(`${API}/checkout`, formData);
+      const response = await axios.post(`${API}/api/v1/checkout`, formData);
       console.log('Success:', response.data);
 
       if (response.data) {
