@@ -1,11 +1,12 @@
 <script lang="ts" setup>
+import { API } from '@/utils'
 import {onMounted, ref} from 'vue'
 
 const profileName = ref('')
 const userItems = ref([''])
 const fetchUserData = async () => {
   try {
-    const req = await fetch('http://localhost:5001/google/callback', {
+    const req = await fetch(`${API}/google/callback`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

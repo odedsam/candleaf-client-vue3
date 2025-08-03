@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useCheckoutStore } from '@/stores/checkoutStore'
-import { PaymentInfo, paymentValidationSchema } from '@/utils/formValidations'
+import { PaymentInfo, paymentValidationSchema } from '@/validations/formValidations'
 import { ref } from 'vue'
 import BaseInput from '@/components/base/BaseInput.vue'
 import RadioInput from '@/components/features/products/RadioInput.vue'

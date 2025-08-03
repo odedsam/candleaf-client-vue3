@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {ref, onMounted} from 'vue'
 import {productCatalog} from '@/utils/constants'
-import {useAuthStore} from '@/stores/authStore'
 import {storeToRefs} from 'pinia'
 import {useProductStore} from '@/stores/productStore'
 import HomeHero from '@/components/sections/HomeHero.vue'
@@ -20,7 +19,6 @@ const data = ref<any | null>(null)
 
 
 onMounted(async () => {
-  // await authStore.fetchCurrentUser()
   try {
 
     await productStore.fetchProducts()

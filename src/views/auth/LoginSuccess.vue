@@ -21,7 +21,7 @@ onMounted(() => {
 
 <template>
   <div v-if="user?.name" class="flex flex-col justify-center items-center gap-3">
-    <h1 class="font-poppins font-semibold text-base sm:text-xl text-emerald-400">Welcome, {{ user.name.split(' ')[0] }}! Logging you in...</h1>
+    <h1 class="font-poppins font-semibold text-base sm:text-xl text-emerald-400">Welcome, <br> {{ user.name.split(' ')[0] }}! Logging you in...</h1>
     <i-tabler-loader class="w-8 h-8 sm:w-10 sm:h-10 animate-spin text-emerald-500" />
   </div>
   <div v-else>

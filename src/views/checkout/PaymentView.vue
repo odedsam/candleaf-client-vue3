@@ -10,7 +10,6 @@ import TablerCalendar from '~icons/tabler/calendar';
 import TablerUser from '~icons/tabler/user';
 import BillingAddress from '@/components/features/checkout/BillingAddress.vue';
 import StepButtons from '@/components/features/checkout/StepButtons.vue';
-// import { useRoute, useRouter } from 'vue-router';
 
 const checkoutStore = useCheckoutStore();
 
@@ -33,11 +32,9 @@ const editMethod = (method?: any) => {
   if (method) newInfo.value.newMethod = method;
 };
 
-// const router = useRouter()
 const submitted = ref(false);
 const errorMessage = ref('');
-// const navigateT = router.push('/checkout/confirmation')
-// const navigateB = router.push('/checkout/shipping')
+
 
 const handleSubmit = async () => {
   submitted.value = true;
@@ -82,16 +79,15 @@ const handleSubmit = async () => {
       <!-- <BaseInput v-model="payment.vatNumber" size="full" placeholder="VAT number (optional)" />
       <BaseInput v-model="payment.pec" size="full" placeholder="PEC (optional)" /> -->
     </div>
-    <button @click="handleSubmit" id="confirmation" type="submit" class="text-green-600 py-12 px-12 mx-auto text-lg font-sans">
-      Confimartion
-    </button>
+
 
     <BillingAddress />
-    <!-- <StepButtons
+    <StepButtons
       primaryText="Confirmation"
       secondaryText="Back To Shipping"
       primaryRoute="/checkout/confirmation"
       secondaryRoute="/checkout/shipping"
-      @submit-info="handleSubmit" /> -->
+      :validate="()=>true"
+      @click="handleSubmit" />
   </div>
 </template>

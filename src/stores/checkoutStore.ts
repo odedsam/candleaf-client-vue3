@@ -1,16 +1,16 @@
+import type { CartItem } from '@/types/index'
+import { createShippingValidationSchema, type ShippingInfo, type PaymentInfo, ShippingOptions } from '@/validations/formValidations'
 import { defineStore, storeToRefs } from 'pinia'
 import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
 
-import { PURCHASE_FAILED, PURCHASE_SUCCUES } from '@/utils/feedBack'
-import { createShippingValidationSchema, type ShippingInfo, type PaymentInfo, ShippingOptions } from '@/utils/formValidations'
 import { formatShippingAddress } from '@/utils/formatters'
-import { CartItem, CheckoutStepRoutes } from '@/types/index'
-import { showToast } from '@/utils'
+import { PURCHASE_FAILED, PURCHASE_SUCCUES } from '@/utils/feedBack'
+import { API, showToast } from '@/utils'
 import { useCartStore } from './cartStore'
 import { useAuthStore } from '@/stores/authStore'
 import { useCustomStorage } from '@/composables/useCustomStorage'
+import axios from 'axios'
 
 const DEFAULT_SHIPPING_OPTIONS: ShippingOptions[] = [
   { id: 'standard', label: 'Standard Shipping', price: 0, hasChecked: true },
@@ -107,7 +107,7 @@ export const useCheckoutStore = defineStore('checkout', () => {
   const submitFormData = async () => {
       const formData = aggregateFormData.value;
     try {
-      const response = await axios.post('http://localhost:5001/api/v1/checkout', formData);
+      const response = await axios.post(`${API}/checkout`, formData);
       console.log('Success:', response.data);
 
       if (response.data) {

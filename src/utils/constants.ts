@@ -1,4 +1,6 @@
-import { Face, Features } from '@/types/index'
+import type { Face, Features } from '@/types/index'
+import type { BasicIngredients, ProductCatalog } from '@/types/constants'
+
 import blueBerries from '@/assets/catalog/blueberriesCup.svg'
 import cherries from '@/assets/catalog/cherriesCup.svg'
 import cinnamon from '@/assets/catalog/cinnamonCup.svg'
@@ -9,8 +11,8 @@ import spiced from '@/assets/catalog/spicedCup.svg'
 import strawberry from '@/assets/catalog/strawberryCup.svg'
 
 
-export const descriptionSection = 'All hand-made with natural soy wax, Candleaf is made for your pleasure moments.'
-export const ingredients = {
+export const descriptionSection:string = 'All hand-made with natural soy wax, Candleaf is made for your pleasure moments.'
+export const ingredients:BasicIngredients = {
   wax: 'Top grade Soy wax that delivers a smoke less, consistent burn',
   fragrance: 'Premium quality ingredients with natural essential oils',
   burningTime: '70-75 hours',
@@ -75,8 +77,7 @@ export const faces: Face[] = [
   },
 ]
 
-
-export const productCatalog = [
+export const productCatalog:ProductCatalog= [
   {
     id: 21,
     title: 'Frosted Mint Bliss',

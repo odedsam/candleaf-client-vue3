@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { API } from '@/utils';
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -37,7 +38,7 @@ const error = ref<string | null>(null);
 async function fetchOrder(id: string) {
   try {
     isLoading.value = true;
-    const res = await fetch(`http://localhost:5001/api/v1/orders/${id}`);
+    const res = await fetch(`${API}/orders/${id}`);
     if (!res.ok) throw new Error('Failed to fetch order');
     order.value = await res.json();
   } catch (e: any) {

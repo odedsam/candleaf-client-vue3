@@ -1,4 +1,4 @@
-import {  type PaymentInfo, type ShippingInfo } from '@/utils/formValidations';
+import {  type PaymentInfo, type ShippingInfo } from '@/validations/formValidations';
 import { Ref } from 'vue';
 
 export type Features = {

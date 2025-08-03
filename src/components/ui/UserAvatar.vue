@@ -17,14 +17,20 @@ const firstName = computed(() => user?.value?.name.split(' ')[0] ?? 'Guest');
 const profileImage = computed(() => user?.value?.avatar ?? ProfileIcon);
 const profileLink = ref<string>('/auth/login');
 
+// later-on
+// const navItems = computed<NavItem[]>(() => [
+//   { name: 'View Profile', to: profileLink.value },
+//   { name: 'Settings', to: `${profileLink.value}/settings` },
+//   { name: 'Preferences', to: `${profileLink.value}/preferences` },
+//   { name: 'Support', to: `${profileLink.value}/support` },
+//   { name: 'Help', to: `${profileLink.value}/help` },
+//   { name: 'Notifications', to: `${profileLink.value}/notifications` },
+// ]);
+
 const navItems = computed<NavItem[]>(() => [
   { name: 'View Profile', to: profileLink.value },
-  { name: 'Settings', to: `${profileLink.value}/settings` },
-  { name: 'Preferences', to: `${profileLink.value}/preferences` },
-  { name: 'Support', to: `${profileLink.value}/support` },
-  { name: 'Help', to: `${profileLink.value}/help` },
-  { name: 'Notifications', to: `${profileLink.value}/notifications` },
 ]);
+
 
 watch([isAuthenticated, user], () => {
     profileLink.value = isAuthenticated.value && user.value?._id ? `/user/${user.value._id}` : '/auth/login';},
