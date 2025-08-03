@@ -29,8 +29,11 @@ const emit = defineEmits(['update:selected']);
     </div>
     <span
       class="font-semibold text-gray-800 font-poppins"
-      :class="{ 'text-black dark:text-black': selected }"
-      :style="selected ? { color: 'white' } : { color: 'black' }">
+      :class="{
+          'dark:text-black': selected,
+          'dark:text-white': !selected,
+        }"
+      >
       {{ price }}
     </span>
   </label>

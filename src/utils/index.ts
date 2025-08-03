@@ -1,4 +1,4 @@
-export * from './authValidation'
+export * from '../validations/authValidation'
 export * from './constants'
 export * from './formatters'
 export * from './formValidations'

@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import { loginWithGoogle, verifyGoogleToken, logout } from '@/services/authService';
 import { User } from '@/types/User';
 import { API } from '@/utils';
+import { getProfile } from '@/services/user';
 import router from '@/router';
 
 type RegisterPayload = {
@@ -11,14 +12,15 @@ type RegisterPayload = {
   password: string
 }
 
-type LoginPayload = Omit<RegisterPayload, 'name'>
+type LoginPayload = Omit<RegisterPayload, 'name' | 'provider'>
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null);
+  const isAuthenticated = computed(() => !!user.value);
   const isLoading = ref(false);
   const error = ref<string | null>(null);
   const formErrors = ref({})
-  const isAuthenticated = computed(() => !!user.value);
+  const orders = ref([]);
 
   const handleGoogleSignIn = async () => {
     isLoading.value = true;
@@ -105,6 +107,7 @@ async function register(payload: RegisterPayload) {
 
       if (!res.ok) {
         const errorData = await res.json();
+        isLoading.value = false;
         throw new Error(errorData.message || 'Login failed');
       }
 
@@ -133,10 +136,12 @@ async function register(payload: RegisterPayload) {
 
 
   const fetchCurrentUser = async () => {
+    console.log("fetchCurrentUser Started");
     try {
       const res = await fetch(`${API}/api/v1/auth/verify`, {
         method: 'POST',
         credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
       });
 
       if (res.status === 401) {
@@ -149,6 +154,7 @@ async function register(payload: RegisterPayload) {
       }
 
       const data = await res.json();
+      console.log(data);
       user.value = data;
     } catch (err: any) {
       console.error(err);
@@ -158,7 +164,20 @@ async function register(payload: RegisterPayload) {
 
 
 
-
+  const fetchUserProfile = async (id: string) => {
+    isLoading.value = true;
+    error.value = null;
+    try {
+      const { user: userData, userOrdersHistory } = await getProfile(id);
+      user.value = userData;
+      orders.value = userOrdersHistory;
+    } catch (err: any) {
+      console.error('Fetch profile failed:', err);
+      error.value = err?.message || 'Failed to fetch profile';
+    } finally {
+      isLoading.value = false;
+    }
+  };
 
 
 
@@ -174,9 +193,11 @@ async function register(payload: RegisterPayload) {
     isAuthenticated,
     isLoading,
     error,
+    orders,
     handleGoogleSignIn,
     handleLogout,
     fetchCurrentUser,
+    fetchUserProfile,
     register,
     login,
   };

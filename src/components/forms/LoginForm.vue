@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+\<script lang="ts" setup>
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
 import { useRouter } from 'vue-router';
@@ -33,11 +33,11 @@ const handleSubmit = async () => {
         email: form.value.email,
         password: form.value.password,
       });
-    // } else {
-    //   await authStore.login({
-    //     email: form.value.email,
-    //     password: form.value.password,
-    //   });
+    } else {
+      await authStore.login({
+        email: form.value.email,
+        password: form.value.password,
+      });
     }
   } catch (err: any) {
     if (err?.validationErrors) {

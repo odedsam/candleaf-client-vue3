@@ -15,5 +15,5 @@ export const validateAuthForm = (form: { name?: string; email: string; password:
       password: result.error.formErrors.fieldErrors.password?.[0] || "",
     };
   }
-  return null; 
+  return null;
 };

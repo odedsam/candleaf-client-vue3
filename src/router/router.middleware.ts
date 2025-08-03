@@ -1,8 +1,9 @@
-// src/router/router.middleware.ts
 import type { NavigationGuardNext, RouteLocationNormalized, Router } from 'vue-router'
-import { storeToRefs } from 'pinia'
-import { useCheckoutStore } from '@/stores/checkoutStore'
 import { useAuthStore } from '@/stores/authStore'
+import { CheckoutStepRoutes } from "@/types"
+import { useMultiStep } from '@/composables/useMultiStep'
+
+
 
 const publicRoutes = ['/auth/login', '/auth/register']
 const checkoutRoutes = [
@@ -13,11 +14,14 @@ const checkoutRoutes = [
   '/checkout/confirmation'
 ]
 
+const { step, nextStep, prevStep } = useMultiStep("checkout_step",Object.values(CheckoutStepRoutes),"/products")
+const expectedRoute = checkoutRoutes[step.value]
+
+
 export const authMiddleware = (router: Router) => {
   router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
-    const checkoutStore = useCheckoutStore()
-    const { step } = storeToRefs(checkoutStore)
-    const expectedRoute = checkoutRoutes[step.value]
+
+
 
 
 
@@ -30,11 +34,12 @@ export const authMiddleware = (router: Router) => {
 
   const auth = useAuthStore()
 
-  // only try fetching user if there's a token cookie
-  const hasToken = document.cookie.includes('token=')
-  if (!auth.user && hasToken && to.path !== '/auth/login/success') {
-    // await auth.fetchCurrentUser()
-  }
+ const hasToken = document.cookie.split('; ').some(c => c.startsWith('candleaf_token='))
+
+    if (!auth.user && hasToken && to.path !== '/auth/login/success') {
+      await auth.fetchCurrentUser()
+    }
+
 
   // block authenticated users from visiting auth pages
   const isPublic = publicRoutes.includes(to.path)
