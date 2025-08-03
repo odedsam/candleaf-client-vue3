@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/authStore';
 import { onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
 
 const route = useRoute();
 const authStore = useAuthStore();
@@ -19,7 +19,7 @@ onMounted(() => {
   </div>
 
   <div v-else-if="authStore.user" class="p-4 md:p-8 max-w-7xl mx-auto">
-    <!-- User Info -->
+
     <div
       class="flex flex-col md:flex-row md:items-center md:justify-between bg-white dark:bg-gray-800 rounded-lg shadow p-4 mb-6 gap-4 transition-colors"
     >
@@ -38,7 +38,6 @@ onMounted(() => {
       />
     </div>
 
-    <!-- Orders Section -->
     <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">
       History Orders
     </h2>
@@ -52,7 +51,6 @@ onMounted(() => {
         :key="order._id"
         class="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-xl transition-all flex flex-col p-5"
       >
-        <!-- Header -->
         <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
           <h3 class="font-semibold text-gray-800 dark:text-gray-100 text-base truncate">
             {{ order.orderNumber }}
@@ -70,7 +68,6 @@ onMounted(() => {
           </span>
         </div>
 
-        <!-- Info -->
         <p class="text-gray-500 dark:text-gray-400 text-sm mb-2">
           {{ new Date(order.createdAt).toLocaleDateString() }}
         </p>
@@ -78,7 +75,6 @@ onMounted(() => {
           Total: {{ order.sub_total.toFixed(2) }} ₪
         </p>
 
-        <!-- Products -->
         <ul class="space-y-2 mb-4 flex-1 overflow-y-auto max-h-40 pr-2">
           <li
             v-for="product in order.products"
@@ -101,12 +97,12 @@ onMounted(() => {
           </li>
         </ul>
 
-        <!-- Actions -->
-        <button
+        <RouterLink
           class="mt-auto px-4 py-2 rounded-md text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors w-full"
+           :to="{ name: 'order-details', params: { id: route.params.id, orderId: order._id } }"
         >
           View Details
-        </button>
+        </RouterLink>
       </div>
     </div>
 

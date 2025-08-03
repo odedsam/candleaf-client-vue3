@@ -47,14 +47,15 @@ async function fetchOrder(id: string) {
   }
 }
 
-onMounted(() => {
-  const id = route.params.id as string;
+onMounted(async() => {
+  const id = route.params.orderId as string;
+  console.log(id);
   if (!id) {
     error.value = 'Invalid order ID';
     isLoading.value = false;
     return;
   }
-  fetchOrder(id);
+  await fetchOrder(id);
 });
 
 function goBack() {
