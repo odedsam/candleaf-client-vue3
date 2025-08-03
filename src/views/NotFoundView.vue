@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {RouterLink} from 'vue-router'
+import { RouterLink } from 'vue-router';
 </script>
 
 <template>
@@ -10,8 +10,7 @@ import {RouterLink} from 'vue-router'
 
     <router-link
       to="/"
-      class="mt-6 px-6 py-3 bg-[#56B280] text-white font-bold rounded-lg shadow-md hover:bg-[#46956F] transition duration-300"
-    >
+      class="mt-6 px-6 py-3 bg-[#56B280] text-white font-bold rounded-lg shadow-md hover:bg-[#46956F] transition duration-300">
       Back to Home
     </router-link>
   </div>

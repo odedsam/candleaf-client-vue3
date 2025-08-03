@@ -11,19 +11,16 @@ import AddressAutoComplete from '@/components/features/checkout/AddressAutoCompl
 
 const checkoutStore = useCheckoutStore();
 const { shipping, shippingErrors } = storeToRefs(checkoutStore);
-
-
 </script>
 
 <template>
-  <div class=" bg-white dark:bg-gray-500 shadow-md rounded-lg">
+  <div class="bg-white dark:bg-gray-500 shadow-md rounded-lg">
     <form @submit.prevent="checkoutStore.validateDetails" class="grid gap-2.5 px-2">
       <CheckoutNewsLetter
         v-model:email="shipping.email"
         v-model:subscribe="shipping.subscribe"
         :invalid="!!shippingErrors.email"
-        :errMessage="shippingErrors.email"
-      />
+        :errMessage="shippingErrors.email" />
 
       <!-- <AddressAutoComplete v-model="shipping.address" /> -->
 
@@ -42,7 +39,6 @@ const { shipping, shippingErrors } = storeToRefs(checkoutStore);
 
       <BaseInput v-model="shipping.postalCode" placeholder="Postal Code" :invalid="!!shippingErrors.postalCode" />
       <BaseError v-if="shippingErrors.postalCode" :message="shippingErrors.postalCode" />
-
 
       <BaseInput v-model="shipping.country" placeholder="Country" :invalid="!!shippingErrors.country" />
       <BaseError v-if="shippingErrors.country" :message="shippingErrors.country" />
@@ -70,8 +66,7 @@ const { shipping, shippingErrors } = storeToRefs(checkoutStore);
         secondaryText="Back to Cart"
         primaryRoute="/checkout/shipping"
         secondaryRoute="/checkout/cart"
-        :validate="()=>true"
-      />
+        :validate="() => true" />
     </form>
   </div>
 </template>

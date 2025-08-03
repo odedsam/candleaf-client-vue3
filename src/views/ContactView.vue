@@ -33,13 +33,11 @@ const handleSubmit = async () => {
     name.value = '';
     email.value = '';
     message.value = '';
-
   } catch (error) {
     console.error('Fetch error:', error);
     errorToast('Network error. Please try again.');
   }
 };
-
 </script>
 
 <template>
@@ -53,7 +51,9 @@ const handleSubmit = async () => {
 
     <form @submit.prevent="handleSubmit" class="max-w-lg mx-auto mt-8 space-y-6">
       <div>
-        <label class="block text-gray-700 font-semibold mb-2 font-poppins dark:placeholder:text-gray-200 dark:text-gray-400">Full Name</label>
+        <label class="block text-gray-700 font-semibold mb-2 font-poppins dark:placeholder:text-gray-200 dark:text-gray-400">
+          Full Name
+        </label>
         <input v-model="name" type="text" class="w-full border rounded-md p-3 font-poppins" placeholder="Enter your name" />
       </div>
 
@@ -67,9 +67,7 @@ const handleSubmit = async () => {
         <textarea v-model="message" class="w-full border rounded-md p-3 font-poppins" rows="4" placeholder="Your message..."></textarea>
       </div>
 
-      <button type="submit" class="w-full bg-[#56B280] text-white font-semibold py-3 font-poppins rounded-md">
-        Send Message
-      </button>
+      <button type="submit" class="w-full bg-[#56B280] text-white font-semibold py-3 font-poppins rounded-md">Send Message</button>
     </form>
   </div>
 </template>

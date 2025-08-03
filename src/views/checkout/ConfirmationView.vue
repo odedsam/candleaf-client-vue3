@@ -5,15 +5,12 @@ import { storeToRefs } from 'pinia';
 import { RouterLink } from 'vue-router';
 import PaymentConfirmation from '@/components/features/checkout/PaymentConfirmation.vue';
 
-
-
 const store = useCheckoutStore();
 const { orderConfirmation } = storeToRefs(store);
 
 const isPaymentConfirmed = ref(false);
 const userOrderId = ref('');
 const userName = ref('');
-
 
 onMounted(() => {
   if (orderConfirmation.value?.success && orderConfirmation.value?.userConfirmation) {
@@ -35,12 +32,9 @@ const order = computed(() => ({
 }));
 
 const orderItems = computed(() => orderConfirmation.value?.userConfirmation?.products || []);
-
-
 </script>
 
 <template>
-
   <PaymentConfirmation :isConfirmed="isPaymentConfirmed" :orderId="userOrderId" :userName="userName" />
 
   <div class="p-6 bg-[#f9f9f9] min-h-screen">
@@ -49,26 +43,43 @@ const orderItems = computed(() => orderConfirmation.value?.userConfirmation?.pro
         <h2 class="text-2xl font-semibold text-[#56B280] mb-4">Order Confirmation</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <p><span class="font-semibold text-gray-700">Name:</span> {{ order.name }} {{ order.lastName }}</p>
-            <p><span class="font-semibold text-gray-700">Address:</span> {{ order.address }}</p>
-            <p><span class="font-semibold text-gray-700">Shipping Note:</span> {{ order.shippingNote }}</p>
+            <p>
+              <span class="font-semibold text-gray-700">Name:</span>
+              {{ order.name }} {{ order.lastName }}
+            </p>
+            <p>
+              <span class="font-semibold text-gray-700">Address:</span>
+              {{ order.address }}
+            </p>
+            <p>
+              <span class="font-semibold text-gray-700">Shipping Note:</span>
+              {{ order.shippingNote }}
+            </p>
           </div>
           <div>
-            <p><span class="font-semibold text-gray-700">Postal Code:</span> {{ order.postalCode }}</p>
-            <p><span class="font-semibold text-gray-700">Province:</span> {{ order.province }}</p>
-            <p><span class="font-semibold text-gray-700">Country:</span> {{ order.country }}</p>
-            <p><span class="font-semibold text-gray-700">Shipping Method:</span> {{ order.shippingMethod }}</p>
+            <p>
+              <span class="font-semibold text-gray-700">Postal Code:</span>
+              {{ order.postalCode }}
+            </p>
+            <p>
+              <span class="font-semibold text-gray-700">Province:</span>
+              {{ order.province }}
+            </p>
+            <p>
+              <span class="font-semibold text-gray-700">Country:</span>
+              {{ order.country }}
+            </p>
+            <p>
+              <span class="font-semibold text-gray-700">Shipping Method:</span>
+              {{ order.shippingMethod }}
+            </p>
           </div>
         </div>
       </div>
 
       <div class="bg-white rounded-2xl shadow-md p-6">
         <h3 class="text-xl font-semibold text-[#56B280] mb-4">Order Items</h3>
-        <div
-          v-for="(item, index) in orderItems"
-          :key="index"
-          class="flex items-center justify-between border-b border-gray-200 py-4"
-        >
+        <div v-for="(item, index) in orderItems" :key="index" class="flex items-center justify-between border-b border-gray-200 py-4">
           <div class="flex items-center gap-4">
             <img :src="item.image" alt="Product Image" class="w-20 h-20 object-cover rounded-xl border" />
             <div>
@@ -83,12 +94,14 @@ const orderItems = computed(() => orderConfirmation.value?.userConfirmation?.pro
         </div>
       </div>
 
-    <div class="flex items-center  gap-2 px-4 py-12">
-      <i-tabler-shopping-cart class="h-8 w-8 text-[#56B280]" />
-      <RouterLink to="/products" class="text-xl font-semibold text-gray-700 hover:text-[#56B280] transition-colors duration-200 underline">
-        Back To Shopping
-      </RouterLink>
-    </div>
+      <div class="flex items-center gap-2 px-4 py-12">
+        <i-tabler-shopping-cart class="h-8 w-8 text-[#56B280]" />
+        <RouterLink
+          to="/products"
+          class="text-xl font-semibold text-gray-700 hover:text-[#56B280] transition-colors duration-200 underline">
+          Back To Shopping
+        </RouterLink>
+      </div>
     </div>
   </div>
 </template>

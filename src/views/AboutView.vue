@@ -1,12 +1,13 @@
-<script lang="ts" setup>
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <div class="container mx-auto px-8 py-16">
     <div class="text-center">
       <h1 class="text-4xl font-bold text-gray-900 dark:text-white">About Candleaf</h1>
       <p class="text-gray-600 mt-4 max-w-2xl mx-auto">
-        Candleaf was born from a passion for purity, sustainability, and beauty. We craft premium handmade candles using 100% natural soy wax, infused with essential oils for a clean and calming burn. Every product is thoughtfully made to transform spaces and uplift souls—sustainably.
+        Candleaf was born from a passion for purity, sustainability, and beauty. We craft premium handmade candles using 100% natural soy
+        wax, infused with essential oils for a clean and calming burn. Every product is thoughtfully made to transform spaces and uplift
+        souls—sustainably.
       </p>
     </div>
 
@@ -14,7 +15,9 @@
       <div class="flex flex-col items-center">
         <i-tabler-leaf class="w-12 h-12 text-green-500" />
         <h3 class="text-xl font-semibold mt-4">Eco-Friendly</h3>
-        <p class="text-gray-600 mt-2">Our candles are made with renewable soy wax and eco-conscious packaging, ensuring a minimal carbon footprint.</p>
+        <p class="text-gray-600 mt-2">
+          Our candles are made with renewable soy wax and eco-conscious packaging, ensuring a minimal carbon footprint.
+        </p>
       </div>
 
       <div class="flex flex-col items-center">
@@ -32,7 +35,9 @@
       <div class="flex flex-col items-center">
         <i-tabler-mood-smile class="w-12 h-12 text-pink-500" />
         <h3 class="text-xl font-semibold mt-4">Aromatic Experience</h3>
-        <p class="text-gray-600 mt-2">Designed to soothe the senses and elevate your mood—Candleaf is more than a candle, it's a lifestyle.</p>
+        <p class="text-gray-600 mt-2">
+          Designed to soothe the senses and elevate your mood—Candleaf is more than a candle, it's a lifestyle.
+        </p>
       </div>
 
       <div class="flex flex-col items-center">

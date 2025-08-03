@@ -35,7 +35,6 @@ const editMethod = (method?: any) => {
 const submitted = ref(false);
 const errorMessage = ref('');
 
-
 const handleSubmit = async () => {
   submitted.value = true;
   try {
@@ -80,14 +79,13 @@ const handleSubmit = async () => {
       <BaseInput v-model="payment.pec" size="full" placeholder="PEC (optional)" /> -->
     </div>
 
-
     <BillingAddress />
     <StepButtons
       primaryText="Confirmation"
       secondaryText="Back To Shipping"
       primaryRoute="/checkout/confirmation"
       secondaryRoute="/checkout/shipping"
-      :validate="()=>true"
+      :validate="() => true"
       @click="handleSubmit" />
   </div>
 </template>

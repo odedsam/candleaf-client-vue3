@@ -1,38 +1,40 @@
 <script setup lang="ts">
-import { watch, ref } from 'vue'
-import { useCheckoutStore } from '@/stores/checkoutStore'
-import { storeToRefs } from 'pinia'
+import { watch, ref } from 'vue';
+import { useCheckoutStore } from '@/stores/checkoutStore';
+import { storeToRefs } from 'pinia';
 
-const checkoutStore = useCheckoutStore()
-const { shipping, formattedShippingAddress, shippingOptions } = storeToRefs(checkoutStore)
+const checkoutStore = useCheckoutStore();
+const { shipping, formattedShippingAddress, shippingOptions } = storeToRefs(checkoutStore);
 
-const selectedShippingMethod = ref(shippingOptions.value.find(opt => opt.id === shipping.value.shippingMethod) || shippingOptions.value[0])
+const selectedShippingMethod = ref(
+  shippingOptions.value.find((opt) => opt.id === shipping.value.shippingMethod) || shippingOptions.value[0],
+);
 
 watch(
   () => shipping.value.shippingMethod,
   (newMethod) => {
-    const found = shippingOptions.value.find(opt => opt.id === newMethod)
-    if (found) selectedShippingMethod.value = found
+    const found = shippingOptions.value.find((opt) => opt.id === newMethod);
+    if (found) selectedShippingMethod.value = found;
   },
-  { immediate: true }
-)
+  { immediate: true },
+);
 
-const updateSelectedShippingMethod = (method: typeof shippingOptions.value[0]) => {
-  checkoutStore.selectShippingMethod(method.id)
-  selectedShippingMethod.value = method
-}
+const updateSelectedShippingMethod = (method: (typeof shippingOptions.value)[0]) => {
+  checkoutStore.selectShippingMethod(method.id);
+  selectedShippingMethod.value = method;
+};
 
 const editContact = (edit?: any) => {
   if (edit) {
-    shipping.value = edit
+    shipping.value = edit;
   }
-}
+};
 
 const editShipping = (editShipping?: any) => {
   if (editShipping) {
-    shipping.value = editShipping
+    shipping.value = editShipping;
   }
-}
+};
 </script>
 
 <template>
